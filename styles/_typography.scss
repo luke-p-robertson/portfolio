@@ -57,17 +57,17 @@ $microgramma: "Microgramma D";
 }
 
 .heading_h1 {
-  font-size: 46px;
-  line-height: 1.208;
+  font-size: 72px;
+  line-height: 1.19;
 
   @media screen and (min-width: $mq-tablet-min) and (max-width: $mq-tablet-max) {
-    font-size: 34px;
-    line-height: 36px;
+    // font-size: 34px;
+    // line-height: 36px;
   }
 
   @media screen and (max-width: $mq-mobile-max) {
-    font-size: 30px;
-    line-height: 1;
+    // font-size: 30px;
+    // line-height: 1;
   }
 }
 
