@@ -53,6 +53,18 @@ $microgramma: "Microgramma D";
   text-transform: uppercase;
 }
 
+.gerstner {
+  font-family: $gerstner;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.microgramma {
+  font-family: $microgramma;
+  font-size: 10px;
+  line-height: 16px;
+}
+
 .heading_h1,
 .heading_h2,
 .heading_h3,
@@ -86,13 +98,14 @@ $microgramma: "Microgramma D";
 }
 
 .body_text {
+  font-family: $gerstner;
   font-size: 13px;
-  font-weight: normal;
+  line-height: 16px;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 
   @media screen and (max-width: $mq-mobile-max) {
-    line-height: 17px;
+    // line-height: 17px;
   }
 }
