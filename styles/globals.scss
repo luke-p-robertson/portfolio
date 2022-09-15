@@ -21,6 +21,11 @@ a {
   box-sizing: border-box;
 }
 
+sup {
+  position: relative;
+  vertical-align: top;
+}
+
 // @media (prefers-color-scheme: dark) {
 //   html {
 //     color-scheme: dark;

@@ -44,6 +44,15 @@
 $gerstner: "Gerstner Programm";
 $microgramma: "Microgramma D";
 
+.gerstner_nav {
+  font-family: $gerstner;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
 .heading_h1,
 .heading_h2,
 .heading_h3,
@@ -58,7 +67,12 @@ $microgramma: "Microgramma D";
 
 .heading_h1 {
   font-size: 72px;
-  line-height: 1.19;
+  line-height: 86px;
+  letter-spacing: -0.03em;
+
+  sup {
+    top: -15px;
+  }
 
   @media screen and (min-width: $mq-tablet-min) and (max-width: $mq-tablet-max) {
     // font-size: 34px;

@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <meta name="description" content="New Things Group is a decentralized design and innovation organization" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav>
+      <nav className={styles.nav}>
         <span>NTG Worldwide</span>
         <span><a href="https://instagram.com">Follow New Things</a></span>
       </nav>

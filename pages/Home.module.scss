@@ -1,10 +1,28 @@
+@import "../styles/colors";
+@import "../styles/typography";
+
 .container {
-  padding: 0 2rem;
+  padding: 38px 4.1666% 40px;
+}
+
+.nav {
+  @extend .gerstner_nav;
+  color: $nobel;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+
+  .logo {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .main {
   .title {
     margin-bottom: 70px;
+    max-width: 85%;
 
     &:last-of-type {
       margin-bottom: 0;
