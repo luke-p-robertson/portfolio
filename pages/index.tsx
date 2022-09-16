@@ -1,10 +1,29 @@
-import {useRef} from 'react';
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from './Home.module.scss'
+import {useRef, useState} from 'react';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import styles from './Home.module.scss';
 
 const Home: NextPage = () => {
+  // const footnoteOne = useRef<HTMLDivElement>(null);
+  // const footnoteTwo = useRef<HTMLDivElement>(null);
+
+  const [footnoteOneVisible, setFootnoteOneVisible] = useState(false);
+  const [footnoteTwoVisible, setFootnoteTwoVisible] = useState(false);
+
+
+  const highlightFootnote = (which: number) => {
+    if (which === 1) {
+      setFootnoteOneVisible(true);
+    } else {
+      setFootnoteTwoVisible(true);
+    }
+  };
+
+  const hideFootnote = () => {
+    setFootnoteOneVisible(false);
+    setFootnoteTwoVisible(false);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,17 +37,17 @@ const Home: NextPage = () => {
       </nav>
       <main className={styles.main}>
         <h1 className={`${styles.title} heading_h1`}>
-          New Things Group is a <em>decentralized</em> design and innovation organization<sup><a href="">1</a></sup>.
+          New Things Group is a <em>decentralized</em> design and innovation organization<sup onMouseEnter={() => highlightFootnote(1)} onMouseLeave={() => hideFootnote()}>1</sup>.
         </h1>
-        <h1 className={`${styles.title} heading_h1`}>Our work expresses new technologies by the <em>power of many</em> to create novel experiences and practical tools<sup><a href="">2</a></sup>.</h1>
-        
+        <h1 className={`${styles.title} heading_h1`}>Our work expresses new technologies by the <em>power of many</em> to create novel experiences and practical tools<sup onMouseEnter={() => highlightFootnote(2)} onMouseLeave={() => hideFootnote()}>2</sup>.</h1>
+
       </main>
       <footer className={styles.footer}>
-        <div className={styles.footer__content}>
-          <span className={styles.footnote}>01</span>
+        <div className={footnoteOneVisible ? `${styles.footer__content} ${styles.active}`  : styles.footer__content}>
+          <span className={styles.footnote}>01</span>         
           <p>We are a Decentralized Autonomous Organization, or DAO (pronounced dow), a new kind of organization, built with blockchain technology, run democratically by its members.</p>
         </div>
-        <div className={styles.footer__content}>
+        <div className={footnoteTwoVisible ? `${styles.footer__content} ${styles.active}`  : styles.footer__content}>
           <span className={styles.footnote}>02</span>
           <p>Through our resarch, we uncover the insights and opportunities that form the basis of our work, crossing the sectors of art, commerce, design, community and technology.</p>
         </div>
