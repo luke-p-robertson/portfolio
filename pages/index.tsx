@@ -33,7 +33,7 @@ const Home: NextPage = () => {
       </Head>
       <nav className={styles.nav}>
         <span>NTG Worldwide</span>
-        <span><a href="https://instagram.com">Follow New Things</a></span>
+        <span><a href="https://instagram.com">Follow New Things</a> <button className={`btn ${styles.btn}`}>Sign Up</button></span>
       </nav>
       <main className={styles.main}>
         <h1 className={`${styles.title} heading_h1`}>

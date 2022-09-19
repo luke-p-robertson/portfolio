@@ -26,6 +26,25 @@ sup {
   vertical-align: top;
 }
 
+.btn {
+  background-color: $new;
+  border: 0;
+  border-radius: 20px;
+  color: $black;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $gerstner;
+  font-size: 13px;
+  line-height: 1;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  transition: background-color 0.1s ease-in-out;
+
+  &:hover {
+    background-color: $nobel;
+  }
+}
+
 // @media (prefers-color-scheme: dark) {
 //   html {
 //     color-scheme: dark;
