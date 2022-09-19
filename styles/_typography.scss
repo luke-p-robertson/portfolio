@@ -79,11 +79,12 @@ $microgramma: "Microgramma D";
 
 .heading_h1 {
   font-size: 72px;
-  line-height: 86px;
+  font-size: 5.42vw;
+  line-height: 1.194444;
   letter-spacing: -0.03em;
 
   sup {
-    top: -15px;
+    top: -5px;
   }
 
   @media screen and (min-width: $mq-tablet-min) and (max-width: $mq-tablet-max) {
