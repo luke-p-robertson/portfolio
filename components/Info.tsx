@@ -4,8 +4,6 @@ import styles from "./Info.module.scss";
 
 type AppProps = {
   data: any;
-  items: any;
-  i: any;
 };
 
 export const InfoSection = ({ data }: AppProps) => {

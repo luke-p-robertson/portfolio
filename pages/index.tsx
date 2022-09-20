@@ -7,7 +7,14 @@ import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 
 type Props = {
-  pagedata: any;
+  pagedata: {
+    id: string;
+    data: {
+      clients: Array<Props>;
+      contact: Array<Props>;
+      profile: Array<Props>;
+    };
+  };
   previewData: any;
 };
 
@@ -24,7 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ previewData }) => {
 };
 
 const Home: NextPage<Props> = ({ pagedata }) => {
-  console.log(pagedata);
+  console.log("PageData", pagedata);
 
   return (
     <>
