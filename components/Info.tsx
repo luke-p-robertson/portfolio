@@ -1,4 +1,5 @@
 import React from "react";
+import { PrismicRichText } from "@prismicio/react";
 import styles from "./Info.module.scss";
 
 type AppProps = {
@@ -12,15 +13,26 @@ export const InfoSection = ({ data }: AppProps) => {
     <div className={styles.content_col}>
       <div className={styles.row}>
         <span className={styles.label}>Profile</span>
-        <div className={styles.content}>content</div>
+        <div className={styles.content}>
+          <PrismicRichText field={data.data.profile} />
+        </div>
       </div>
       <div className={styles.row}>
         <span className={styles.label}>Contact</span>
-        <div className={styles.content}>content</div>
+        <div className={styles.content}>
+          <PrismicRichText field={data.data.contact} />
+        </div>
       </div>
       <div className={styles.row}>
         <span className={styles.label}>Clients</span>
-        <div className={styles.content}>content</div>
+        <div className={styles.content}>
+          <ul>
+            {data.data.clients.map(function (item, i) {
+              console.log("test");
+              return <li key={i}>{item.client}</li>;
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );
