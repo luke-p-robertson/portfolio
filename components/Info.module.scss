@@ -1,0 +1,22 @@
+@import "../styles/colors";
+@import "../styles/typography";
+
+.content_col {
+  display: block;
+  padding: 54px 15px 240px;
+  width: 41.7%;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+
+    .label {
+      width: 20%;
+    }
+
+    .content {
+      width: 80%;
+    }
+  }
+}
