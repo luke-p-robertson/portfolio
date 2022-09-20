@@ -4,6 +4,8 @@ import styles from "./Info.module.scss";
 
 type AppProps = {
   data: any;
+  items: any;
+  i: any;
 };
 
 export const InfoSection = ({ data }: AppProps) => {
@@ -27,7 +29,7 @@ export const InfoSection = ({ data }: AppProps) => {
         <span className={styles.label}>Clients</span>
         <div className={styles.content}>
           <ul>
-            {data.data.clients.map(function (item, i) {
+            {data.data.clients.map(function (item: any, i: any) {
               console.log("test");
               return <li key={i}>{item.client}</li>;
             })}
