@@ -1,11 +1,31 @@
 import { useRef, useState } from "react";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
+import { createClient, linkResolver } from "../prismicio";
 import Head from "next/head";
 import styles from "./Home.module.scss";
 import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 
-const Home: NextPage = () => {
+type Props = {
+  pagedata: object;
+  previewData: object;
+};
+
+export const getStaticProps: GetStaticProps = async ({ previewData }) => {
+  const client = createClient({ previewData });
+
+  const pagedata = await client.getSingle("homepage");
+
+  return {
+    props: {
+      pagedata,
+    },
+  };
+};
+
+const Home: NextPage<Props> = ({ pagedata }) => {
+  console.log(pagedata);
+
   return (
     <>
       <Head>
@@ -22,10 +42,10 @@ const Home: NextPage = () => {
       </nav>
 
       <main className={styles.main}>
-        <Projects />
+        <Projects data={pagedata} />
       </main>
       <section className={styles.info}>
-        <InfoSection data={null} />
+        <InfoSection data={pagedata} />
       </section>
     </>
   );
