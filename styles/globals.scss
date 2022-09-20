@@ -6,6 +6,7 @@
 html,
 body {
   background-color: $alabaster;
+  @extend .body_text;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -33,7 +34,7 @@ sup {
   color: $black;
   cursor: pointer;
   display: inline-block;
-  font-family: $gerstner;
+  font-family: $rand;
   font-size: 13px;
   line-height: 1;
   padding: 10px 20px;

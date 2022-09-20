@@ -6,7 +6,6 @@
 }
 
 .nav {
-  @extend .gerstner_nav;
   color: $nobel;
   display: flex;
   justify-content: space-between;
@@ -59,10 +58,6 @@
 
     &:first-of-type {
       margin-left: 0;
-    }
-
-    .footnote {
-      @extend .microgramma;
     }
 
     p {

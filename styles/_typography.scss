@@ -1,67 +1,18 @@
 @import "./helpers";
 
-@import url("https://use.typekit.net/ozm2ijo.css");
-
 @font-face {
-  font-family: "Microgramma D";
-  src: url("/fonts/MicrogrammaD-BoldExte.woff2") format("woff2"),
-    url("/fonts/MicrogrammaD-BoldExte.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Gerstner Programm";
-  src: url("/fonts/GerstnerProgramm-Regular.woff2") format("woff2"),
-    url("/fonts/GerstnerProgramm-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Gerstner Programm";
-  src: url("/fonts/GerstnerProgramm-Italic.woff2") format("woff2"),
-    url("/fonts/GerstnerProgramm-Italic.woff") format("woff");
-  font-weight: normal;
-  font-style: italic;
-  font-display: swap;
-}
-
-@mixin kingscaslon_regular {
-  font-family: kings-caslon, sans-serif;
-  font-weight: 400;
+  font-family: "Rand";
+  src: url("/fonts/Rand-Medium.woff2") format("woff2"),
+    url("/fonts/Rand-Medium.woff") format("woff");
+  font-weight: 500;
   font-style: normal;
 }
 
-@mixin kingscaslon_italic {
-  font-family: kings-caslon, sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
+$rand: "Rand";
 
-$gerstner: "Gerstner Programm";
-$microgramma: "Microgramma D";
-
-.gerstner_nav {
-  font-family: $gerstner;
-  font-weight: normal;
-  font-style: normal;
+.rand {
+  font-family: $rand;
   font-size: 13px;
-  line-height: 16px;
-  text-transform: uppercase;
-}
-
-.gerstner {
-  font-family: $gerstner;
-  font-size: 13px;
-  line-height: 16px;
-}
-
-.microgramma {
-  font-family: $microgramma;
-  font-size: 10px;
   line-height: 16px;
 }
 
@@ -71,7 +22,7 @@ $microgramma: "Microgramma D";
 .heading_h4,
 .heading_h5,
 .heading_h6 {
-  @include kingscaslon_regular;
+  @extend .rand;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -99,9 +50,7 @@ $microgramma: "Microgramma D";
 }
 
 .body_text {
-  font-family: $gerstner;
-  font-size: 13px;
-  line-height: 16px;
+  @extend .rand;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
