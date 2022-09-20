@@ -7,8 +7,8 @@ import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 
 type Props = {
-  pagedata: object;
-  previewData: object;
+  pagedata: any;
+  previewData: any;
 };
 
 export const getStaticProps: GetStaticProps = async ({ previewData }) => {
