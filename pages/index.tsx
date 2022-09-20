@@ -1,60 +1,34 @@
-import {useRef, useState} from 'react';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import styles from './Home.module.scss';
+import { useRef, useState } from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import styles from "./Home.module.scss";
+import { InfoSection } from "../components/Info";
+import { Projects } from "../components/Projects";
 
 const Home: NextPage = () => {
-  // const footnoteOne = useRef<HTMLDivElement>(null);
-  // const footnoteTwo = useRef<HTMLDivElement>(null);
-
-  const [footnoteOneVisible, setFootnoteOneVisible] = useState(false);
-  const [footnoteTwoVisible, setFootnoteTwoVisible] = useState(false);
-
-
-  const highlightFootnote = (which: number) => {
-    if (which === 1) {
-      setFootnoteOneVisible(true);
-    } else {
-      setFootnoteTwoVisible(true);
-    }
-  };
-
-  const hideFootnote = () => {
-    setFootnoteOneVisible(false);
-    setFootnoteTwoVisible(false);
-  }
-
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>New Things Group</title>
-        <meta name="description" content="New Things Group is a decentralized design and innovation organization" />
+        <title>Luke Robertson</title>
+        <meta
+          name="description"
+          content="Luke Robertson is an Australian born designer with a focus on visual identity and typographic craft."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav className={styles.nav}>
-        <span>NTG Worldwide</span>
-        <span><a href="https://instagram.com">Follow New Things</a> <button className={`btn ${styles.btn}`}>Sign Up</button></span>
+      <nav>
+        <span>Luke Robertson</span>
+        <button>Information</button>
       </nav>
+
       <main className={styles.main}>
-        <h1 className={`${styles.title} heading_h1`}>
-          New Things Group is a <em>decentralized</em> design and innovation organization<sup onMouseEnter={() => highlightFootnote(1)} onMouseLeave={() => hideFootnote()}>1</sup>.
-        </h1>
-        <h1 className={`${styles.title} heading_h1`}>Our work expresses new technologies by the <em>power of many</em> to create novel experiences and practical tools<sup onMouseEnter={() => highlightFootnote(2)} onMouseLeave={() => hideFootnote()}>2</sup>.</h1>
-
+        <Projects />
       </main>
-      <footer className={styles.footer}>
-        <div className={footnoteOneVisible ? `${styles.footer__content} ${styles.active}`  : styles.footer__content}>
-          <span className={styles.footnote}>01</span>         
-          <p>We are a Decentralized Autonomous Organization, or DAO (pronounced dow), a new kind of organization, built with blockchain technology, run democratically by its members.</p>
-        </div>
-        <div className={footnoteTwoVisible ? `${styles.footer__content} ${styles.active}`  : styles.footer__content}>
-          <span className={styles.footnote}>02</span>
-          <p>Through our resarch, we uncover the insights and opportunities that form the basis of our work, crossing the sectors of art, commerce, design, community and technology.</p>
-        </div>
-        <div className={styles.footer__content}></div>
-      </footer>
-    </div>
-  )
-}
+      <section className={styles.info}>
+        <InfoSection data={null} />
+      </section>
+    </>
+  );
+};
 
-export default Home
+export default Home;
