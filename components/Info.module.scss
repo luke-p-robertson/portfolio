@@ -24,9 +24,8 @@
       width: 16.66666667%;
 
       span {
+        @extend .small_text;
         display: inline-block;
-        font-size: 15px;
-        line-height: 15px;
         vertical-align: baseline;
       }
     }

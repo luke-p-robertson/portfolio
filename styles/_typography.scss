@@ -12,13 +12,9 @@ $rand: "Rand";
 
 .rand {
   font-family: $rand;
-  font-size: 13px;
-  line-height: 16px;
-  font-size: 32px;
-  line-height: 38px;
-  /* or 119% */
-
-  letter-spacing: -0.01em;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 .heading_h1,
@@ -39,10 +35,6 @@ $rand: "Rand";
   line-height: 1.194444;
   letter-spacing: -0.03em;
 
-  sup {
-    top: -5px;
-  }
-
   @media screen and (min-width: $mq-tablet-min) and (max-width: $mq-tablet-max) {
     // font-size: 34px;
     // line-height: 36px;
@@ -54,11 +46,18 @@ $rand: "Rand";
   }
 }
 
+.small_text {
+  @extend .rand;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
 .body_text {
   @extend .rand;
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+
+  font-size: 32px;
+  line-height: 1.19;
+  letter-spacing: -0.01em;
 
   @media screen and (max-width: $mq-mobile-max) {
     // line-height: 17px;
