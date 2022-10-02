@@ -14,6 +14,11 @@ $rand: "Rand";
   font-family: $rand;
   font-size: 13px;
   line-height: 16px;
+  font-size: 32px;
+  line-height: 38px;
+  /* or 119% */
+
+  letter-spacing: -0.01em;
 }
 
 .heading_h1,

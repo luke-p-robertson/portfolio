@@ -12,24 +12,28 @@ export const InfoSection = ({ data }: AppProps) => {
   return (
     <div className={styles.content_col}>
       <div className={styles.row}>
-        <span className={styles.label}>Profile</span>
+        <div className={styles.label}> </div>
         <div className={styles.content}>
           <PrismicRichText field={data.data.profile} />
         </div>
       </div>
       <div className={styles.row}>
-        <span className={styles.label}>Contact</span>
+        <div className={styles.label}>
+          <span>Contact</span>
+        </div>
         <div className={styles.content}>
           <PrismicRichText field={data.data.contact} />
         </div>
       </div>
       <div className={styles.row}>
-        <span className={styles.label}>Clients</span>
+        <div className={styles.label}>
+          <span>Clients</span>
+        </div>
         <div className={styles.content}>
           <ul>
             {data.data.clients.map(function (item: any, i: any) {
               console.log("test");
-              return <li key={i}>{item.client}</li>;
+              return <li key={i}>{item.client}, &nbsp;</li>;
             })}
           </ul>
         </div>

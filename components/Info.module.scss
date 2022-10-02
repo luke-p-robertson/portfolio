@@ -4,19 +4,41 @@
 .content_col {
   display: block;
   padding: 54px 15px 240px;
-  width: 41.7%;
+  width: 100%;
 
   .row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+
+    p {
+      margin-bottom: 40px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
 
     .label {
-      width: 20%;
+      position: relative;
+      width: 16.66666667%;
+
+      span {
+        display: inline-block;
+        font-size: 15px;
+        line-height: 15px;
+        vertical-align: baseline;
+      }
     }
 
     .content {
-      width: 80%;
+      width: 83.33333333%;
+
+      ul {
+        li {
+          display: inline-block;
+        }
+      }
     }
   }
 }
