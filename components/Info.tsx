@@ -7,7 +7,7 @@ type AppProps = {
 };
 
 export const InfoSection = ({ data }: AppProps) => {
-  console.log(data.data);
+  console.log("Info Component", data.data);
 
   return (
     <div className={styles.content_col}>

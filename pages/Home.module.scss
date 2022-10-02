@@ -1,7 +1,16 @@
 @import "../styles/colors";
 @import "../styles/typography";
 
+.navigation {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 .main {
+  background-color: lightblue;
   height: 100vh;
   width: 100%;
 }

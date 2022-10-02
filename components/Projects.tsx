@@ -6,7 +6,15 @@ type AppProps = {
 };
 
 export const Projects = ({ data }: AppProps) => {
-  console.log(data.data);
+  console.log("Projects Component", data.data);
 
-  return <h1>Projects Section</h1>;
+  return (
+    <section className={styles.projects_module}>
+      <ul>
+        <li>
+          <span className={styles.caption}>Some Caption Here</span>
+        </li>
+      </ul>
+    </section>
+  );
 };

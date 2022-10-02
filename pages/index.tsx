@@ -43,7 +43,7 @@ const Home: NextPage<Props> = ({ pagedata }) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav>
+      <nav className={`${styles.navigation}`}>
         <span>Luke Robertson</span>
         <button>Information</button>
       </nav>
