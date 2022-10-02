@@ -32,8 +32,12 @@ export const InfoSection = ({ data }: AppProps) => {
         <div className={styles.content}>
           <ul>
             {data.data.clients.map(function (item: any, i: any) {
-              console.log("test");
-              return <li key={i}>{item.client}, &nbsp;</li>;
+              if (i + 1 === data.data.clients.length) {
+                // last one
+                return <li key={i}>{item.client}</li>;
+              } else {
+                return <li key={i}>{item.client}, &nbsp;</li>;
+              }
             })}
           </ul>
         </div>
