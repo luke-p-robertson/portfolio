@@ -1,14 +1,10 @@
 import React from "react";
 import styles from "./Projects.module.scss";
 
-type AppProps = {
-  data: any;
-};
-
-export const Projects = ({ data }: AppProps) => {
+export const Projects = ({ data }) => {
   console.log("Projects Component", data);
 
-  const textStyle = (color: string) => ({
+  const textStyle = (color) => ({
     color: `${color}`,
   });
 
@@ -19,7 +15,7 @@ export const Projects = ({ data }: AppProps) => {
   return (
     <section className={styles.projects_module}>
       <ul>
-        {data.map((item: any, i: any) => {
+        {data.map((item, i) => {
           return (
             <li key={i}>
               <figure

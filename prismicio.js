@@ -8,22 +8,14 @@ import sm from "./sm.json";
  */
 export const repositoryName = prismic.getRepositoryName(sm.apiEndpoint);
 
-/**
- * The project's Prismic Link Resolver. This function determines the URL for a given Prismic document.
- *
- * @type {prismicH.LinkResolverFunction}
- */
-// Update the Link Resolver to match your project's route structure
-export function linkResolver(doc) {
-  switch (doc.type) {
-    case "homepage":
-      return "/";
-    case "page":
-      return `/${doc.uid}`;
-    default:
-      return null;
-  }
-}
+// Update the routes array to match your project's route structure
+/** @type {prismic.ClientConfig['routes']} **/
+const routes = [
+  {
+    type: "homepage",
+    path: "/",
+  },
+];
 
 /**
  * Creates a Prismic client for the project's repository. The client is used to
@@ -32,7 +24,10 @@ export function linkResolver(doc) {
  * @param config {prismicNext.CreateClientConfig} - Configuration for the Prismic client.
  */
 export const createClient = (config = {}) => {
-  const client = prismic.createClient(sm.apiEndpoint, config);
+  const client = prismic.createClient(sm.apiEndpoint, {
+    routes,
+    ...config,
+  });
 
   prismicNext.enableAutoPreviews({
     client,

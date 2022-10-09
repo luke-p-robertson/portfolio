@@ -2,11 +2,7 @@ import React from "react";
 import { PrismicRichText } from "@prismicio/react";
 import styles from "./Info.module.scss";
 
-type AppProps = {
-  data: any;
-};
-
-export const InfoSection = ({ data }: AppProps) => {
+export const InfoSection = ({ data }) => {
   console.log("Info Component", data.data);
 
   return (
@@ -31,7 +27,7 @@ export const InfoSection = ({ data }: AppProps) => {
         </div>
         <div className={styles.content}>
           <ul>
-            {data.data.clients.map(function (item: any, i: any) {
+            {data.data.clients.map(function (item, i) {
               if (i + 1 === data.data.clients.length) {
                 // last one
                 return <li key={i}>{item.client}</li>;

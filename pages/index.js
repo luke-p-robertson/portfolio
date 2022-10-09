@@ -1,26 +1,13 @@
 import { useRef, useState, useLayoutEffect } from "react";
-import type { NextPage, GetStaticProps } from "next";
-import { createClient, linkResolver } from "../prismicio";
 import Head from "next/head";
-import styles from "./Home.module.scss";
+import Image from "next/image";
+import { createClient } from "../prismicio";
 import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 import animateScrollTo from "animated-scroll-to";
+import styles from "./Home.module.scss";
 
-type Props = {
-  pagedata: {
-    id: string;
-    data: {
-      clients: Array<Props>;
-      contact: Array<Props>;
-      profile: Array<Props>;
-      projects: Array<Props>;
-    };
-  };
-  previewData: any;
-};
-
-export const getStaticProps: GetStaticProps = async ({ previewData }) => {
+export async function getStaticProps({ previewData }) {
   const client = createClient({ previewData });
 
   const pagedata = await client.getSingle("homepage", {
@@ -39,16 +26,12 @@ export const getStaticProps: GetStaticProps = async ({ previewData }) => {
       pagedata,
     },
   };
-};
+}
 
-const Home: NextPage<Props> = ({ pagedata }) => {
+export default function Homepage({ pagedata }) {
   console.log("PageData", pagedata);
 
-  const infoRef = useRef<HTMLElement>(null);
-
-  useLayoutEffect(() => {
-    console.log(infoRef); // { current: <h1_object> }
-  });
+  const infoRef = useRef(null);
 
   return (
     <>
@@ -79,6 +62,4 @@ const Home: NextPage<Props> = ({ pagedata }) => {
       </section>
     </>
   );
-};
-
-export default Home;
+}
