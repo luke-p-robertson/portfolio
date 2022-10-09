@@ -15,6 +15,7 @@
     "@prismicio/next": "^0.1.5",
     "@prismicio/react": "^2.5.0",
     "@prismicio/slice-simulator-react": "^0.2.2",
+    "animated-scroll-to": "^2.3.0",
     "framer-motion": "^7.3.4",
     "next": "12.2.5",
     "next-svgr": "^0.0.2",

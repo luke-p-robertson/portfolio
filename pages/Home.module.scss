@@ -2,15 +2,23 @@
 @import "../styles/typography";
 
 .navigation {
+  @extend .small_text;
   display: block;
   position: fixed;
   top: 0;
   left: 0;
+  padding: 13px $navGutter_desktop 0;
   width: 100%;
+  z-index: 3;
+
+  span {
+    display: inline-block;
+    width: $gutter_desktop * 2;
+  }
 }
 
 .main {
-  background-color: lightblue;
+  // background-color: lightblue;
   height: 100vh;
   width: 100%;
 }
@@ -18,5 +26,5 @@
 .info {
   display: flex;
   justify-content: flex-end;
-  padding: 54px 15px 240px;
+  padding: 54px $navGutter_desktop 240px;
 }

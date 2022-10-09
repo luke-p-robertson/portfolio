@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import type { NextPage, GetStaticProps } from "next";
 import { createClient, linkResolver } from "../prismicio";
 import Head from "next/head";
 import styles from "./Home.module.scss";
 import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
+import animateScrollTo from "animated-scroll-to";
 
 type Props = {
   pagedata: {
@@ -13,6 +14,7 @@ type Props = {
       clients: Array<Props>;
       contact: Array<Props>;
       profile: Array<Props>;
+      projects: Array<Props>;
     };
   };
   previewData: any;
@@ -21,7 +23,16 @@ type Props = {
 export const getStaticProps: GetStaticProps = async ({ previewData }) => {
   const client = createClient({ previewData });
 
-  const pagedata = await client.getSingle("homepage");
+  const pagedata = await client.getSingle("homepage", {
+    fetchLinks: [
+      "project.media_type",
+      "project.image",
+      "project.video",
+      "project.description",
+      "project.orientation",
+      "project.text_color",
+    ],
+  });
 
   return {
     props: {
@@ -32,6 +43,12 @@ export const getStaticProps: GetStaticProps = async ({ previewData }) => {
 
 const Home: NextPage<Props> = ({ pagedata }) => {
   console.log("PageData", pagedata);
+
+  const infoRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    console.log(infoRef); // { current: <h1_object> }
+  });
 
   return (
     <>
@@ -45,13 +62,19 @@ const Home: NextPage<Props> = ({ pagedata }) => {
       </Head>
       <nav className={`${styles.navigation}`}>
         <span>Luke Robertson</span>
-        <button>Information</button>
+        <button
+          onClick={() => {
+            animateScrollTo(infoRef.current);
+          }}
+        >
+          Information
+        </button>
       </nav>
 
       <main className={styles.main}>
-        <Projects data={pagedata} />
+        <Projects data={pagedata ? pagedata.data.projects : null} />
       </main>
-      <section className={styles.info}>
+      <section ref={infoRef} className={styles.info} id="information">
         <InfoSection data={pagedata} />
       </section>
     </>
