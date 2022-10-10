@@ -29,12 +29,17 @@ export async function getStaticProps({ previewData }) {
 }
 
 export default function Homepage({ pagedata }) {
-  console.log("PageData", pagedata);
+  // console.log("PageData", pagedata);
 
   const [curr, setCurr] = useState(0);
   const [themeColor, setThemeColor] = useState("#000000");
-  // const [pressed, setPressed] = useState([]);
+  const [infoClick, setInfoClick] = useState(false);
 
+  const textStyle = (color) => ({
+    color: `${color}`,
+  });
+
+  // handle keyboard controls
   useEffect(() => {
     const handleKeyUp = (event) => {
       const { key } = event;
@@ -75,11 +80,32 @@ export default function Homepage({ pagedata }) {
     };
   }, [curr, setCurr, pagedata.data.projects.length]);
 
-  const textStyle = (color) => ({
-    color: `${color}`,
-  });
+  const infoRef = useRef();
+  const projectRef = useRef();
 
-  const infoRef = useRef(null);
+  // automatically change nav color and scroll destination when info is in view
+  useEffect(() => {
+    const handleScroll = () => {
+      var someDiv = infoRef.current;
+      var distanceToTop = someDiv.getBoundingClientRect().top;
+
+      // console.log("Info to Top", distanceToTop);
+
+      if (distanceToTop < 20) {
+        setThemeColor("#000000");
+        setInfoClick(true);
+      } else {
+        setThemeColor("#FFFFFF");
+
+        setInfoClick(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [setThemeColor, setInfoClick]);
 
   return (
     <>
@@ -98,14 +124,22 @@ export default function Homepage({ pagedata }) {
         <span>Luke Robertson</span>
         <button
           onClick={() => {
-            animateScrollTo(infoRef.current);
+            if (infoClick) {
+              setInfoClick(false);
+              setThemeColor("#FFFFFF");
+              animateScrollTo(0);
+            } else {
+              setInfoClick(true);
+              setThemeColor("#000000");
+              animateScrollTo(infoRef.current);
+            }
           }}
         >
           Information
         </button>
       </nav>
 
-      <main className={styles.main}>
+      <main className={styles.main} ref={projectRef}>
         <Projects
           data={pagedata ? pagedata.data.projects : null}
           themeColor={themeColor}

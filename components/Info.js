@@ -3,7 +3,7 @@ import { PrismicRichText } from "@prismicio/react";
 import styles from "./Info.module.scss";
 
 export const InfoSection = ({ data }) => {
-  console.log("Info Component", data.data);
+  // console.log("Info Component", data.data);
 
   return (
     <div className={styles.content_col}>

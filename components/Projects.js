@@ -8,7 +8,7 @@ export const Projects = ({
   curr,
   setCurr,
 }) => {
-  console.log("Projects Component", data);
+  // console.log("Projects Component", data);
 
   const textStyle = (color) => ({
     color: `${color}`,
@@ -19,7 +19,7 @@ export const Projects = ({
   });
 
   const changeProject = (i) => {
-    console.log("Change Project", i);
+    // console.log("Change Project", i);
     if (i + 1 > data.length - 1) {
       setCurr(0);
     } else {
@@ -28,7 +28,7 @@ export const Projects = ({
   };
 
   useEffect(() => {
-    console.log("Current Project Updated");
+    // console.log("Current Project Updated");
     setThemeColor(data[curr].project.data.text_color);
   }, [curr]);
 
