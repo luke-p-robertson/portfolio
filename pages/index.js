@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { createClient } from "../prismicio";
@@ -33,6 +33,47 @@ export default function Homepage({ pagedata }) {
 
   const [curr, setCurr] = useState(0);
   const [themeColor, setThemeColor] = useState("#000000");
+  // const [pressed, setPressed] = useState([]);
+
+  useEffect(() => {
+    const handleKeyUp = (event) => {
+      const { key } = event;
+
+      let next;
+
+      if (key === "ArrowRight") {
+        // console.log("Next Project", key, curr);
+
+        if (curr + 1 > pagedata.data.projects.length - 1) {
+          // console.log("Back to Zero");
+          next = 0;
+        } else {
+          // console.log("Add One");
+          next = curr + 1;
+        }
+      }
+
+      if (key === "ArrowLeft") {
+        // console.log("Previous Project", key, curr);
+
+        if (curr - 1 <= 0) {
+          // console.log("Back to End");
+          next = pagedata.data.projects.length - 1;
+        } else {
+          // console.log("Subtract One");
+          next = curr - 1;
+        }
+      }
+
+      setCurr(next);
+    };
+
+    document.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [curr, setCurr, pagedata.data.projects.length]);
 
   const textStyle = (color) => ({
     color: `${color}`,

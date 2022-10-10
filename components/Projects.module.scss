@@ -38,7 +38,6 @@
         width: 100%;
 
         .imageCanvas {
-          background-size: contain;
           background-position: center;
           background-repeat: no-repeat;
           display: block;
@@ -46,6 +45,22 @@
           margin: 0;
           padding: 0;
           width: 100%;
+        }
+
+        &.full_bleed {
+          .imageCanvas {
+            background-size: cover;
+          }
+        }
+
+        &.constrained {
+          padding: {
+            top: 50px;
+            bottom: 50px;
+          }
+          .imageCanvas {
+            background-size: contain;
+          }
         }
 
         img {
