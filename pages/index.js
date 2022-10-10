@@ -32,12 +32,21 @@ export default function Homepage({ pagedata }) {
   // console.log("PageData", pagedata);
 
   const [curr, setCurr] = useState(0);
-  const [themeColor, setThemeColor] = useState("#000000");
+  const [themeColor, setThemeColor] = useState(null);
   const [infoClick, setInfoClick] = useState(false);
 
   const textStyle = (color) => ({
     color: `${color}`,
   });
+
+  // set initial theme color
+  useEffect(() => {
+    console.log("checking for populated page data", pagedata);
+
+    if (pagedata && pagedata.data) {
+      setThemeColor(pagedata.data.projects[0].project.data.text_color);
+    }
+  }, []);
 
   // handle keyboard controls
   useEffect(() => {
@@ -61,7 +70,7 @@ export default function Homepage({ pagedata }) {
       if (key === "ArrowLeft") {
         // console.log("Previous Project", key, curr);
 
-        if (curr - 1 <= 0) {
+        if (curr - 1 < 0) {
           // console.log("Back to End");
           next = pagedata.data.projects.length - 1;
         } else {
@@ -71,6 +80,7 @@ export default function Homepage({ pagedata }) {
       }
 
       setCurr(next);
+      setThemeColor(pagedata.data.projects[next].project.data.text_color);
     };
 
     document.addEventListener("keyup", handleKeyUp);
@@ -119,7 +129,7 @@ export default function Homepage({ pagedata }) {
       </Head>
       <nav
         className={`${styles.navigation}`}
-        style={themeColor ? textStyle(themeColor) : textStyle("inherit")}
+        style={themeColor && textStyle(themeColor)}
       >
         <span>Luke Robertson</span>
         <button

@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./Projects.module.scss";
 
-export const Projects = ({
-  data,
-  themeColor,
-  setThemeColor,
-  curr,
-  setCurr,
-}) => {
+export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
   // console.log("Projects Component", data);
 
   const textStyle = (color) => ({
@@ -22,15 +16,23 @@ export const Projects = ({
     // console.log("Change Project", i);
     if (i + 1 > data.length - 1) {
       setCurr(0);
+      setThemeColor(data[0].project.data.text_color);
     } else {
       setCurr(i + 1);
+      setThemeColor(data[i + 1].project.data.text_color);
     }
   };
 
-  useEffect(() => {
-    // console.log("Current Project Updated");
-    setThemeColor(data[curr].project.data.text_color);
-  }, [curr]);
+  // useEffect(() => {
+  //   if (data && curr && data[curr].project?.data.text_color) {
+  //     console.log(
+  //       "Current Project Updated",
+  //       curr,
+  //       data[curr]?.project?.data?.text_color
+  //     );
+
+  //   }
+  // }, [curr, data, setThemeColor]);
 
   return (
     <section className={styles.projects_module}>
