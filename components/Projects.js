@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Projects.module.scss";
 
 export const Projects = ({ data }) => {
   console.log("Projects Component", data);
+
+  const [curr, setCurr] = useState(0);
 
   const textStyle = (color) => ({
     color: `${color}`,
@@ -12,12 +14,26 @@ export const Projects = ({ data }) => {
     backgroundImage: `url(${imgSrc})`,
   });
 
+  const changeProject = (i) => {
+    console.log("Change Project", i);
+    if (i + 1 > data.length - 1) {
+      setCurr(0);
+    } else {
+      setCurr(i + 1);
+    }
+  };
+
   return (
     <section className={styles.projects_module}>
       <ul>
         {data.map((item, i) => {
           return (
-            <li key={i}>
+            <li
+              onClick={() => changeProject(i)}
+              index={i}
+              key={i}
+              className={i === curr ? styles.active : null}
+            >
               <figure
                 className={
                   item.project.data.orientation === "Full Bleed"

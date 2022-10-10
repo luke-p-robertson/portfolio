@@ -17,9 +17,18 @@
 
     li {
       background-color: $white;
+      cursor: pointer;
       position: absolute;
       height: 100%;
       width: 100%;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.1s ease-out;
+
+      &.active {
+        opacity: 1;
+        z-index: 2;
+      }
 
       figure {
         display: block;
@@ -29,7 +38,7 @@
         width: 100%;
 
         .imageCanvas {
-          background-size: cover;
+          background-size: contain;
           background-position: center;
           background-repeat: no-repeat;
           display: block;
