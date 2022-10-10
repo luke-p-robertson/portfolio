@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Projects.module.scss";
 
-export const Projects = ({ data }) => {
+export const Projects = ({
+  data,
+  themeColor,
+  setThemeColor,
+  curr,
+  setCurr,
+}) => {
   console.log("Projects Component", data);
-
-  const [curr, setCurr] = useState(0);
 
   const textStyle = (color) => ({
     color: `${color}`,
@@ -22,6 +26,11 @@ export const Projects = ({ data }) => {
       setCurr(i + 1);
     }
   };
+
+  useEffect(() => {
+    console.log("Current Project Updated");
+    setThemeColor(data[curr].project.data.text_color);
+  }, [curr]);
 
   return (
     <section className={styles.projects_module}>

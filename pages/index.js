@@ -31,6 +31,13 @@ export async function getStaticProps({ previewData }) {
 export default function Homepage({ pagedata }) {
   console.log("PageData", pagedata);
 
+  const [curr, setCurr] = useState(0);
+  const [themeColor, setThemeColor] = useState("#000000");
+
+  const textStyle = (color) => ({
+    color: `${color}`,
+  });
+
   const infoRef = useRef(null);
 
   return (
@@ -43,7 +50,10 @@ export default function Homepage({ pagedata }) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav className={`${styles.navigation}`}>
+      <nav
+        className={`${styles.navigation}`}
+        style={themeColor ? textStyle(themeColor) : textStyle("inherit")}
+      >
         <span>Luke Robertson</span>
         <button
           onClick={() => {
@@ -55,7 +65,13 @@ export default function Homepage({ pagedata }) {
       </nav>
 
       <main className={styles.main}>
-        <Projects data={pagedata ? pagedata.data.projects : null} />
+        <Projects
+          data={pagedata ? pagedata.data.projects : null}
+          themeColor={themeColor}
+          setThemeColor={setThemeColor}
+          curr={curr}
+          setCurr={setCurr}
+        />
       </main>
       <section ref={infoRef} className={styles.info} id="information">
         <InfoSection data={pagedata} />
