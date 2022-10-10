@@ -1,13 +1,12 @@
 import { useRef, useState, useContext, useEffect } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import { createClient } from "../prismicio";
 import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 import animateScrollTo from "animated-scroll-to";
 import styles from "./Home.module.scss";
 
-export async function getStaticProps({ previewData }) {
+export async function getServerSideProps({ previewData }) {
   const client = createClient({ previewData });
 
   const pagedata = await client.getSingle("homepage", {
@@ -46,7 +45,7 @@ export default function Homepage({ pagedata }) {
     if (pagedata && pagedata.data) {
       setThemeColor(pagedata.data.projects[0].project.data.text_color);
     }
-  }, []);
+  }, [pagedata]);
 
   // handle keyboard controls
   useEffect(() => {
@@ -80,7 +79,7 @@ export default function Homepage({ pagedata }) {
       }
 
       setCurr(next);
-      setThemeColor(pagedata.data.projects[next].project.data.text_color);
+      setThemeColor(pagedata?.data?.projects[next]?.project?.data?.text_color);
     };
 
     document.addEventListener("keyup", handleKeyUp);
@@ -88,7 +87,7 @@ export default function Homepage({ pagedata }) {
     return () => {
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [curr, setCurr, pagedata.data.projects.length]);
+  }, [curr, setCurr, pagedata]);
 
   const infoRef = useRef();
   const projectRef = useRef();
@@ -151,7 +150,7 @@ export default function Homepage({ pagedata }) {
 
       <main className={styles.main} ref={projectRef}>
         <Projects
-          data={pagedata ? pagedata.data.projects : null}
+          data={pagedata && pagedata.data.projects}
           themeColor={themeColor}
           setThemeColor={setThemeColor}
           curr={curr}
@@ -159,7 +158,7 @@ export default function Homepage({ pagedata }) {
         />
       </main>
       <section ref={infoRef} className={styles.info} id="information">
-        <InfoSection data={pagedata} />
+        <InfoSection data={pagedata && pagedata} />
       </section>
     </>
   );
