@@ -1,11 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./Projects.module.scss";
 
 export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
   // console.log("Projects Component", data);
 
+  const videoRef = useRef(null);
+
+  let refs = useRef([React.createRef(), React.createRef()]);
+
   const textStyle = (color) => ({
     color: `${color}`,
+  });
+
+  const bgStyle = (color) => ({
+    backgroundColor: `${color}`,
   });
 
   const imgStyle = (imgSrc) => ({
@@ -21,18 +29,12 @@ export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
       setCurr(i + 1);
       setThemeColor(data[i + 1].project.data.text_color);
     }
+
+    // videoRef.current.pause();
+    // refs.current[i].current.pause();
+    // videoRef.current.currentTime = 0;
+    // videoRef.current.play();
   };
-
-  // useEffect(() => {
-  //   if (data && curr && data[curr].project?.data.text_color) {
-  //     console.log(
-  //       "Current Project Updated",
-  //       curr,
-  //       data[curr]?.project?.data?.text_color
-  //     );
-
-  //   }
-  // }, [curr, data, setThemeColor]);
 
   return (
     <section className={styles.projects_module}>
@@ -44,6 +46,11 @@ export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
               index={i}
               key={i}
               className={i === curr ? styles.active : null}
+              style={
+                item.project.data.background_color
+                  ? bgStyle(item.project.data.background_color)
+                  : "#ffffff"
+              }
             >
               <figure
                 className={
@@ -58,7 +65,7 @@ export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
                     style={imgStyle(item.project.data.image.url)}
                   />
                 ) : (
-                  <video loop autoPlay muted>
+                  <video loop autoPlay muted ref={refs.current[i]}>
                     <source
                       src={item.project.data.video.url}
                       type="video/mp4"

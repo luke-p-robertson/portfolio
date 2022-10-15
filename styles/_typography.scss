@@ -50,16 +50,21 @@ $rand: "Rand";
   @extend .rand;
   font-size: 15px;
   line-height: 1.2;
+
+  @media screen and (max-width: $mq-mobile-max) {
+    font-size: 13px;
+    line-height: 1.23;
+  }
 }
 
 .body_text {
   @extend .rand;
-
   font-size: 32px;
   line-height: 1.19;
   letter-spacing: -0.01em;
 
   @media screen and (max-width: $mq-mobile-max) {
-    // line-height: 17px;
+    font-size: 13px;
+    line-height: 1.23;
   }
 }

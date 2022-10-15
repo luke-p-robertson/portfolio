@@ -35,6 +35,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        position: relative;
         width: 100%;
 
         .imageCanvas {
@@ -44,27 +45,7 @@
           height: 100%;
           margin: 0;
           padding: 0;
-          width: 100%;
-        }
-
-        &.full_bleed {
-          .imageCanvas {
-            background-size: cover;
-          }
-        }
-
-        &.constrained {
-          padding: {
-            top: 50px;
-            bottom: 50px;
-          }
-          .imageCanvas {
-            background-size: contain;
-          }
-        }
-
-        img {
-          height: 100%;
+          position: relative;
           width: 100%;
         }
 
@@ -76,6 +57,32 @@
           width: 100%;
           height: 100%;
           object-fit: cover;
+        }
+
+        &.full_bleed {
+          .imageCanvas {
+            background-size: cover;
+          }
+
+          @media (max-aspect-ratio: 16/10) {
+            .imageCanvas {
+              background-size: contain;
+            }
+
+            video {
+              object-fit: contain;
+            }
+          }
+        }
+
+        &.constrained {
+          padding: {
+            top: 50px;
+            bottom: 50px;
+          }
+          .imageCanvas {
+            background-size: contain;
+          }
         }
       }
 

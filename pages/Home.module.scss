@@ -3,7 +3,7 @@
 
 .navigation {
   @extend .small_text;
-  display: block;
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,10 +15,17 @@
     display: inline-block;
     width: $gutter_desktop * 2;
   }
+
+  @media screen and (max-width: $mq-mobile-max) {
+    display: flex;
+    justify-content: space-between;
+    span {
+      width: auto;
+    }
+  }
 }
 
 .main {
-  // background-color: lightblue;
   height: 100vh;
   width: 100%;
 }
@@ -27,4 +34,9 @@
   display: flex;
   justify-content: flex-end;
   padding: 54px $navGutter_desktop 240px;
+
+  @media screen and (max-width: $mq-mobile-max) {
+    padding: 107px $navGutter_mobile 100px;
+    min-height: 100vh;
+  }
 }
