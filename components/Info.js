@@ -8,7 +8,9 @@ export const InfoSection = ({ data }) => {
   return (
     <div className={styles.content_col}>
       <div className={styles.row}>
-        <div className={styles.label}> </div>
+        <div className={styles.label}>
+          <span>Profile</span>
+        </div>
         <div className={styles.content}>
           <PrismicRichText field={data.data.profile} />
         </div>
