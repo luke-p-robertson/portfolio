@@ -92,7 +92,7 @@ export const Projects = ({
                     style={imgStyle(item.project.data.image.url)}
                   />
                 ) : (
-                  <video loop autoPlay muted ref={refs[i]}>
+                  <video loop muted ref={refs[i]}>
                     <source
                       src={item.project.data.video.url}
                       type="video/mp4"
