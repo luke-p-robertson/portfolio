@@ -11,10 +11,6 @@ export const Projects = ({
 }) => {
   // console.log("Projects Component", data);
 
-  const videoRef = useRef(null);
-
-  // let refs = useRef([React.createRef(), React.createRef()]);
-
   const refs = useMemo(
     () =>
       Array(data.length)
@@ -26,16 +22,18 @@ export const Projects = ({
   useEffect(() => {
     console.log("curr", curr);
 
-    if (refs[old].current) {
-      refs[old].current.pause();
-      refs[old].current.currentTime = 0;
-      // refs[i].current.load();
-    }
+    if (refs.length > 0) {
+      if (refs[old] && refs[old].current) {
+        refs[old].current.pause();
+        refs[old].current.currentTime = 0;
+        // refs[i].current.load();
+      }
 
-    if (refs[curr].current) {
-      refs[curr].current.play();
+      if (refs[curr] && refs[curr].current) {
+        refs[curr].current.play();
+      }
     }
-  }, [curr]);
+  }, [curr, old, refs]);
 
   const textStyle = (color) => ({
     color: `${color}`,
@@ -65,54 +63,55 @@ export const Projects = ({
   return (
     <section className={styles.projects_module}>
       <ul>
-        {data.map((item, i) => {
-          return (
-            <li
-              onClick={() => changeProject(i)}
-              index={i}
-              key={i}
-              className={i === curr ? styles.active : null}
-              style={
-                item.project.data.background_color
-                  ? bgStyle(item.project.data.background_color)
-                  : "#ffffff"
-              }
-            >
-              <figure
-                className={
-                  item.project.data.orientation === "Full Bleed"
-                    ? styles.full_bleed
-                    : styles.constrained
-                }
-                data-video={item.project.data.video ? i : null}
-              >
-                {item.project.data.media_type === "Image" ? (
-                  <div
-                    className={styles.imageCanvas}
-                    style={imgStyle(item.project.data.image.url)}
-                  />
-                ) : (
-                  <video loop muted ref={refs[i]}>
-                    <source
-                      src={item.project.data.video.url}
-                      type="video/mp4"
-                    />
-                  </video>
-                )}
-              </figure>
-              <span
-                className={styles.caption}
+        {data &&
+          data.map((item, i) => {
+            return (
+              <li
+                onClick={() => changeProject(i)}
+                index={i}
+                key={i}
+                className={i === curr ? styles.active : null}
                 style={
-                  item.project.data.text_color
-                    ? textStyle(item.project.data.text_color)
-                    : textStyle("inherit")
+                  item.project.data.background_color
+                    ? bgStyle(item.project.data.background_color)
+                    : "#ffffff"
                 }
               >
-                {item.project.data.description}
-              </span>
-            </li>
-          );
-        })}
+                <figure
+                  className={
+                    item.project.data.orientation === "Full Bleed"
+                      ? styles.full_bleed
+                      : styles.constrained
+                  }
+                  data-video={item.project.data.video ? i : null}
+                >
+                  {item.project.data.media_type === "Image" ? (
+                    <div
+                      className={styles.imageCanvas}
+                      style={imgStyle(item.project.data.image.url)}
+                    />
+                  ) : (
+                    <video loop muted ref={refs[i]}>
+                      <source
+                        src={item.project.data.video.url}
+                        type="video/mp4"
+                      />
+                    </video>
+                  )}
+                </figure>
+                <span
+                  className={styles.caption}
+                  style={
+                    item.project.data.text_color
+                      ? textStyle(item.project.data.text_color)
+                      : textStyle("inherit")
+                  }
+                >
+                  {item.project.data.description}
+                </span>
+              </li>
+            );
+          })}
       </ul>
     </section>
   );
