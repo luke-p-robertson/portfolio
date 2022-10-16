@@ -32,6 +32,7 @@ export default function Homepage({ pagedata }) {
   // console.log("PageData", pagedata);
 
   const [curr, setCurr] = useState(0);
+  const [old, setOld] = useState(pagedata.data.projects.length - 1);
   const [themeColor, setThemeColor] = useState(null);
   const [infoClick, setInfoClick] = useState(false);
 
@@ -54,6 +55,7 @@ export default function Homepage({ pagedata }) {
       const { key } = event;
 
       let next;
+      let prev;
 
       if (key === "ArrowRight") {
         // console.log("Next Project", key, curr);
@@ -61,8 +63,10 @@ export default function Homepage({ pagedata }) {
         if (curr + 1 > pagedata.data.projects.length - 1) {
           // console.log("Back to Zero");
           next = 0;
+          prev = pagedata.data.projects.length - 1;
         } else {
           // console.log("Add One");
+          prev = curr;
           next = curr + 1;
         }
       }
@@ -73,12 +77,15 @@ export default function Homepage({ pagedata }) {
         if (curr - 1 < 0) {
           // console.log("Back to End");
           next = pagedata.data.projects.length - 1;
+          prev = 0;
         } else {
           // console.log("Subtract One");
+          prev = curr;
           next = curr - 1;
         }
       }
 
+      setOld(prev);
       setCurr(next);
       setThemeColor(pagedata?.data?.projects[next]?.project?.data?.text_color);
     };
@@ -156,6 +163,8 @@ export default function Homepage({ pagedata }) {
           setThemeColor={setThemeColor}
           curr={curr}
           setCurr={setCurr}
+          old={old}
+          setOld={setOld}
         />
       </main>
       <section ref={infoRef} className={styles.info} id="information">

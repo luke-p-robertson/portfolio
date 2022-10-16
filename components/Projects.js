@@ -1,12 +1,41 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import styles from "./Projects.module.scss";
 
-export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
+export const Projects = ({
+  data,
+  setThemeColor,
+  curr,
+  setCurr,
+  old,
+  setOld,
+}) => {
   // console.log("Projects Component", data);
 
   const videoRef = useRef(null);
 
-  let refs = useRef([React.createRef(), React.createRef()]);
+  // let refs = useRef([React.createRef(), React.createRef()]);
+
+  const refs = useMemo(
+    () =>
+      Array(data.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    []
+  );
+
+  useEffect(() => {
+    console.log("curr", curr);
+
+    if (refs[old].current) {
+      refs[old].current.pause();
+      refs[old].current.currentTime = 0;
+      // refs[i].current.load();
+    }
+
+    if (refs[curr].current) {
+      refs[curr].current.play();
+    }
+  }, [curr]);
 
   const textStyle = (color) => ({
     color: `${color}`,
@@ -24,16 +53,13 @@ export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
     // console.log("Change Project", i);
     if (i + 1 > data.length - 1) {
       setCurr(0);
+      setOld(data.length - 1);
       setThemeColor(data[0].project.data.text_color);
     } else {
       setCurr(i + 1);
+      setOld(i);
       setThemeColor(data[i + 1].project.data.text_color);
     }
-
-    // videoRef.current.pause();
-    // refs.current[i].current.pause();
-    // videoRef.current.currentTime = 0;
-    // videoRef.current.play();
   };
 
   return (
@@ -58,6 +84,7 @@ export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
                     ? styles.full_bleed
                     : styles.constrained
                 }
+                data-video={item.project.data.video ? i : null}
               >
                 {item.project.data.media_type === "Image" ? (
                   <div
@@ -65,7 +92,7 @@ export const Projects = ({ data, setThemeColor, curr, setCurr }) => {
                     style={imgStyle(item.project.data.image.url)}
                   />
                 ) : (
-                  <video loop autoPlay muted ref={refs.current[i]}>
+                  <video loop autoPlay muted ref={refs[i]}>
                     <source
                       src={item.project.data.video.url}
                       type="video/mp4"
