@@ -34,7 +34,7 @@ export default function Homepage({ pagedata }) {
   const [curr, setCurr] = useState(0);
   const [old, setOld] = useState(pagedata.data.projects.length - 1);
   const [themeColor, setThemeColor] = useState(null);
-  const [infoClick, setInfoClick] = useState(false);
+  const [projectColor, setProjectColor] = useState(null);
 
   const textStyle = (color) => ({
     color: `${color}`,
@@ -42,10 +42,11 @@ export default function Homepage({ pagedata }) {
 
   // set initial theme color
   useEffect(() => {
-    console.log("checking for populated page data", pagedata);
+    // console.log("checking for populated page data", pagedata);
 
     if (pagedata && pagedata.data) {
       setThemeColor(pagedata.data.projects[0].project.data.text_color);
+      setProjectColor(pagedata.data.projects[0].project.data.text_color);
     }
   }, [pagedata]);
 
@@ -88,6 +89,9 @@ export default function Homepage({ pagedata }) {
       setOld(prev);
       setCurr(next);
       setThemeColor(pagedata?.data?.projects[next]?.project?.data?.text_color);
+      setProjectColor(
+        pagedata?.data?.projects[next]?.project?.data?.text_color
+      );
     };
 
     document.addEventListener("keyup", handleKeyUp);
@@ -110,11 +114,8 @@ export default function Homepage({ pagedata }) {
 
       if (distanceToTop < 20) {
         setThemeColor("#000000");
-        setInfoClick(true);
       } else {
-        setThemeColor("#FFFFFF");
-
-        setInfoClick(false);
+        setThemeColor(projectColor);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -122,7 +123,7 @@ export default function Homepage({ pagedata }) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [setThemeColor, setInfoClick]);
+  }, [projectColor, setThemeColor]);
 
   return (
     <>
@@ -138,18 +139,20 @@ export default function Homepage({ pagedata }) {
         className={`${styles.navigation}`}
         style={themeColor && textStyle(themeColor)}
       >
-        <span>Luke Robertson</span>
         <button
+          className={styles.logotype}
           onClick={() => {
-            if (infoClick) {
-              setInfoClick(false);
-              setThemeColor("#FFFFFF");
-              animateScrollTo(0);
-            } else {
-              setInfoClick(true);
-              setThemeColor("#000000");
-              animateScrollTo(infoRef.current);
-            }
+            // setThemeColor("#FFFFFF");
+            animateScrollTo(0);
+          }}
+        >
+          Luke Robertson
+        </button>
+        <button
+          className={styles.information}
+          onClick={() => {
+            setThemeColor("#000000");
+            animateScrollTo(infoRef.current);
           }}
         >
           Information
@@ -159,8 +162,8 @@ export default function Homepage({ pagedata }) {
       <main className={styles.main} ref={projectRef}>
         <Projects
           data={pagedata && pagedata.data.projects}
-          themeColor={themeColor}
           setThemeColor={setThemeColor}
+          setProjectColor={setProjectColor}
           curr={curr}
           setCurr={setCurr}
           old={old}

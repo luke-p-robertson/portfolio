@@ -4,6 +4,7 @@ import styles from "./Projects.module.scss";
 export const Projects = ({
   data,
   setThemeColor,
+  setProjectColor,
   curr,
   setCurr,
   old,
@@ -20,7 +21,7 @@ export const Projects = ({
   );
 
   useEffect(() => {
-    console.log("curr", curr);
+    // console.log("curr", curr);
 
     if (refs.length > 0) {
       if (refs[old] && refs[old].current) {
@@ -53,10 +54,12 @@ export const Projects = ({
       setCurr(0);
       setOld(data.length - 1);
       setThemeColor(data[0].project.data.text_color);
+      setProjectColor(data[0].project.data.text_color);
     } else {
       setCurr(i + 1);
       setOld(i);
       setThemeColor(data[i + 1].project.data.text_color);
+      setProjectColor(data[i + 1].project.data.text_color);
     }
   };
 

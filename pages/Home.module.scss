@@ -11,7 +11,11 @@
   width: 100%;
   z-index: 3;
 
-  span {
+  button {
+    text-align: left;
+  }
+
+  .logotype {
     display: inline-block;
     width: $gutter_desktop * 2;
   }
@@ -19,6 +23,7 @@
   @media screen and (max-width: $mq-mobile-max) {
     display: flex;
     justify-content: space-between;
+
     span {
       width: auto;
     }
