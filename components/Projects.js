@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import styles from "./Projects.module.scss";
 
 export const Projects = ({
@@ -94,7 +94,7 @@ export const Projects = ({
                       style={imgStyle(item.project.data.image.url)}
                     />
                   ) : (
-                    <video loop muted ref={refs[i]}>
+                    <video loop muted playsInline ref={refs[i]}>
                       <source
                         src={item.project.data.video.url}
                         type="video/mp4"

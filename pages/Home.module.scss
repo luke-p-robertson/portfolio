@@ -10,6 +10,8 @@
   padding: 13px $navGutter_desktop 0;
   width: 100%;
   z-index: 3;
+  transition: color 0.3s ease;
+  // opacity: 0;
 
   button {
     text-align: left;
@@ -45,3 +47,14 @@
     min-height: 100vh;
   }
 }
+
+// .loader {
+//   background-color: $white;
+//   display: block;
+//   position: fixed;
+//   height: 100%;
+//   width: 100%;
+//   top: 0;
+//   left: 0;
+//   z-index: 1000;
+// }

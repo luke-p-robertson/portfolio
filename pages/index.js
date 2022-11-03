@@ -4,6 +4,7 @@ import { createClient } from "../prismicio";
 import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 import animateScrollTo from "animated-scroll-to";
+import { motion } from "framer-motion";
 import styles from "./Home.module.scss";
 
 export async function getServerSideProps({ previewData }) {
@@ -31,6 +32,8 @@ export async function getServerSideProps({ previewData }) {
 export default function Homepage({ pagedata }) {
   // console.log("PageData", pagedata);
 
+  const [siteLoaded, setSiteLoaded] = useState(false);
+  const [siteTimer, setSiteTimer] = useState(false);
   const [curr, setCurr] = useState(0);
   const [old, setOld] = useState(pagedata.data.projects.length - 1);
   const [themeColor, setThemeColor] = useState(null);
@@ -47,6 +50,7 @@ export default function Homepage({ pagedata }) {
     if (pagedata && pagedata.data) {
       setThemeColor(pagedata.data.projects[0].project.data.text_color);
       setProjectColor(pagedata.data.projects[0].project.data.text_color);
+      setSiteLoaded(true);
     }
   }, [pagedata]);
 
@@ -104,6 +108,13 @@ export default function Homepage({ pagedata }) {
   const infoRef = useRef();
   const projectRef = useRef();
 
+  // after 3 seconds, show the site
+  useEffect(() => {
+    setTimeout(() => {
+      setSiteTimer(true);
+    }, 1000);
+  }, []);
+
   // automatically change nav color and scroll destination when info is in view
   useEffect(() => {
     const handleScroll = () => {
@@ -125,6 +136,30 @@ export default function Homepage({ pagedata }) {
     };
   }, [projectColor, setThemeColor]);
 
+  const animTiming = 0.5;
+  const variants = {
+    show: {
+      opacity: 1,
+      transition: {
+        ease: "easeOut",
+        duration: animTiming,
+      },
+    },
+    hide: {
+      opacity: 0,
+      transition: {
+        ease: "easeOut",
+        duration: animTiming,
+      },
+      transitionEnd: {
+        display: "none",
+      },
+    },
+    init: {
+      opacity: 0,
+    },
+  };
+
   return (
     <>
       <Head>
@@ -135,14 +170,17 @@ export default function Homepage({ pagedata }) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav
+      <motion.nav
         className={`${styles.navigation}`}
+        variants={variants}
+        initial={"init"}
+        animate={siteLoaded && siteTimer ? "show" : "default"}
         style={themeColor && textStyle(themeColor)}
       >
         <button
           className={styles.logotype}
           onClick={() => {
-            // setThemeColor("#FFFFFF");
+            setThemeColor(projectColor);
             animateScrollTo(0);
           }}
         >
@@ -157,9 +195,15 @@ export default function Homepage({ pagedata }) {
         >
           Information
         </button>
-      </nav>
+      </motion.nav>
 
-      <main className={styles.main} ref={projectRef}>
+      <motion.main
+        variants={variants}
+        initial={"init"}
+        animate={siteLoaded && siteTimer ? "show" : "default"}
+        className={styles.main}
+        ref={projectRef}
+      >
         <Projects
           data={pagedata && pagedata.data.projects}
           setThemeColor={setThemeColor}
@@ -169,10 +213,16 @@ export default function Homepage({ pagedata }) {
           old={old}
           setOld={setOld}
         />
-      </main>
+      </motion.main>
       <section ref={infoRef} className={styles.info} id="information">
         <InfoSection data={pagedata && pagedata} />
       </section>
+      {/* <motion.div
+        variants={variants}
+        animate={siteLoaded && siteTimer ? "hide" : null}
+        // initial={"show"}
+        className={styles.loader}
+      /> */}
     </>
   );
 }
