@@ -64,7 +64,7 @@
             background-size: cover;
           }
 
-          @media (max-aspect-ratio: 16/10) {
+          @media (max-aspect-ratio: 16/14) {
             .imageCanvas {
               background-size: contain;
             }
@@ -91,6 +91,26 @@
         position: absolute;
         bottom: 20px;
         left: 15px;
+      }
+
+      .prev_proj,
+      .next_proj {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        cursor: pointer;
+        z-index: 3;
+      }
+
+      .prev_proj {
+        cursor: w-resize;
+        left: 0;
+      }
+
+      .next_proj {
+        cursor: e-resize;
+        right: 0;
       }
     }
   }

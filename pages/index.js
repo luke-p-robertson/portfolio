@@ -127,10 +127,6 @@ export default function Homepage({ pagedata }) {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(siteTimer);
-  }, [siteTimer]);
-
   // automatically change nav color and scroll destination when info is in view
   useEffect(() => {
     const handleScroll = () => {

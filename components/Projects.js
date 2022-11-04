@@ -48,18 +48,33 @@ export const Projects = ({
     backgroundImage: `url(${imgSrc})`,
   });
 
-  const changeProject = (i) => {
-    // console.log("Change Project", i);
-    if (i + 1 > data.length - 1) {
-      setCurr(0);
-      setOld(data.length - 1);
-      setThemeColor(data[0].project.data.text_color);
-      setProjectColor(data[0].project.data.text_color);
-    } else {
-      setCurr(i + 1);
-      setOld(i);
-      setThemeColor(data[i + 1].project.data.text_color);
-      setProjectColor(data[i + 1].project.data.text_color);
+  const changeProject = (i, dir) => {
+    // console.log("Change Project", i, dir);
+
+    if (dir === "next") {
+      if (i + 1 > data.length - 1) {
+        setCurr(0);
+        setOld(data.length - 1);
+        setThemeColor(data[0].project.data.text_color);
+        setProjectColor(data[0].project.data.text_color);
+      } else {
+        setCurr(i + 1);
+        setOld(i);
+        setThemeColor(data[i + 1].project.data.text_color);
+        setProjectColor(data[i + 1].project.data.text_color);
+      }
+    } else if (dir === "prev") {
+      if (i - 1 < 0) {
+        setCurr(data.length - 1);
+        setOld(0);
+        setThemeColor(data[data.length - 1].project.data.text_color);
+        setProjectColor(data[data.length - 1].project.data.text_color);
+      } else {
+        setCurr(i - 1);
+        setOld(i);
+        setThemeColor(data[i - 1].project.data.text_color);
+        setProjectColor(data[i - 1].project.data.text_color);
+      }
     }
   };
 
@@ -70,7 +85,6 @@ export const Projects = ({
           data.map((item, i) => {
             return (
               <li
-                onClick={() => changeProject(i)}
                 index={i}
                 key={i}
                 className={i === curr ? styles.active : null}
@@ -112,6 +126,14 @@ export const Projects = ({
                 >
                   {item.project.data.description}
                 </span>
+                <div
+                  onClick={() => changeProject(i, "prev")}
+                  className={styles.prev_proj}
+                />
+                <div
+                  onClick={() => changeProject(i, "next")}
+                  className={styles.next_proj}
+                />
               </li>
             );
           })}
