@@ -34,7 +34,7 @@ export const InfoSection = ({ data }) => {
                 // last one
                 return <li key={i}>{item.client}</li>;
               } else {
-                return <li key={i}>{item.client}, &nbsp;</li>;
+                return <li key={i}>{item.client},&nbsp;</li>;
               }
             })}
           </ul>

@@ -111,9 +111,14 @@ export default function Homepage({ pagedata }) {
   // after 3 seconds, show the site
   useEffect(() => {
     setTimeout(() => {
+      // alert("site loaded");
       setSiteTimer(true);
     }, 1000);
   }, []);
+
+  useEffect(() => {
+    console.log(siteTimer);
+  }, [siteTimer]);
 
   // automatically change nav color and scroll destination when info is in view
   useEffect(() => {
@@ -174,7 +179,7 @@ export default function Homepage({ pagedata }) {
         className={`${styles.navigation}`}
         variants={variants}
         initial={"init"}
-        animate={siteLoaded && siteTimer ? "show" : "default"}
+        animate={siteTimer ? "show" : "init"}
         style={themeColor && textStyle(themeColor)}
       >
         <button
@@ -200,7 +205,7 @@ export default function Homepage({ pagedata }) {
       <motion.main
         variants={variants}
         initial={"init"}
-        animate={siteLoaded && siteTimer ? "show" : "default"}
+        animate={siteTimer ? "show" : "init"}
         className={styles.main}
         ref={projectRef}
       >

@@ -7,6 +7,11 @@
   width: 100%;
   z-index: 2;
 
+  @supports (-webkit-touch-callout: none) {
+    height: stretch;
+    height: -webkit-fill-available;
+  }
+
   ul {
     display: flex;
     height: 100%;
