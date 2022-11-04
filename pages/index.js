@@ -114,6 +114,17 @@ export default function Homepage({ pagedata }) {
       // alert("site loaded");
       setSiteTimer(true);
     }, 1000);
+
+    const appHeight = () => {
+      const doc = document.documentElement;
+      doc.style.setProperty("--app-height", `${window.innerHeight}px`);
+    };
+    window.addEventListener("resize", appHeight);
+    appHeight();
+
+    return () => {
+      window.removeEventListener("resize", appHeight);
+    };
   }, []);
 
   useEffect(() => {

@@ -41,6 +41,10 @@
   //   // height: fill-available;
   //   height: 100%;
   // }
+
+  @media screen and (max-width: $mq-mobile-max) {
+    height: var(--app-height);
+  }
 }
 
 .info {
