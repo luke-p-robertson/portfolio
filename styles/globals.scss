@@ -12,6 +12,17 @@ body {
   margin: 0;
 }
 
+// body {
+//   min-height: 100vh;
+//   min-height: fill-available;
+// }
+
+// html {
+//   @supports (-webkit-touch-callout: none) {
+//     height: fill-available;
+//   }
+// }
+
 a {
   color: inherit;
   text-decoration: none;
