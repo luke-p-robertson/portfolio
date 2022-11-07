@@ -91,8 +91,9 @@
         display: block;
         position: absolute;
         bottom: 20px;
-        left: 15px;
-        width: calc(100% - 15px);
+        left: 0;
+        padding: 0 15px;
+        width: 100%;
 
         .total_count {
           display: inline-block;
@@ -100,6 +101,7 @@
         }
 
         @media screen and (max-width: $mq-mobile-max) {
+          bottom: 25px;
           width: calc(100% - 30px);
 
           .total_count {
