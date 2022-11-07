@@ -116,7 +116,7 @@ export const Projects = ({
                     </video>
                   )}
                 </figure>
-                <span
+                <div
                   className={styles.caption}
                   style={
                     item.project.data.text_color
@@ -124,8 +124,11 @@ export const Projects = ({
                       : textStyle("inherit")
                   }
                 >
+                  <span className={styles.total_count}>{`${i + 1}/${
+                    data.length
+                  }`}</span>{" "}
                   {item.project.data.description}
-                </span>
+                </div>
                 <div
                   onClick={() => changeProject(i, "prev")}
                   className={styles.prev_proj}
