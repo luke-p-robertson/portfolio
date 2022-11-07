@@ -10,7 +10,7 @@ export const Projects = ({
   old,
   setOld,
 }) => {
-  console.log("Projects Component", data);
+  // console.log("Projects Component", data);
 
   const refs = useMemo(
     () =>
