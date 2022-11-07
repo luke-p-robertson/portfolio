@@ -88,16 +88,34 @@
 
       .caption {
         @extend .small_text;
+        cursor: default;
         display: block;
         position: absolute;
         bottom: 20px;
         left: 0;
         padding: 0 15px;
         width: 100%;
+        z-index: 4;
 
         .total_count {
           display: inline-block;
           width: $gutter_desktop * 2;
+        }
+
+        .external_link {
+          position: relative;
+
+          span {
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s ease;
+          }
+
+          &:hover {
+            span {
+              transform: translateX(2px);
+            }
+          }
         }
 
         @media screen and (max-width: $mq-mobile-max) {

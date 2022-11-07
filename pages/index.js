@@ -19,6 +19,7 @@ export async function getServerSideProps({ previewData }) {
       "project.orientation",
       "project.text_color",
       "project.background_color",
+      "project.external_link",
     ],
   });
 

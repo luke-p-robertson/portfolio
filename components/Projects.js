@@ -10,7 +10,7 @@ export const Projects = ({
   old,
   setOld,
 }) => {
-  // console.log("Projects Component", data);
+  console.log("Projects Component", data);
 
   const refs = useMemo(
     () =>
@@ -127,7 +127,18 @@ export const Projects = ({
                   <span className={styles.total_count}>{`${i + 1}/${
                     data.length
                   }`}</span>{" "}
-                  {item.project.data.description}
+                  {item.project.data.external_link ? (
+                    <a
+                      className={styles.external_link}
+                      href={item.project.data.external_link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.project.data.description} <span>↗</span>
+                    </a>
+                  ) : (
+                    item.project.data.description
+                  )}
                 </div>
                 <div
                   onClick={() => changeProject(i, "prev")}
