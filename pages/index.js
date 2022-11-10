@@ -181,7 +181,8 @@ export default function Homepage({ pagedata }) {
           name="description"
           content="Luke Robertson is an Australian born designer with a focus on visual identity and typographic craft."
         />
-        <link rel="icon" href="/favicon.ico" />
+
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
       <motion.nav
         className={`${styles.navigation}`}
