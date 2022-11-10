@@ -89,7 +89,9 @@
       .caption {
         @extend .small_text;
         cursor: default;
-        display: block;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
         position: absolute;
         bottom: 20px;
         left: 0;
@@ -118,13 +120,24 @@
           }
         }
 
+        .external_link,
+        .description {
+          display: block;
+          max-width: calc(100% - #{$gutter_desktop * 2});
+        }
+
         @media screen and (max-width: $mq-mobile-max) {
           bottom: 25px;
           width: calc(100% - 30px);
 
           .total_count {
             margin-right: 20px;
-            width: auto;
+            width: 40px;
+          }
+
+          .external_link,
+          .description {
+            max-width: calc(100% - 40px);
           }
         }
       }

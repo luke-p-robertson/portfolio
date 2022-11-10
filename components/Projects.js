@@ -137,7 +137,9 @@ export const Projects = ({
                       {item.project.data.description} <span>↗</span>
                     </a>
                   ) : (
-                    item.project.data.description
+                    <span className={styles.description}>
+                      {item.project.data.description}
+                    </span>
                   )}
                 </div>
                 <div
