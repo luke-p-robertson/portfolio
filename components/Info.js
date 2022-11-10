@@ -25,7 +25,7 @@ export const InfoSection = ({ data }) => {
       </div>
       <div className={styles.row}>
         <div className={styles.label}>
-          <span>Clients</span>
+          <span>Select Clients</span>
         </div>
         <div className={styles.content}>
           <ul>
