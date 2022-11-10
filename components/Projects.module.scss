@@ -95,7 +95,7 @@
         position: absolute;
         bottom: 20px;
         left: 0;
-        padding: 0 15px;
+        padding: 0 $navGutter_desktop;
         width: 100%;
         z-index: 4;
 
@@ -128,6 +128,7 @@
 
         @media screen and (max-width: $mq-mobile-max) {
           bottom: 25px;
+          padding: 0 $navGutter_mobile;
           width: calc(100% - 30px);
 
           .total_count {

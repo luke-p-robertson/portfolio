@@ -21,7 +21,7 @@
   .logotype {
     // background-color: pink;
     display: inline-block;
-    width: 16.66666667%;
+    width: $gutter_desktop * 2;
   }
 
   @media screen and (max-width: $mq-mobile-max) {

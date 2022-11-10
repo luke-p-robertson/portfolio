@@ -21,7 +21,7 @@
 
     .label {
       position: relative;
-      width: 16.66666667%;
+      width: $gutter_desktop * 2;
 
       span {
         @extend .small_text;
