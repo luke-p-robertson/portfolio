@@ -2,15 +2,16 @@
 @import "../styles/typography";
 
 .navigation {
+  // background-color: lightblue;
   @extend .small_text;
   display: flex;
   position: fixed;
   top: 0;
   left: 0;
   padding: 13px $navGutter_desktop 0;
-  width: 100%;
   z-index: 3;
   transition: color 0.3s ease;
+  width: 100%;
   // opacity: 0;
 
   button {
@@ -18,6 +19,7 @@
   }
 
   .logotype {
+    // background-color: pink;
     display: inline-block;
     width: 16.66666667%;
   }
@@ -25,6 +27,7 @@
   @media screen and (max-width: $mq-mobile-max) {
     display: flex;
     justify-content: space-between;
+    padding: 13px calc($navGutter_mobile - 2px) 0;
 
     .logotype {
       width: auto;
@@ -51,14 +54,3 @@
     min-height: 100vh;
   }
 }
-
-// .loader {
-//   background-color: $white;
-//   display: block;
-//   position: fixed;
-//   height: 100%;
-//   width: 100%;
-//   top: 0;
-//   left: 0;
-//   z-index: 1000;
-// }
