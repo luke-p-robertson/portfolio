@@ -35,8 +35,9 @@
 
       p a {
         transition: color 0.2s ease;
+
         &:hover {
-          color: rgba($black, 0.75);
+          color: rgba($black, 0.65);
         }
       }
 
