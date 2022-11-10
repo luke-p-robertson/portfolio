@@ -33,6 +33,13 @@
     .content {
       width: 83.33333333%;
 
+      p a {
+        transition: color 0.2s ease;
+        &:hover {
+          color: rgba($black, 0.75);
+        }
+      }
+
       ul {
         li {
           display: inline-block;
