@@ -78,6 +78,12 @@ export const Projects = ({
     }
   };
 
+  const padLeadingZeros = (num, size) => {
+    var s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
+  };
+
   return (
     <section className={styles.projects_module}>
       <ul>
@@ -124,9 +130,10 @@ export const Projects = ({
                       : textStyle("inherit")
                   }
                 >
-                  <span className={styles.total_count}>{`${i + 1}/${
-                    data.length
-                  }`}</span>{" "}
+                  <span className={styles.total_count}>{`${padLeadingZeros(
+                    i + 1,
+                    2
+                  )}/${data.length}`}</span>{" "}
                   {item.project.data.external_link ? (
                     <a
                       className={styles.external_link}
