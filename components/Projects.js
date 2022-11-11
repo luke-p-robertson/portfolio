@@ -133,7 +133,7 @@ export const Projects = ({
                   <span className={styles.total_count}>{`${padLeadingZeros(
                     i + 1,
                     2
-                  )}/${data.length}`}</span>{" "}
+                  )}/${padLeadingZeros(data.length, 2)}`}</span>{" "}
                   {item.project.data.external_link ? (
                     <a
                       className={styles.external_link}
