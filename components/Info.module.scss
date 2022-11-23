@@ -61,13 +61,29 @@
       }
 
       p {
+        font-size: 19px;
         margin-bottom: 20px;
+      }
+
+      ul {
+        li {
+          display: inline;
+          font-size: 19px;
+          word-break: break-word;
+          overflow-wrap: break-word;
+          white-space: break-spaces;
+        }
       }
 
       .label {
         display: block;
+        padding-top: 20px;
         margin-bottom: 20px;
         width: auto;
+
+        &.no_margin {
+          padding-top: 0;
+        }
       }
     }
   }

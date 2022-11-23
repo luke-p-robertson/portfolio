@@ -8,7 +8,7 @@ export const InfoSection = ({ data }) => {
   return (
     <div className={styles.content_col}>
       <div className={styles.row}>
-        <div className={styles.label}>
+        <div className={`${styles.label} ${styles.no_margin}`}>
           <span>Profile</span>
         </div>
         <div className={styles.content}>
