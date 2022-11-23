@@ -28,16 +28,16 @@ export const InfoSection = ({ data }) => {
           <span>Select Clients</span>
         </div>
         <div className={styles.content}>
-          <ul>
+          <p>
             {data.data.clients.map(function (item, i) {
               if (i + 1 === data.data.clients.length) {
                 // last one
-                return <li key={i}>{item.client}</li>;
+                return <span key={i}>{item.client}</span>;
               } else {
-                return <li key={i}>{item.client},&nbsp;</li>;
+                return <span key={i}>{item.client}, </span>;
               }
             })}
-          </ul>
+          </p>
         </div>
       </div>
     </div>
