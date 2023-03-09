@@ -52,8 +52,18 @@ $rand: "Rand";
   line-height: 1.2;
 
   @media screen and (max-width: $mq-mobile-max) {
-    font-size: 13px;
-    line-height: 1.23;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+}
+
+.credit {
+  @extend .rand;
+  font-size: 12px;
+  line-height: 1.5;
+
+  @media screen and (max-width: $mq-mobile-max) {
+    font-size: 11px;
   }
 }
 

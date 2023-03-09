@@ -30,14 +30,21 @@ export const InfoSection = ({ data }) => {
         <div className={styles.content}>
           <p>
             {data.data.clients.map(function (item, i) {
-              if (i + 1 === data.data.clients.length) {
-                // last one
-                return <span key={i}>{item.client}</span>;
-              } else {
-                return <span key={i}>{item.client}, </span>;
-              }
+              return (
+                <span className={styles.client} key={i}>
+                  {item.client}
+                </span>
+              );
             })}
           </p>
+        </div>
+      </div>
+      <div className={`${styles.row} ${styles.last}`}>
+        <div className={styles.label} />
+        <div className={styles.content}>
+          <a href="https://collect.nyc" target="_blank" rel="noreferrer">
+            Site developed by Collect NYC <span>↗</span>
+          </a>
         </div>
       </div>
     </div>

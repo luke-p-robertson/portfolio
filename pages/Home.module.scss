@@ -8,7 +8,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  padding: 13px $navGutter_desktop 0;
+  padding: 20px $navGutter_desktop 0;
   z-index: 3;
   transition: color 0.3s ease;
   width: 100%;
@@ -47,10 +47,11 @@
 .info {
   display: flex;
   justify-content: flex-end;
-  padding: 54px $navGutter_desktop 240px;
+  padding: 20px $navGutter_desktop;
+  min-height: 100vh;
 
   @media screen and (max-width: $mq-mobile-max) {
-    padding: 107px $navGutter_mobile 100px;
+    padding: 107px $navGutter_mobile 20px;
     min-height: 100vh;
   }
 }
