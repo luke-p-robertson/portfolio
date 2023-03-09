@@ -136,7 +136,7 @@
         @media screen and (max-width: $mq-mobile-max) {
           bottom: 25px;
           padding: 0 $navGutter_mobile;
-          width: calc(100% - 30px);
+          width: calc(100%);
 
           .total_count {
             margin-right: 20px;
@@ -145,7 +145,7 @@
 
           .external_link,
           .description {
-            max-width: calc(100% - 40px);
+            max-width: calc(100% - 20px);
           }
         }
       }
