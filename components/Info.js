@@ -43,7 +43,7 @@ export const InfoSection = ({ data }) => {
         <div className={styles.label} />
         <div className={styles.content}>
           <a href="https://collect.nyc" target="_blank" rel="noreferrer">
-            Site developed by Collect NYC <span>↗</span>
+            Site developed by Collect NEW YORK <span>↗</span>
           </a>
         </div>
       </div>
