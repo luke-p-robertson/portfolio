@@ -15,7 +15,7 @@ export const InfoSection = ({ data }) => {
           <PrismicRichText field={data.data.profile} />
         </div>
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.contact}`}>
         <div className={styles.label}>
           <span>Contact</span>
         </div>

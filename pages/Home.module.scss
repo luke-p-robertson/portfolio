@@ -51,7 +51,7 @@
   min-height: 100vh;
 
   @media screen and (max-width: $mq-mobile-max) {
-    padding: 107px $navGutter_mobile 20px;
+    padding: 64px $navGutter_mobile 20px;
     min-height: 100vh;
   }
 }
