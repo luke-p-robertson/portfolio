@@ -7,6 +7,8 @@ import animateScrollTo from "animated-scroll-to";
 import { motion } from "framer-motion";
 import styles from "./Home.module.scss";
 
+// comment for deploy purposes only
+
 export async function getServerSideProps({ previewData }) {
   const client = createClient({ previewData });
 
