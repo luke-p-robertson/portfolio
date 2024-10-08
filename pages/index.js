@@ -1,4 +1,4 @@
-import { useRef, useState, useContext, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Head from "next/head";
 import { createClient } from "../prismicio";
 import { InfoSection } from "../components/Info";
