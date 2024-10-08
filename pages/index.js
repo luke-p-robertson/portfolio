@@ -1,4 +1,4 @@
-import { useRef, useState, useContext, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Head from "next/head";
 import { createClient } from "../prismicio";
 import { InfoSection } from "../components/Info";
@@ -6,6 +6,8 @@ import { Projects } from "../components/Projects";
 import animateScrollTo from "animated-scroll-to";
 import { motion } from "framer-motion";
 import styles from "./Home.module.scss";
+
+// comment for deploy purposes only
 
 export async function getServerSideProps({ previewData }) {
   const client = createClient({ previewData });
