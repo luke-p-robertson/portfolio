@@ -41,6 +41,7 @@
         .imageCanvas {
           background-position: center;
           background-repeat: no-repeat;
+          background-size: contain;
           display: block;
           height: 100%;
           margin: 0;
@@ -64,6 +65,10 @@
             background-size: cover;
           }
 
+          video {
+            object-fit: cover;
+          }
+
           @media (max-aspect-ratio: 16/14) {
             .imageCanvas {
               background-size: contain;
@@ -76,12 +81,17 @@
         }
 
         &.constrained {
-          padding: {
-            top: 50px;
-            bottom: 65px;
-          }
+          // padding: {
+          //   top: 50px;
+          //   bottom: 65px;
+          // }
+
           .imageCanvas {
             background-size: contain;
+          }
+
+          video {
+            object-fit: contain;
           }
 
           @media screen and (max-width: $mq-mobile-max) {
