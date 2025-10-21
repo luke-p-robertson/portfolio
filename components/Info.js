@@ -42,8 +42,8 @@ export const InfoSection = ({ data }) => {
       <div className={`${styles.row} ${styles.last}`}>
         <div className={styles.label} />
         <div className={styles.content}>
-          <a href="https://collect.nyc" target="_blank" rel="noreferrer">
-            Site developed by Collect NEW YORK <span>↗</span>
+          <a href="https://ap.ltd" target="_blank" rel="noreferrer">
+            Site developed by AP <span>↗</span>
           </a>
         </div>
       </div>
