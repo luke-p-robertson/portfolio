@@ -43,7 +43,7 @@ export const InfoSection = ({ data }) => {
         <div className={styles.label} />
         <div className={styles.content}>
           <a href="https://ap.ltd" target="_blank" rel="noreferrer">
-            Site developed by AP <span>↗</span>
+            Site developed by AP<span>↗</span>
           </a>
         </div>
       </div>
