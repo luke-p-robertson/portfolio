@@ -3,8 +3,6 @@ import { PrismicRichText } from "@prismicio/react";
 import styles from "./Info.module.scss";
 
 export const InfoSection = ({ data }) => {
-  // console.log("Info Component", data.data);
-
   return (
     <div className={styles.content_col}>
       <div className={styles.row}>
@@ -43,7 +41,7 @@ export const InfoSection = ({ data }) => {
         <div className={styles.label} />
         <div className={styles.content}>
           <a href="https://ap.ltd" target="_blank" rel="noreferrer">
-            Site developed by AP<span>↗</span>
+            Site developed by AP <span>↗</span>
           </a>
         </div>
       </div>
