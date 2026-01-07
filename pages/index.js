@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import Head from "next/head";
 import { createClient } from "../prismicio";
+import * as prismicH from "@prismicio/helpers";
 import { InfoSection } from "../components/Info";
 import { Projects } from "../components/Projects";
 import animateScrollTo from "animated-scroll-to";
@@ -34,6 +35,21 @@ export async function getServerSideProps({ previewData }) {
 
 export default function Homepage({ pagedata }) {
   // console.log("PageData", pagedata);
+
+  // Helper function to safely extract text from Prismic fields
+  const getText = (field) => {
+    if (!field) return null;
+    if (typeof field === "string") return field;
+    // Handle Prismic Title and RichText fields (arrays)
+    if (Array.isArray(field)) {
+      return prismicH.asText(field);
+    }
+    // Handle object with text property
+    if (typeof field === "object" && field.text) {
+      return prismicH.asText(field);
+    }
+    return null;
+  };
 
   const [siteLoaded, setSiteLoaded] = useState(false);
   const [siteTimer, setSiteTimer] = useState(false);
@@ -178,10 +194,13 @@ export default function Homepage({ pagedata }) {
   return (
     <>
       <Head>
-        <title>Luke Robertson</title>
+        <title>{getText(pagedata?.data?.meta_title) || "Luke Robertson"}</title>
         <meta
           name="description"
-          content="Luke Robertson is an Australian born designer with a focus on visual identity and typographic craft."
+          content={
+            getText(pagedata?.data?.meta_description) ||
+            "Luke Robertson is an Australian born designer with a focus on visual identity and typographic craft."
+          }
         />
 
         <link
