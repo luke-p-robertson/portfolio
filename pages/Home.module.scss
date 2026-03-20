@@ -22,6 +22,24 @@
     // background-color: pink;
     display: inline-block;
     width: $gutter_desktop * 2;
+
+    .logotype_desktop {
+      display: inline;
+    }
+
+    .logotype_mobile {
+      display: none;
+    }
+
+    @media screen and (max-width: $mq-tablet-max) {
+      .logotype_desktop {
+        display: none;
+      }
+
+      .logotype_mobile {
+        display: inline;
+      }
+    }
   }
 
   @media screen and (max-width: $mq-mobile-max) {
