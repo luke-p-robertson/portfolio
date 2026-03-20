@@ -113,7 +113,7 @@ export default function Homepage({ pagedata }) {
       setCurr(next);
       setThemeColor(pagedata?.data?.projects[next]?.project?.data?.text_color);
       setProjectColor(
-        pagedata?.data?.projects[next]?.project?.data?.text_color
+        pagedata?.data?.projects[next]?.project?.data?.text_color,
       );
     };
 
@@ -239,7 +239,8 @@ export default function Homepage({ pagedata }) {
             animateScrollTo(0);
           }}
         >
-          Luke Robertson
+          <span className={styles.logotype_desktop}>Luke Robertson Studio</span>
+          <span className={styles.logotype_mobile}>LR.S</span>
         </button>
         <button
           className={styles.information}
