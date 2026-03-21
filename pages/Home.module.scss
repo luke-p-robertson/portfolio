@@ -31,7 +31,7 @@
       display: none;
     }
 
-    @media screen and (max-width: $mq-tablet-max) {
+    @media screen and (min-width: $mq-mobile-max) and (max-width: $mq-tablet-max) {
       .logotype_desktop {
         display: none;
       }
