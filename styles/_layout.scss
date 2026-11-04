@@ -1,0 +1,31 @@
+@use "variables";
+
+@mixin mobile {
+  @media (max-width: variables.$mq-mobile-max) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: variables.$mq-tablet-min) {
+    @content;
+  }
+}
+
+/** 12-column page grid inside the page margins. */
+@mixin grid {
+  display: grid;
+  grid-template-columns: repeat(variables.$grid-columns, minmax(0, 1fr));
+  column-gap: variables.$grid-gutter;
+  padding-inline: variables.$page-margin;
+}
+
+/** Hides content visually but keeps it for screen readers. */
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

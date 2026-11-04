@@ -1,80 +1,80 @@
-@import "./helpers";
+@use "variables";
 
-@font-face {
-  font-family: "Rand";
-  src: url("/fonts/Rand-Medium.woff2") format("woff2"),
-    url("/fonts/Rand-Medium.woff") format("woff");
-  font-weight: 500;
+/**
+ * The Figma file uses trial fonts: Practice (desktop), Practice Display (the LR.S
+ * mark) and JJannon (mobile). `--font-main` / `--font-display` stay unset until the
+ * licensed files land (lib/siteFont.ts), so these fall back to a system serif.
+ */
+$main-font: var(--font-main, "Times New Roman"), "Times New Roman", Times, serif;
+$display-font: var(--font-display, "Times New Roman"), "Times New Roman", Times, serif;
+$main-font-weight: 400;
+
+// Type scale (Figma: 14/18 detail, 20/24 body, 40 statement, 240 mark; mobile 14/19,
+// 18/24, 32, 85)
+$detail-size: 14px;
+$detail-line-height: 18px;
+$detail-line-height-mobile: 19px;
+$body-size: 20px;
+$body-line-height: 24px;
+$body-size-mobile: 18px;
+$statement-size: 40px;
+$statement-size-mobile: 32px;
+$statement-line-height: 1.2;
+$mark-size: 240px;
+$mark-size-mobile: 85px;
+$tracking-tight: -0.01em;
+
+@mixin font-base {
+  font-family: $main-font;
+  font-weight: $main-font-weight;
   font-style: normal;
+  letter-spacing: 0;
 }
 
-$rand: "Rand";
+/** Navigation, labels, captions, credits. */
+@mixin detail {
+  @include font-base;
+  font-size: $detail-size;
+  line-height: $detail-line-height;
 
-.rand {
-  font-family: $rand;
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-.heading_h1,
-.heading_h2,
-.heading_h3,
-.heading_h4,
-.heading_h5,
-.heading_h6 {
-  @extend .rand;
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-.heading_h1 {
-  font-size: 72px;
-  font-size: 5.42vw;
-  line-height: 1.194444;
-  letter-spacing: -0.03em;
-
-  @media screen and (min-width: $mq-tablet-min) and (max-width: $mq-tablet-max) {
-    // font-size: 34px;
-    // line-height: 36px;
-  }
-
-  @media screen and (max-width: $mq-mobile-max) {
-    // font-size: 30px;
-    // line-height: 1;
+  @media (max-width: variables.$mq-mobile-max) {
+    line-height: $detail-line-height-mobile;
   }
 }
 
-.small_text {
-  @extend .rand;
-  font-size: 15px;
-  line-height: 1.2;
+/** Profile and project description text. */
+@mixin body {
+  @include font-base;
+  font-size: $body-size;
+  line-height: $body-line-height;
+  letter-spacing: $tracking-tight;
 
-  @media screen and (max-width: $mq-mobile-max) {
-    font-size: 14px;
-    line-height: 1.2;
+  @media (max-width: variables.$mq-mobile-max) {
+    font-size: $body-size-mobile;
   }
 }
 
-.credit {
-  @extend .rand;
-  font-size: 12px;
-  line-height: 1.5;
+/** Centred statement slide. */
+@mixin statement {
+  @include font-base;
+  font-size: $statement-size;
+  line-height: $statement-line-height;
+  letter-spacing: $tracking-tight;
 
-  @media screen and (max-width: $mq-mobile-max) {
-    font-size: 11px;
+  @media (max-width: variables.$mq-mobile-max) {
+    font-size: $statement-size-mobile;
   }
 }
 
-.body_text {
-  @extend .rand;
-  font-size: 32px;
-  line-height: 1.19;
-  letter-spacing: -0.01em;
+/** The LR.S intro mark. */
+@mixin mark {
+  font-family: $display-font;
+  font-weight: $main-font-weight;
+  font-size: $mark-size;
+  line-height: 1;
+  letter-spacing: $tracking-tight;
 
-  @media screen and (max-width: $mq-mobile-max) {
-    font-size: 13px;
-    line-height: 1.23;
+  @media (max-width: variables.$mq-mobile-max) {
+    font-size: $mark-size-mobile;
   }
 }

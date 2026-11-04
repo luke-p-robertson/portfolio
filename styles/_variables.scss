@@ -1,0 +1,65 @@
+// Colors (Figma: black, white, and the #8e8e8e label grey)
+$white: #ffffff;
+$black: #000000;
+$text: $black;
+$grey: #8e8e8e;
+/** Inactive slideshow thumbnails. */
+$thumb-inactive-opacity: 0.3;
+/** Embedded Sanity Studio at /cms. */
+$studio-background: #101112;
+
+// Spacing scale — (desktop, mobile). Emitted as responsive custom properties in
+// `app/globals.scss`; components use the `$space-*` aliases below, which resolve to
+// the right value per breakpoint. Never hardcode a px gap — pick a step.
+// Measured from the 1280 / 402 Figma frames; awaiting Joshua's OK on the snapping.
+$spacing: (
+  "xs": (8px, 8px),
+  "s": (12px, 20px),
+  "m": (44px, 44px),
+  "l": (88px, 44px),
+  "xl": (188px, 132px),
+);
+
+$space-xs: var(--space-xs);
+$space-s: var(--space-s);
+$space-m: var(--space-m);
+$space-l: var(--space-l);
+$space-xl: var(--space-xl);
+
+// Grid — 12 columns, 12px margin and gutter on the 1280 frame; mobile uses 2 columns.
+$grid-columns: 12;
+$page-margin: $space-s;
+$grid-gutter: $space-s;
+/** Mobile project index: two 140px columns inset 40px with a 41px gap. */
+$mobile-index-inset: 40px;
+$mobile-index-gap: 41px;
+/** Mobile header sits 15px from the top (the sides use the 20px page margin). */
+$header-top-mobile: 15px;
+/** Mobile slides centre this far above the middle of the screen. */
+$slide-lift-mobile: 20px;
+
+// Media
+$aspect-feature: unquote("3 / 2");
+$aspect-feature-half: unquote("3 / 4");
+$aspect-feature-mobile: unquote("9 / 16");
+$aspect-card: unquote("4 / 5");
+/** Slideshow thumbnail strip height. */
+$thumb-height: 50px;
+
+// Components / z-index
+$z-header: 50;
+$z-overlay: 100;
+$z-intro: 200;
+
+// Motion
+$transition-duration: 0.2s;
+/** The one crossfade timing: slides, headline, intro, pages, index thumbnails. */
+$fade-duration: 0.6s;
+/** Delay between each index thumbnail fading in. */
+$stagger-step: 0.05s;
+
+//  Breakpoints
+$mq-desktop-min: 1024px;
+$mq-tablet-max: 1023px;
+$mq-tablet-min: 769px;
+$mq-mobile-max: 768px;

@@ -1,0 +1,98 @@
+@use "sass:list";
+@use "@/styles/_variables.scss" as variables;
+@use "@/styles/_typography.scss" as typography;
+@use "@/styles/_layout.scss" as layout;
+
+:root {
+  @each $name, $values in variables.$spacing {
+    --space-#{$name}: #{list.nth($values, 1)};
+  }
+
+  @include layout.mobile {
+    @each $name, $values in variables.$spacing {
+      --space-#{$name}: #{list.nth($values, 2)};
+    }
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @include typography.detail;
+  margin: 0;
+  background: variables.$white;
+  color: variables.$text;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+ol,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font: inherit;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Embedded Sanity at /cms — avoid site typography/background leaking behind Studio */
+html[data-sanity-studio] body {
+  background: variables.$studio-background;
+  color: variables.$white;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}

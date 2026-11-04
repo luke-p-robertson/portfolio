@@ -1,0 +1,66 @@
+@use "@/styles/_variables.scss" as variables;
+@use "@/styles/_typography.scss" as typography;
+@use "@/styles/_layout.scss" as layout;
+
+.page {
+  @include layout.grid;
+  align-items: start;
+  padding-block: variables.$space-xl;
+
+  @include layout.mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: variables.$space-l;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  grid-row: 1;
+  grid-column: span 2;
+
+  &:first-child {
+    grid-column: 2 / span 2;
+  }
+
+  @include layout.mobile {
+    grid-row: 2;
+
+    &,
+    &:first-child {
+      grid-column: span 1;
+    }
+  }
+}
+
+.label {
+  display: block;
+  color: variables.$grey;
+}
+
+.text {
+  @include typography.body;
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  grid-row: 1;
+  grid-column: 7 / span 5;
+
+  @include layout.mobile {
+    grid-column: 1 / -1;
+  }
+}
+
+.credit {
+  grid-row: 2;
+  grid-column: 2 / span 4;
+  margin-top: variables.$space-l;
+  color: variables.$grey;
+
+  @include layout.mobile {
+    grid-row: 3;
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+}

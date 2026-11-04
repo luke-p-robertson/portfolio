@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Luke Robertson Studio
 
-## Getting Started
-
-First, run the development server:
+Next.js (App Router) site with an embedded Sanity Studio at `/cms`. Hosted on Vercel.
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm install
+npm run dev        # http://localhost:3000, Studio at /cms
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No `.env.local` is needed: the Sanity project (`x47vlamh`, dataset `production`) is set in
+`sanity/lib/projectId.ts`. Production needs `SANITY_REVALIDATE_SECRET` (see `.env.example`).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Pages
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- `/`: the LR.S intro (once per session), then the featured scroll (Homepage document).
+- `/projects`: the index with its category filter (Projects page document, Filter categories).
+- `/projects/[slug]`: a project's slideshow: statement, image/video and info slides.
+- `/profile`: profile text and details (Profile document).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Content
 
-## Learn More
+The Prismic content was copied in with `npm run import:prismic` (`scripts/importPrismic.ts`).
+Re-running it replaces the imported documents, including any edits made to them in Sanity.
 
-To learn more about Next.js, take a look at the following resources:
+## Schema
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+After changing schemas, deploy them: `npx sanity schema deploy`.

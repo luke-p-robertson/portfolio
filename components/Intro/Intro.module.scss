@@ -1,0 +1,28 @@
+@use "@/styles/_variables.scss" as variables;
+@use "@/styles/_typography.scss" as typography;
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: variables.$z-intro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: variables.$white;
+  color: variables.$text;
+  cursor: pointer;
+  transition: opacity variables.$fade-duration ease-out;
+
+  :global(html[data-intro-seen]) & {
+    display: none;
+  }
+}
+
+.leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mark {
+  @include typography.mark;
+}

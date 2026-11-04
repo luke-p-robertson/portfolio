@@ -1,0 +1,114 @@
+@use "@/styles/_variables.scss" as variables;
+@use "@/styles/_typography.scss" as typography;
+@use "@/styles/_layout.scss" as layout;
+
+.page {
+  padding-block: variables.$space-xl;
+}
+
+.grid {
+  @include layout.grid;
+  row-gap: variables.$space-l;
+  transition: opacity variables.$transition-duration;
+
+  @include layout.mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: variables.$mobile-index-gap;
+    row-gap: variables.$space-m;
+    padding-inline: variables.$mobile-index-inset;
+  }
+}
+
+/** The grid fades back while the desktop filter list is open. */
+.dimmed {
+  opacity: variables.$thumb-inactive-opacity;
+}
+
+/** Thumbnails fade in one after another from the top left (`--i` is the card's position). */
+.card {
+  grid-column: span 2;
+  animation: card-in variables.$fade-duration ease-out backwards;
+  animation-delay: calc(var(--i, 0) * #{variables.$stagger-step});
+
+  @include layout.desktop {
+    &:nth-child(3n + 1) {
+      grid-column: 3 / span 2;
+    }
+
+    &:nth-child(3n + 2) {
+      grid-column: 6 / span 2;
+    }
+
+    &:nth-child(3n) {
+      grid-column: 9 / span 2;
+    }
+  }
+
+  @include layout.mobile {
+    grid-column: auto;
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: variables.$aspect-card;
+  background: variables.$white;
+}
+
+.label {
+  display: block;
+  margin-top: variables.$space-s;
+
+  @include layout.mobile {
+    margin-top: variables.$space-xs;
+  }
+}
+
+.discipline {
+  display: block;
+  color: variables.$grey;
+}
+
+.empty {
+  grid-column: 3 / span 8;
+  color: variables.$grey;
+
+  @include layout.mobile {
+    grid-column: 1 / -1;
+  }
+}
+
+/** Desktop "Filter" sits at the start of column 2, like the profile's first column. */
+.filter {
+  position: absolute;
+  top: variables.$page-margin;
+  left: calc(
+    #{variables.$page-margin} + (100% - 2 * #{variables.$page-margin} - 11 * #{variables.$grid-gutter}) /
+      12 + #{variables.$grid-gutter}
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.option {
+  opacity: 0.55;
+
+  &[aria-pressed="true"],
+  &:hover {
+    opacity: 1;
+  }
+}

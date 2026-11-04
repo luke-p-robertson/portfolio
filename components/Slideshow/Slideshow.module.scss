@@ -1,0 +1,273 @@
+@use "@/styles/_variables.scss" as variables;
+@use "@/styles/_typography.scss" as typography;
+@use "@/styles/_layout.scss" as layout;
+
+/** Colours come from the project (`--project-background`, `--project-text`), white/black by default. */
+.root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--project-background, #{variables.$white});
+  color: var(--project-text, #{variables.$text});
+  touch-action: pan-y;
+}
+
+.header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: variables.$z-header;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  padding: variables.$page-margin;
+
+  @include layout.mobile {
+    padding-top: variables.$header-top-mobile;
+  }
+}
+
+.close {
+  justify-self: start;
+}
+
+.title {
+  text-align: center;
+}
+
+/** Mobile sets "for …" on its own line. */
+.titleBreak {
+  @include layout.mobile {
+    display: block;
+  }
+}
+
+.info {
+  justify-self: end;
+}
+
+/** Everything outside the header: hidden while the headline shows, then crossfades in. */
+.stage {
+  position: absolute;
+  inset: 0;
+  transition: opacity variables.$fade-duration ease-out;
+}
+
+.stageHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/** Slides crossfade: the outgoing one stays visible until its fade has finished. */
+.slide {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity variables.$fade-duration ease-out,
+    visibility 0s linear variables.$fade-duration;
+}
+
+.current {
+  z-index: 1;
+
+  /** The info slide sits above the click zones so its text and links stay usable. */
+  &.infoSection {
+    z-index: 3;
+  }
+
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity variables.$fade-duration ease-out,
+    visibility 0s;
+}
+
+/** Left and right halves step back and forward. */
+.zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 50%;
+}
+
+.prev {
+  left: 0;
+  cursor: w-resize;
+}
+
+.next {
+  right: 0;
+  cursor: e-resize;
+}
+
+/** The project headline: fades in on load, holds, fades away. Clicking skips it. */
+.headline {
+  @include typography.statement;
+  @include layout.grid;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  align-content: center;
+  text-align: center;
+  cursor: pointer;
+  animation: fade-in variables.$fade-duration ease-out backwards;
+  transition: opacity variables.$fade-duration ease-out;
+
+  @include layout.mobile {
+    padding-bottom: calc(2 * #{variables.$slide-lift-mobile});
+  }
+
+  span {
+    grid-column: 3 / span 8;
+
+    @include layout.mobile {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.headlineLeaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/** Contained media: the whole frame, between the header and the thumbnails. */
+.contained {
+  position: absolute;
+  top: variables.$space-m;
+  right: variables.$page-margin;
+  bottom: calc(#{variables.$thumb-height} + #{variables.$space-xs});
+  left: variables.$page-margin;
+
+  @include layout.mobile {
+    right: 0;
+    bottom: calc(#{variables.$space-m} + 2 * #{variables.$slide-lift-mobile});
+    left: 0;
+  }
+}
+
+.fullBleed {
+  position: absolute;
+  inset: 0;
+
+  /** Phones show every slide whole and full width, as in the mobile design. */
+  @include layout.mobile {
+    inset: variables.$space-m 0 calc(#{variables.$space-m} + 2 * #{variables.$slide-lift-mobile});
+
+    img,
+    video {
+      object-fit: contain;
+    }
+  }
+}
+
+.infoSlide {
+  @include layout.grid;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  align-content: start;
+  padding-block: variables.$space-xl;
+  overflow-y: auto;
+
+  @include layout.mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: variables.$space-l;
+  }
+}
+
+.scope {
+  grid-row: 1;
+  grid-column: 2 / span 2;
+
+  @include layout.mobile {
+    grid-row: 2;
+    grid-column: 1;
+  }
+}
+
+.credits {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  grid-row: 1;
+  grid-column: 4 / span 2;
+
+  @include layout.mobile {
+    grid-row: 2;
+    grid-column: 2;
+  }
+}
+
+.label {
+  display: block;
+  color: variables.$grey;
+}
+
+.description {
+  @include typography.body;
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  grid-row: 1;
+  grid-column: 7 / span 5;
+
+  @include layout.mobile {
+    grid-column: 1 / -1;
+  }
+}
+
+.thumbs {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  height: variables.$thumb-height;
+  transform: translateX(-50%);
+
+  @include layout.mobile {
+    display: none;
+  }
+}
+
+.thumb {
+  position: relative;
+  height: 100%;
+  opacity: variables.$thumb-inactive-opacity;
+  transition: opacity variables.$transition-duration;
+
+  &:hover,
+  &[aria-current="true"] {
+    opacity: 1;
+  }
+}
+
+.thumb .thumbImage {
+  width: auto;
+  height: 100%;
+}
+
+.counter {
+  position: absolute;
+  bottom: variables.$page-margin;
+  left: 50%;
+  z-index: 3;
+  transform: translateX(-50%);
+
+  @include layout.desktop {
+    display: none;
+  }
+}
+
+.hidden {
+  @include layout.visually-hidden;
+}

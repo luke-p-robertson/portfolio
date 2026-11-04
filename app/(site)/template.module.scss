@@ -1,0 +1,12 @@
+@use "@/styles/_variables.scss" as variables;
+
+/** Each page fades in on arrival, on the same timing as the slides. */
+.page {
+  animation: page-in variables.$fade-duration ease-out backwards;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+}

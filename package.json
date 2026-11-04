@@ -1,31 +1,37 @@
 {
-  "name": "luke-robertson-portfolio",
-  "version": "0.1.0",
+  "name": "luke-robertson-studio",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "slicemachine": "start-slicemachine"
+    "lint": "eslint",
+    "sanity:cors": "sanity cors add http://localhost:3000 --credentials",
+    "sanity:cors:list": "sanity cors list",
+    "import:prismic": "sanity exec scripts/importPrismic.ts --with-user-token"
   },
   "dependencies": {
-    "@prismicio/client": "^6.7.1",
-    "@prismicio/helpers": "^2.3.5",
-    "@prismicio/next": "^0.1.5",
-    "@prismicio/react": "^2.5.0",
-    "@prismicio/slice-simulator-react": "^0.2.2",
-    "animated-scroll-to": "^2.3.0",
-    "framer-motion": "^7.5.3",
-    "next": "12.3.1",
-    "next-svgr": "^0.0.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "sass": "^1.55.0"
+    "@portabletext/react": "^3.2.4",
+    "@portabletext/toolkit": "^2.0.18",
+    "@sanity/client": "^6.22.0",
+    "@sanity/image-url": "^2.1.1",
+    "next": "16.2.2",
+    "next-sanity": "^12.2.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sanity": "^5.18.0",
+    "sanity-plugin-media": "^4.3.0",
+    "sass": "^1.81.0",
+    "styled-components": "^6.3.11"
   },
   "devDependencies": {
-    "eslint": "8.25.0",
-    "eslint-config-next": "12.3.1",
-    "slice-machine-ui": "^0.5.0"
+    "@svgr/webpack": "^8.1.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.2",
+    "typescript": "^5"
   }
 }
