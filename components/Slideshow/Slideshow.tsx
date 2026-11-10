@@ -1,12 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { BlockContent } from "@/components/BlockContent/BlockContent";
 import { Media } from "@/components/Media/Media";
 import { SanityImage } from "@/components/SanityImage/SanityImage";
-import { PREVIOUS_PATH_KEY, STUDIO_NAME } from "@/lib/navigation";
+import { useProjectHeader } from "@/components/SiteHeader/HeaderContext";
+import { useCloseProject } from "@/components/SiteHeader/useCloseProject";
+import { STUDIO_NAME } from "@/lib/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
 import type { MediaData, ProjectData, SlideData } from "@/sanity/lib/cachedQueries";
 
@@ -39,11 +40,11 @@ function hasInfo(project: ProjectData) {
  * A project's case study. The headline fades in, holds, then fades to the first slide; the
  * slides crossfade one at a time and loop, with the info (scope, credits, description) as
  * the last one. Step with the arrow keys, the thumbnails, by clicking either half of the
- * screen, or on phones by tapping (forward) or swiping. "Close" returns to the page the
- * visitor came from; "Info" jumps to the info slide.
+ * screen, or on phones by tapping (forward) or swiping. Close, the title and Info live in
+ * the persistent site header, which this lends its title, colour and Info action.
  */
 export function Slideshow({ project }: SlideshowProps) {
-  const router = useRouter();
+  const close = useCloseProject();
   const isMobile = useIsMobile();
   const items: Item[] = [
     ...(project.slides ?? []).flatMap((slide) =>
@@ -89,17 +90,16 @@ export function Slideshow({ project }: SlideshowProps) {
     [count, index, intro, show, skipIntro],
   );
 
-  const close = useCallback(() => {
-    let previousPath: string | null = null;
-    try {
-      previousPath = sessionStorage.getItem(PREVIOUS_PATH_KEY);
-    } catch {}
-    if (previousPath && !previousPath.startsWith(`/projects/${project.slug}`)) {
-      router.back();
-    } else {
-      router.push("/projects");
-    }
-  }, [router, project.slug]);
+  const showInfo = useCallback(() => {
+    setIntro("done");
+    show(infoIndex);
+  }, [infoIndex, show]);
+
+  useProjectHeader({
+    title: project.title ?? "",
+    textColor: project.textColor,
+    onInfo: infoIndex >= 0 ? showInfo : null,
+  });
 
   // Headline: hold, fade out (crossfading to the first slide), then unmount.
   useEffect(() => {
@@ -160,27 +160,9 @@ export function Slideshow({ project }: SlideshowProps) {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <header className={styles.header}>
-        <button type="button" className={styles.close} onClick={close}>
-          Close
-        </button>
-        <h1 className={styles.title}>
-          {STUDIO_NAME}{" "}
-          <span className={styles.titleBreak}>for {project.title}</span>
-        </h1>
-        {infoIndex >= 0 ? (
-          <button
-            type="button"
-            className={styles.info}
-            onClick={() => {
-              setIntro("done");
-              show(infoIndex);
-            }}
-          >
-            Info
-          </button>
-        ) : null}
-      </header>
+      <h1 className={styles.hidden}>
+        {STUDIO_NAME} for {project.title}
+      </h1>
 
       {intro !== "done" && headline ? (
         <button

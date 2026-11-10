@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { FeatureScroll } from "@/components/FeatureScroll/FeatureScroll";
 import { Intro } from "@/components/Intro/Intro";
-import { SiteHeader } from "@/components/SiteHeader/SiteHeader";
 import { getHomepageData } from "@/sanity/lib/cachedQueries";
 import { buildPageMetadata } from "@/sanity/lib/seoMetadata";
 
@@ -17,7 +16,6 @@ export default async function HomePage() {
   return (
     <>
       <Intro />
-      <SiteHeader />
       <FeatureScroll features={data?.features} />
     </>
   );

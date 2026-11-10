@@ -1,57 +1,159 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useState, type CSSProperties } from "react";
 
 import { Overlay, overlayItemClass } from "@/components/Overlay/Overlay";
 import { STUDIO_NAME } from "@/lib/navigation";
+import { useIsMobile } from "@/lib/useIsMobile";
 
+import { Crossfade } from "./Crossfade";
+import { useHeader } from "./HeaderContext";
 import styles from "./SiteHeader.module.scss";
-
-type SiteHeaderProps = {
-  /** Desktop: shown after "Projects" (the index filter). */
-  desktopExtra?: React.ReactNode;
-  /** Mobile: the right-hand slot (the index's "Filter"). */
-  mobileRight?: React.ReactNode;
-  /** Lift the header above a page's own overlay (the mobile filter) and drop the blend. */
-  raised?: boolean;
-};
+import { useCloseProject } from "./useCloseProject";
 
 /**
- * Projects · Luke Robertson Studio · Profile on desktop; Menu · Luke Robertson Studio on
- * mobile, where "Menu" opens a full-screen list of the two pages.
+ * The one site header, kept in the site layout so it never disappears between pages.
+ * "Luke Robertson Studio" stays put; the slots that change by page crossfade:
+ *  - desktop: Projects (+ Filter on the index) ↔ Close on the left, Profile ↔ Info on the
+ *    right, and "for <project>" beside the name on a project;
+ *  - mobile: Menu ↔ Close on the left, Filter (index) or Info (project) on the right.
  */
-export function SiteHeader({ desktopExtra, mobileRight, raised = false }: SiteHeaderProps) {
+export function SiteHeader() {
+  const pathname = usePathname();
+  const { project, filter } = useHeader();
+  const isMobile = useIsMobile();
+  const closeProject = useCloseProject();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
+  const onProject = pathname.startsWith("/projects/");
+  const onIndex = pathname === "/projects";
+  const showFilter = onIndex && filter && filter.options.length > 1 ? filter : null;
+  const raised = menuOpen || Boolean(showFilter?.open && isMobile);
+  const projectColor = onProject ? project?.textColor?.trim() : null;
+
+  const headerClass = [
+    styles.header,
+    raised ? styles.solid : onProject ? styles.project : styles.blend,
+  ].join(" ");
+
   return (
     <>
-      <header className={[styles.header, menuOpen || raised ? styles.solid : styles.blend].join(" ")}>
+      <header
+        className={headerClass}
+        style={projectColor ? ({ "--header-color": projectColor } as CSSProperties) : undefined}
+      >
         <div className={styles.left}>
-          <span className={styles.desktopOnly}>
-            <Link href="/projects">Projects</Link>
-          </span>
-          {desktopExtra ? <span className={styles.desktopOnly}>{desktopExtra}</span> : null}
-          <button
-            type="button"
+          <Crossfade itemKey={onProject ? "close" : "projects"} className={styles.desktopOnly}>
+            {onProject ? (
+              <button type="button" onClick={closeProject}>
+                Close
+              </button>
+            ) : (
+              <Link href="/projects">Projects</Link>
+            )}
+          </Crossfade>
+          <Crossfade
+            itemKey={menuOpen ? "menu-close" : onProject ? "close" : "menu"}
             className={styles.mobileOnly}
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-expanded={menuOpen}
           >
-            {menuOpen ? "Close" : "Menu"}
-          </button>
+            {menuOpen ? (
+              <button type="button" onClick={closeMenu} aria-expanded>
+                Close
+              </button>
+            ) : onProject ? (
+              <button type="button" onClick={closeProject}>
+                Close
+              </button>
+            ) : (
+              <button type="button" onClick={() => setMenuOpen(true)} aria-expanded={false}>
+                Menu
+              </button>
+            )}
+          </Crossfade>
         </div>
-        <Link href="/" className={styles.center} onClick={closeMenu}>
-          {STUDIO_NAME}
-        </Link>
-        <div className={styles.right}>
-          <span className={styles.desktopOnly}>
-            <Link href="/profile">Profile</Link>
-          </span>
-          {mobileRight && !menuOpen ? (
-            <span className={styles.mobileOnly}>{mobileRight}</span>
+
+        <Crossfade
+          itemKey={showFilter ? "filter" : "none"}
+          className={`${styles.filterSlot} ${styles.desktopOnly}`}
+        >
+          {showFilter ? (
+            <span className={styles.filter}>
+              <button type="button" onClick={showFilter.toggle} aria-expanded={showFilter.open}>
+                Filter
+              </button>
+              {showFilter.open ? (
+                <span className={styles.options}>
+                  {showFilter.options.map((option) => (
+                    <button
+                      key={option.slug || "all"}
+                      type="button"
+                      className={styles.option}
+                      aria-pressed={option.slug === showFilter.value}
+                      onClick={() => showFilter.choose(option.slug)}
+                    >
+                      {option.title}
+                    </button>
+                  ))}
+                </span>
+              ) : null}
+            </span>
           ) : null}
+        </Crossfade>
+
+        <div className={styles.center}>
+          <Link href="/" onClick={closeMenu}>
+            {STUDIO_NAME}
+          </Link>
+          <Crossfade
+            itemKey={onProject && project ? `for:${project.title}` : "none"}
+            className={styles.suffix}
+          >
+            {onProject && project ? <span>for {project.title}</span> : null}
+          </Crossfade>
+        </div>
+
+        <div className={styles.right}>
+          <Crossfade
+            itemKey={onProject ? (project?.onInfo ? "info" : "none") : "profile"}
+            className={styles.desktopOnly}
+          >
+            {onProject ? (
+              project?.onInfo ? (
+                <button type="button" onClick={project.onInfo}>
+                  Info
+                </button>
+              ) : null
+            ) : (
+              <Link href="/profile">Profile</Link>
+            )}
+          </Crossfade>
+          <Crossfade
+            itemKey={
+              menuOpen
+                ? "none"
+                : showFilter
+                  ? showFilter.open
+                    ? "filter-close"
+                    : "filter"
+                  : onProject && project?.onInfo
+                    ? "info"
+                    : "none"
+            }
+            className={styles.mobileOnly}
+          >
+            {menuOpen ? null : showFilter ? (
+              <button type="button" onClick={showFilter.toggle} aria-expanded={showFilter.open}>
+                {showFilter.open ? "Close" : "Filter"}
+              </button>
+            ) : onProject && project?.onInfo ? (
+              <button type="button" onClick={project.onInfo}>
+                Info
+              </button>
+            ) : null}
+          </Crossfade>
         </div>
       </header>
       {menuOpen ? (

@@ -5,7 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { Overlay, overlayOptionClass } from "@/components/Overlay/Overlay";
 import { SanityImage } from "@/components/SanityImage/SanityImage";
-import { SiteHeader } from "@/components/SiteHeader/SiteHeader";
+import { useFilterHeader } from "@/components/SiteHeader/HeaderContext";
 import { useIsMobile } from "@/lib/useIsMobile";
 import type { CategoryData, ProjectCard } from "@/sanity/lib/cachedQueries";
 
@@ -36,7 +36,7 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
   const close = useCallback(() => setOpen(false), []);
   const isMobile = useIsMobile();
 
-  const choose = (slug: string) => {
+  const choose = useCallback((slug: string) => {
     setFilter(slug);
     setOpen(false);
     const url = new URL(window.location.href);
@@ -46,7 +46,15 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
       url.searchParams.delete("filter");
     }
     window.history.replaceState(window.history.state, "", url);
-  };
+  }, []);
+  const toggle = useCallback(() => setOpen((o) => !o), []);
+
+  // The persistent header draws the "Filter" control from this.
+  const filterHeader = useMemo(
+    () => (options.length > 1 ? { options, value: filter, open, toggle, choose } : null),
+    [options, filter, open, toggle, choose],
+  );
+  useFilterHeader(filterHeader);
 
   const visible = filter
     ? projects.filter((p) => p.categories?.includes(filter))
@@ -65,32 +73,8 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
       </button>
     ));
 
-  const hasFilter = options.length > 1;
-
   return (
     <>
-      <SiteHeader
-        raised={open && isMobile}
-        desktopExtra={
-          hasFilter ? (
-            <span className={styles.filter}>
-              <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-                Filter
-              </button>
-              {open ? (
-                <span className={styles.options}>{optionButtons(styles.option)}</span>
-              ) : null}
-            </span>
-          ) : null
-        }
-        mobileRight={
-          hasFilter ? (
-            <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-              {open ? "Close" : "Filter"}
-            </button>
-          ) : null
-        }
-      />
       <main className={styles.page}>
         {/* Keyed by filter so a new selection fades in again from the first card. */}
         <ul

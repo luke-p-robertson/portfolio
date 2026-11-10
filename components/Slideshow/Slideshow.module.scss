@@ -12,39 +12,6 @@
   touch-action: pan-y;
 }
 
-.header {
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: variables.$z-header;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: start;
-  padding: variables.$page-margin;
-
-  @include layout.mobile {
-    padding-top: variables.$header-top-mobile;
-  }
-}
-
-.close {
-  justify-self: start;
-}
-
-.title {
-  text-align: center;
-}
-
-/** Mobile sets "for …" on its own line. */
-.titleBreak {
-  @include layout.mobile {
-    display: block;
-  }
-}
-
-.info {
-  justify-self: end;
-}
-
 /** Everything outside the header: hidden while the headline shows, then crossfades in. */
 .stage {
   position: absolute;

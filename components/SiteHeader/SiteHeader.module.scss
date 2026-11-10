@@ -17,7 +17,8 @@
     padding-top: variables.$header-top-mobile;
   }
 
-  > * {
+  a,
+  button {
     pointer-events: auto;
   }
 }
@@ -28,6 +29,11 @@
   mix-blend-mode: difference;
 }
 
+/** On a project the header takes the project's text colour (black by default). */
+.project {
+  color: var(--header-color, #{variables.$text});
+}
+
 /** Above an overlay the header sits on plain white, so it uses the text colour. */
 .solid {
   z-index: variables.$z-overlay + 1;
@@ -36,17 +42,116 @@
 
 .left {
   display: flex;
+  grid-column: 1;
+  grid-row: 1;
   justify-self: start;
 }
 
 .center {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
   text-align: center;
+}
+
+/**
+ * "for <project>" hangs off the name so the name never moves: beside it on desktop,
+ * on the line below on mobile (as in the mobile design).
+ */
+.suffix {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  white-space: nowrap;
+
+  &::before {
+    content: "\00a0";
+  }
+
+  @include layout.mobile {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &::before {
+      content: none;
+    }
+  }
 }
 
 .right {
   display: flex;
+  grid-column: 3;
+  grid-row: 1;
   justify-self: end;
   text-align: right;
+}
+
+/** Desktop "Filter" sits at the start of column 2, like the profile's first column. */
+.filterSlot {
+  position: absolute;
+  top: variables.$page-margin;
+  left: calc(
+    #{variables.$page-margin} + (100% - 2 * #{variables.$page-margin} - 11 * #{variables.$grid-gutter}) /
+      12 + #{variables.$grid-gutter}
+  );
+}
+
+.filter,
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.option {
+  opacity: 0.55;
+
+  &[aria-pressed="true"],
+  &:hover {
+    opacity: 1;
+  }
+}
+
+/** Crossfade slot: outgoing and incoming content share one grid cell while they fade. */
+.crossfade {
+  display: inline-grid;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.item {
+  display: block;
+}
+
+.entering {
+  display: block;
+  animation: slot-in variables.$fade-duration ease-out backwards;
+}
+
+.leaving {
+  display: block;
+  pointer-events: none;
+  animation: slot-out variables.$fade-duration ease-out forwards;
+
+  a,
+  button {
+    pointer-events: none;
+  }
+}
+
+@keyframes slot-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slot-out {
+  to {
+    opacity: 0;
+  }
 }
 
 .desktopOnly {
