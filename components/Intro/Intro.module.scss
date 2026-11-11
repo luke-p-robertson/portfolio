@@ -1,5 +1,5 @@
 @use "@/styles/_variables.scss" as variables;
-@use "@/styles/_typography.scss" as typography;
+@use "@/styles/_layout.scss" as layout;
 
 .intro {
   position: fixed;
@@ -8,6 +8,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  // The mark sits slightly above centre, as in the Figma splash frames.
+  padding-bottom: calc(2 * #{variables.$mark-lift});
   background: variables.$white;
   color: variables.$text;
   cursor: pointer;
@@ -23,6 +25,13 @@
   pointer-events: none;
 }
 
+/** The LR.S mark (lrs-mark.svg, outlined from Practice Display), sized as in the Figma. */
 .mark {
-  @include typography.mark;
+  display: block;
+  width: variables.$mark-width;
+  height: auto;
+
+  @include layout.mobile {
+    width: variables.$mark-width-mobile;
+  }
 }

@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 
 import { FADE_MS, SPLASH_MS } from "@/lib/motion";
-import { INTRO_SEEN_KEY, STUDIO_SHORT_NAME } from "@/lib/navigation";
+import { INTRO_SEEN_KEY } from "@/lib/navigation";
 
 import styles from "./Intro.module.scss";
+import Mark from "./lrs-mark.svg";
 
 
 /**
@@ -54,7 +55,7 @@ export function Intro() {
       onClick={() => setPhase("leaving")}
       aria-hidden
     >
-      <span className={styles.mark}>{STUDIO_SHORT_NAME}</span>
+      <Mark className={styles.mark} />
     </div>
   );
 }

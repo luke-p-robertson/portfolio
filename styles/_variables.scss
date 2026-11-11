@@ -64,6 +64,12 @@ $aspect-card: unquote("4 / 5");
 $thumb-height: 50px;
 $thumb-gap: 6px;
 
+// The LR.S splash mark: its width (Figma ink: 424 × 159 desktop, 182 × 66 mobile) and how
+// far above the middle of the screen it sits.
+$mark-width: 424px;
+$mark-width-mobile: 182px;
+$mark-lift: 29px;
+
 // Components / z-index
 $z-header: 50;
 $z-overlay: 100;
