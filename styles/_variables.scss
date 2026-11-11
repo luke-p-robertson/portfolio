@@ -14,9 +14,9 @@ $studio-background: #101112;
 // Measured from the 1280 / 402 Figma frames; awaiting Joshua's OK on the snapping.
 $spacing: (
   "xs": (8px, 8px),
-  "s": (12px, 20px),
+  "s": (15px, 20px),
   "m": (44px, 44px),
-  "l": (88px, 44px),
+  "l": (102px, 44px),
   "xl": (188px, 132px),
 );
 
@@ -26,22 +26,22 @@ $space-m: var(--space-m);
 $space-l: var(--space-l);
 $space-xl: var(--space-xl);
 
-// Grid — 12 columns, 12px margin and gutter on the 1280 frame; mobile uses 2 columns.
+// Grid — 12 columns, 15px margin and gutter on the 1280 frame; mobile uses 2 columns.
 $grid-columns: 12;
 $page-margin: $space-s;
 $grid-gutter: $space-s;
 /** Mobile project index: two 140px columns inset 40px with a 41px gap. */
 $mobile-index-inset: 40px;
 $mobile-index-gap: 41px;
-/** Mobile header sits 15px from the top (the sides use the 20px page margin). */
+/** The header sits 12px from the top on desktop, 15px on mobile (sides use the page margin). */
+$header-top: 12px;
 $header-top-mobile: 15px;
+/** The profile and info text column (column 7 onwards) stops short of the margin. */
+$text-column-width: 579px;
 /** Mobile slides centre this far above the middle of the screen. */
 $slide-lift-mobile: 20px;
 
 // Media
-$aspect-feature: unquote("3 / 2");
-$aspect-feature-half: unquote("3 / 4");
-$aspect-feature-mobile: unquote("9 / 16");
 $aspect-card: unquote("4 / 5");
 /** Slideshow thumbnail strip height. */
 $thumb-height: 50px;

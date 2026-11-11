@@ -24,7 +24,10 @@
   opacity: variables.$thumb-inactive-opacity;
 }
 
-/** Thumbnails fade in one after another from the top left (`--i` is the card's position). */
+/**
+ * Thumbnails fade in one after another from the top left (`--i` is the card's position).
+ * Desktop rows of three, each three columns wide: flush left, centred, flush right.
+ */
 .card {
   grid-column: span 2;
   animation: card-in variables.$fade-duration ease-out backwards;
@@ -32,15 +35,18 @@
 
   @include layout.desktop {
     &:nth-child(3n + 1) {
-      grid-column: 3 / span 2;
+      grid-column: 1 / span 3;
     }
 
+    // Columns 4–9 hold the middle card at half their width: three columns, centred.
     &:nth-child(3n + 2) {
-      grid-column: 6 / span 2;
+      grid-column: 4 / span 6;
+      justify-self: center;
+      width: calc(50% - #{variables.$grid-gutter} / 2);
     }
 
     &:nth-child(3n) {
-      grid-column: 9 / span 2;
+      grid-column: 10 / span 3;
     }
   }
 
@@ -62,12 +68,13 @@
   background: variables.$white;
 }
 
+/** Room for three lines on desktop (projects can list several disciplines), so rows stay even. */
 .label {
   display: block;
-  margin-top: variables.$space-s;
+  margin-top: variables.$space-xs;
 
-  @include layout.mobile {
-    margin-top: variables.$space-xs;
+  @include layout.desktop {
+    min-height: 3lh;
   }
 }
 
@@ -77,7 +84,7 @@
 }
 
 .empty {
-  grid-column: 3 / span 8;
+  grid-column: 1 / -1;
   color: variables.$grey;
 
   @include layout.mobile {

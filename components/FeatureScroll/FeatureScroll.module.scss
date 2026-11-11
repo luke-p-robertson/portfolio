@@ -2,13 +2,16 @@
 @use "@/styles/_layout.scss" as layout;
 
 /**
- * Each feature sticks to the top as it arrives, so the next one slides up over it like a
- * stack of cards. Capped at the viewport height so a whole card is always in view.
+ * Each feature is exactly one screen tall and sticks to the top as it arrives, so the next
+ * one slides up over it like a stack of cards and covers it completely. The images fill
+ * the card and crop to fit.
  */
 .feature {
   position: sticky;
   top: 0;
   display: block;
+  height: 100svh;
+  height: 100dvh;
   overflow: hidden;
   background: variables.$white;
 }
@@ -16,6 +19,7 @@
 .desktop {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  height: 100%;
 
   @include layout.mobile {
     display: none;
@@ -26,24 +30,13 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/** Full width always; on short screens the height caps and the image crops instead of narrowing. */
 .media,
 .mobile {
   width: 100%;
-  max-height: 100svh;
-}
-
-.single .media {
-  aspect-ratio: variables.$aspect-feature;
-}
-
-.pair .media {
-  aspect-ratio: variables.$aspect-feature-half;
+  height: 100%;
 }
 
 .mobile {
-  aspect-ratio: variables.$aspect-feature-mobile;
-
   @include layout.desktop {
     display: none;
   }

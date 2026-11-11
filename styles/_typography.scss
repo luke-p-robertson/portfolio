@@ -1,23 +1,27 @@
 @use "variables";
 
 /**
- * The Figma file uses trial fonts: Practice (desktop), Practice Display (the LR.S
- * mark) and JJannon (mobile). `--font-main` / `--font-display` stay unset until the
- * licensed files land (lib/siteFont.ts), so these fall back to a system serif.
+ * Two faces (Figma, Nov 11): Practice, a serif, for large text (body, statement, overlay
+ * menus), with Practice Display for the LR.S mark; and Test The Future, a sans, for small
+ * text (navigation, labels, details, credits). `--font-main` / `--font-display` /
+ * `--font-small` stay unset until Luke's licensed files land (lib/siteFont.ts), so these
+ * fall back to a system serif and sans.
  */
 $main-font: var(--font-main, "Times New Roman"), "Times New Roman", Times, serif;
 $display-font: var(--font-display, "Times New Roman"), "Times New Roman", Times, serif;
+$small-font: var(--font-small, "Helvetica Neue"), "Helvetica Neue", Helvetica, Arial, sans-serif;
 $main-font-weight: 400;
 
-// Type scale (Figma: 14/18 detail, 20/24 body, 40 statement, 240 mark; mobile 14/19,
+// Type scale (Figma: 14/20 small, 22/28 body, 48 statement, 240 mark; mobile 14/19,
 // 18/24, 32, 85)
 $detail-size: 14px;
-$detail-line-height: 18px;
+$detail-line-height: 20px;
 $detail-line-height-mobile: 19px;
-$body-size: 20px;
-$body-line-height: 24px;
+$body-size: 22px;
+$body-line-height: 28px;
 $body-size-mobile: 18px;
-$statement-size: 40px;
+$body-line-height-mobile: 24px;
+$statement-size: 48px;
 $statement-size-mobile: 32px;
 $statement-line-height: 1.2;
 $mark-size: 240px;
@@ -31,11 +35,13 @@ $tracking-tight: -0.01em;
   letter-spacing: 0;
 }
 
-/** Navigation, labels, captions, credits. */
+/** Navigation, labels, captions, credits: the small-text face. */
 @mixin detail {
   @include font-base;
+  font-family: $small-font;
   font-size: $detail-size;
   line-height: $detail-line-height;
+  letter-spacing: $tracking-tight;
 
   @media (max-width: variables.$mq-mobile-max) {
     line-height: $detail-line-height-mobile;
@@ -51,6 +57,7 @@ $tracking-tight: -0.01em;
 
   @media (max-width: variables.$mq-mobile-max) {
     font-size: $body-size-mobile;
+    line-height: $body-line-height-mobile;
   }
 }
 

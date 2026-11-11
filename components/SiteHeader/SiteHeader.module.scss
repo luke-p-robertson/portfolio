@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: start;
-  padding: variables.$page-margin;
+  padding: variables.$header-top variables.$page-margin variables.$page-margin;
   pointer-events: none;
 
   @include layout.mobile {
@@ -87,10 +87,10 @@
   text-align: right;
 }
 
-/** Desktop "Filter" sits at the start of column 2, like the profile's first column. */
+/** Desktop "Filter" sits at the start of column 2. */
 .filterSlot {
   position: absolute;
-  top: variables.$page-margin;
+  top: variables.$header-top;
   left: calc(
     #{variables.$page-margin} + (100% - 2 * #{variables.$page-margin} - 11 * #{variables.$grid-gutter}) /
       12 + #{variables.$grid-gutter}

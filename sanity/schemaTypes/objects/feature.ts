@@ -31,14 +31,14 @@ export const feature = defineType({
       name: "media",
       title: "Image / video",
       type: "media",
-      description: "Desktop. Single: 3:2 landscape. Pair: the left image, 3:4 portrait.",
+      description: "Desktop. Fills the screen and crops to fit, so landscape works best. Pair: the left half.",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "secondMedia",
       title: "Second image / video",
       type: "media",
-      description: "The right image of a pair, 3:4 portrait.",
+      description: "The right half of a pair; portrait works best.",
       hidden: ({ parent }) => parent?.layout !== "pair",
     }),
     defineField({
@@ -46,7 +46,7 @@ export const feature = defineType({
       title: "Mobile image / video",
       type: "media",
       description:
-        "Optional. Shown instead on phones, 9:16 portrait. Without it, the desktop image is cropped to fit.",
+        "Optional. Shown instead on phones, filling the screen (portrait, about 9:16). Without it, the desktop image is cropped to fit.",
     }),
   ],
   preview: {

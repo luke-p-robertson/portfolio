@@ -3,7 +3,7 @@ import Script from "next/script";
 
 import { SanityStudioRouteMark } from "@/components/SanityStudioRouteMark/SanityStudioRouteMark";
 import { INTRO_SEEN_KEY } from "@/lib/navigation";
-import { displayFont, siteFont } from "@/lib/siteFont";
+import { displayFont, siteFont, smallFont } from "@/lib/siteFont";
 import { SITE_URL } from "@/lib/siteUrl";
 
 import "./globals.scss";
@@ -29,7 +29,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={[siteFont.variable, displayFont.variable].filter(Boolean).join(" ")}
+      className={[siteFont.variable, smallFont.variable, displayFont.variable]
+        .filter(Boolean)
+        .join(" ")}
       suppressHydrationWarning
     >
       <body className={siteFont.className}>
