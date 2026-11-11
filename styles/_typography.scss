@@ -12,7 +12,7 @@ $small-font: "The Future", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $main-font-weight: 400;
 
 // Type scale (Figma: 14/20 small, 22/28 body, 48 statement, 240 mark; mobile 13/19,
-// 18/24, 32, 85)
+// 18/24, 32, 100)
 $detail-size: 14px;
 $detail-line-height: 20px;
 $detail-size-mobile: 13px;
@@ -25,7 +25,7 @@ $statement-size: 48px;
 $statement-size-mobile: 32px;
 $statement-line-height: 1.2;
 $mark-size: 240px;
-$mark-size-mobile: 85px;
+$mark-size-mobile: 100px;
 $tracking-tight: -0.01em;
 
 @mixin font-base {
