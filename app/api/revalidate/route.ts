@@ -1,30 +1,42 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
+import { parseBody } from "next-sanity/webhook";
 
 import { SANITY_CACHE_TAG } from "@/sanity/lib/cachedQueries";
 
-const STATIC_SITE_PATHS = ["/", "/projects", "/profile"] as const;
+type WebhookBody = {
+  _type?: string;
+  slug?: string | null;
+};
 
+/**
+ * Sanity webhook (sanity.io/manage → API → Webhooks), fired on every publish, unpublish or
+ * delete. The request is signed with SANITY_REVALIDATE_SECRET, set both on the webhook and
+ * in Vercel. `parseBody` checks the signature, then waits for the Content Lake so the
+ * refetch reads what was just published.
+ *
+ * All Sanity data shares one cache tag, so any change expires everything at once — the
+ * next visitor to any page gets fresh content (`expire: 0`), never a stale copy. The site
+ * is small enough that this beats tracking which pages use which document.
+ */
 export async function POST(request: NextRequest) {
-  const secret = request.nextUrl.searchParams.get("secret");
-  const expected = process.env.SANITY_REVALIDATE_SECRET?.trim();
-
-  if (!expected || secret !== expected) {
-    return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
+  const secret = process.env.SANITY_REVALIDATE_SECRET?.trim();
+  if (!secret) {
+    return NextResponse.json({ message: "SANITY_REVALIDATE_SECRET is not set" }, { status: 500 });
   }
 
-  revalidateTag(SANITY_CACHE_TAG, "max");
-
-  const paths = [...STATIC_SITE_PATHS];
-
-  for (const path of paths) {
-    revalidatePath(path);
+  const { isValidSignature, body } = await parseBody<WebhookBody>(request, secret);
+  if (!isValidSignature) {
+    return NextResponse.json({ message: "Invalid signature" }, { status: 401 });
   }
-  revalidatePath("/projects/[slug]", "page");
+
+  revalidateTag(SANITY_CACHE_TAG, { expire: 0 });
+  revalidatePath("/", "layout");
 
   return NextResponse.json({
     revalidated: true,
-    paths,
+    type: body?._type ?? null,
+    slug: body?.slug ?? null,
     at: Date.now(),
   });
 }

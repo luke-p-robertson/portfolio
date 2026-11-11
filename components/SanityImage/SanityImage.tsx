@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import {
+  IMAGE_QUALITY,
   sanityImageIntrinsicDimensions,
   urlForSanityImage,
   type SanityCropHotspotAsset,
@@ -14,7 +15,8 @@ type SanityImageProps = {
   sizes: string;
   /** Cover a positioned parent (cropped around the hotspot) instead of sizing naturally. */
   fill?: boolean;
-  priority?: boolean;
+  /** Fetch early: the first image a visitor sees on a page (Next 16's `preload`). */
+  preload?: boolean;
   alt?: string;
   className?: string;
 };
@@ -32,11 +34,12 @@ export function SanityImage({
   image,
   sizes,
   fill = false,
-  priority = false,
+  preload = false,
   alt,
   className,
 }: SanityImageProps) {
-  const src = urlForSanityImage(image, { width: 2560, quality: 100 });
+  // The base URL carries the Studio crop; the loader sets the width per srcset entry.
+  const src = urlForSanityImage(image, { width: 2560 });
   if (!image || !src) {
     return null;
   }
@@ -51,8 +54,8 @@ export function SanityImage({
         alt={altText}
         fill
         sizes={sizes}
-        quality={100}
-        priority={priority}
+        quality={IMAGE_QUALITY}
+        preload={preload}
         style={{ objectPosition: hotspotPosition(image) }}
       />
     );
@@ -68,8 +71,8 @@ export function SanityImage({
       width={width}
       height={height}
       sizes={sizes}
-      quality={100}
-      priority={priority}
+      quality={IMAGE_QUALITY}
+      preload={preload}
     />
   );
 }

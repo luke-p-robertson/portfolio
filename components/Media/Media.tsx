@@ -12,13 +12,14 @@ type MediaProps = {
   className?: string;
   /** `cover` crops to the box (default); `contain` shows the whole frame. */
   fit?: "cover" | "contain";
-  priority?: boolean;
+  /** Fetch early: the first image a visitor sees on a page. */
+  preload?: boolean;
   /** Videos only: false pauses it (a slide that isn't current). */
   active?: boolean;
 };
 
 /** An image or looping video filling a sized box. */
-export function Media({ media, sizes, className, fit = "cover", priority, active }: MediaProps) {
+export function Media({ media, sizes, className, fit = "cover", preload, active }: MediaProps) {
   const boxClass = [styles.box, className].filter(Boolean).join(" ");
   const fitClass = fit === "contain" ? styles.contain : undefined;
 
@@ -50,7 +51,7 @@ export function Media({ media, sizes, className, fit = "cover", priority, active
         image={media.image}
         sizes={sizes}
         fill
-        priority={priority}
+        preload={preload}
         className={fitClass}
       />
     </div>

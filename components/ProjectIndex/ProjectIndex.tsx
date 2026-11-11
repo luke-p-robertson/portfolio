@@ -97,7 +97,8 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
                       image={image}
                       alt={project.title ?? ""}
                       fill
-                      sizes="(max-width: 768px) 40vw, 16vw"
+                      sizes="(max-width: 768px) 36vw, 24vw"
+                      preload={i < 3}
                     />
                   </div>
                   <span className={styles.label}>

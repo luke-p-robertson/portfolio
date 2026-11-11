@@ -1,0 +1,40 @@
+/* LEGAL DISCLAIMER
+ *
+ * These Fonts are licensed only for use on these domains and their subdomains:
+ * lukerobertson.studio
+ *
+ * It is illegal to download or use them on other websites.
+ *
+ * While the @font-face statements below may be modified by the client, this
+ * disclaimer may not be removed.
+ *
+ * Optimo webfonts are protected by copyright law and provided under license. To modify, alter, translate, convert, decode or reverse engineer in any manner whatsoever, including converting the Font Software into a different format is strictly prohibited. The webfont files are not to be used for anything other than web font use.
+ *
+ * optimo.ch
+ */
+
+/* Practice (Optimo): large text and, until Practice Display arrives, the LR.S mark. */
+@font-face {
+  font-family: "Practice";
+  src: url("Practice-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* The Future: small text (navigation, labels, details, credits). */
+@font-face {
+  font-family: "The Future";
+  src: url("TheFuture-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "The Future";
+  src: url("TheFuture-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}

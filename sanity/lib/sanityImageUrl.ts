@@ -2,6 +2,12 @@ import { createImageUrlBuilder } from "@sanity/image-url";
 
 import { SANITY_PROJECT_ID, SANITY_DATASET } from "./projectId";
 
+/**
+ * Encoding quality for every image (Sanity CDN, 0–100). 90 is visually indistinguishable
+ * from 100 on these photographs at about 40% less weight; raise it if Luke sees banding.
+ */
+export const IMAGE_QUALITY = 90;
+
 export type SanityCropHotspotAsset = {
   alt?: string | null;
   crop?: Record<string, unknown> | null;
@@ -64,7 +70,7 @@ export function urlForSanityImage(
       .fit(options.fit ?? "max")
       .auto("format") ?? null;
   let chain = options.height !== undefined ? b?.height(options.height) : b;
-  chain = chain?.quality(options.quality ?? 100);
+  chain = chain?.quality(options.quality ?? IMAGE_QUALITY);
   const url = chain?.url();
   return url?.trim() ?? item.asset?.url?.trim() ?? null;
 }

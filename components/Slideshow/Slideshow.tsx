@@ -11,6 +11,7 @@ import { FADE_MS, PROJECT_INTRO_MS } from "@/lib/motion";
 import { STUDIO_NAME } from "@/lib/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
 import type { MediaData, ProjectData, SlideData } from "@/sanity/lib/cachedQueries";
+import { sanityImageIntrinsicDimensions } from "@/sanity/lib/sanityImageUrl";
 
 import styles from "./Slideshow.module.scss";
 
@@ -25,6 +26,17 @@ const SWIPE_THRESHOLD = 40;
 
 function thumbImage(media?: MediaData | null) {
   return media?.mediaType === "video" ? media.poster : media?.image;
+}
+
+/**
+ * Slides fill the height between header and thumbnails (the viewport less 100px), so on
+ * desktop an image is shown at that height × its aspect ratio wide (or narrower, on a
+ * narrow screen) — not the full viewport width. Phones show slides full width.
+ */
+function slideSizes(media?: MediaData | null): string {
+  const { width, height } = sanityImageIntrinsicDimensions(media?.image);
+  const ratio = width / height;
+  return `(max-width: 768px) 100vw, calc((100vh - 100px) * ${ratio.toFixed(3)})`;
 }
 
 function hasInfo(project: ProjectData) {
@@ -112,10 +124,15 @@ export function Slideshow({ project }: SlideshowProps) {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") {
-        go(1);
-      } else if (event.key === "ArrowLeft") {
-        go(-1);
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        // A key press puts whatever was last clicked (a slide half, a thumbnail, Info) into
+        // keyboard-focus mode and draws its focus ring; the arrows shouldn't, so let go of it.
+        // Tabbing through the controls still shows focus as normal.
+        const focused = document.activeElement;
+        if (focused instanceof HTMLElement && focused !== document.body) {
+          focused.blur();
+        }
+        go(event.key === "ArrowRight" ? 1 : -1);
       } else if (event.key === "Escape") {
         close();
       }
@@ -215,7 +232,7 @@ export function Slideshow({ project }: SlideshowProps) {
                 item.kind === "media" ? (
                   <MediaSlide
                     slide={item.slide}
-                    priority={i === 0}
+                    preload={i === 0}
                     active={isCurrent && stageVisible}
                   />
                 ) : (
@@ -256,7 +273,7 @@ export function Slideshow({ project }: SlideshowProps) {
                 show(i);
               }}
             >
-              <SanityImage image={image} sizes="120px" className={styles.thumbImage} />
+              <SanityImage image={image} sizes="80px" className={styles.thumbImage} />
             </button>
           );
         })}
@@ -267,11 +284,11 @@ export function Slideshow({ project }: SlideshowProps) {
 
 function MediaSlide({
   slide,
-  priority,
+  preload,
   active,
 }: {
   slide: SlideData;
-  priority: boolean;
+  preload: boolean;
   active: boolean;
 }) {
   return (
@@ -279,8 +296,8 @@ function MediaSlide({
       media={slide.media}
       className={styles.media}
       fit="contain"
-      sizes="100vw"
-      priority={priority}
+      sizes={slideSizes(slide.media)}
+      preload={preload}
       active={active}
     />
   );

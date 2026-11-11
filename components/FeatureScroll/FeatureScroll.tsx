@@ -20,7 +20,10 @@ export function FeatureScroll({ features }: FeatureScrollProps) {
       {features.map((feature, index) => {
         const isPair = feature.layout === "pair";
         const href = feature.slug ? `/projects/${feature.slug}` : null;
-        const priority = index === 0;
+        // Only the desktop image is preloaded: a preload ignores CSS, so preloading the
+        // mobile version too would download both everywhere. The mobile one still loads
+        // straight away on phones, as it's in view.
+        const preload = index === 0;
         const content = (
           <>
             <div
@@ -30,7 +33,7 @@ export function FeatureScroll({ features }: FeatureScrollProps) {
                 media={feature.media}
                 className={styles.media}
                 sizes={isPair ? "50vw" : "100vw"}
-                priority={priority}
+                preload={preload}
               />
               {isPair ? (
                 <Media media={feature.secondMedia} className={styles.media} sizes="50vw" />
@@ -40,7 +43,6 @@ export function FeatureScroll({ features }: FeatureScrollProps) {
               media={feature.mobileMedia?.mediaType ? feature.mobileMedia : feature.media}
               className={styles.mobile}
               sizes="100vw"
-              priority={priority}
             />
             {feature.title ? <span className={styles.caption}>{feature.title}</span> : null}
           </>

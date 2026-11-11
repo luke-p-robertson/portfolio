@@ -15,15 +15,12 @@ const nextConfig: NextConfig = {
     includePaths: [path.join(process.cwd(), "node_modules")],
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.sanity.io",
-      },
-    ],
+    // Every image is resized and encoded by Sanity's CDN (lib/sanityImageLoader.ts), not
+    // by Vercel's image optimiser.
+    loader: "custom",
+    loaderFile: "./lib/sanityImageLoader.ts",
     deviceSizes: [640, 750, 828, 1080, 1200, 1280, 1920, 2560],
-    imageSizes: [256, 384, 480, 640, 750, 828, 960, 1080, 1200],
-    qualities: [100],
+    imageSizes: [96, 160, 256, 384, 480, 640, 750, 828, 960, 1080, 1200],
   },
   async headers() {
     return [
