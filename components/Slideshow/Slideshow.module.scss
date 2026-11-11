@@ -106,33 +106,22 @@
   }
 }
 
-/** Contained media: the whole frame, between the header and the thumbnails. */
-.contained {
+/**
+ * Every slide's image or video fills the height between the header and the thumbnails;
+ * its width follows its own aspect ratio, centred (only a very wide image on a narrow
+ * screen is limited by the width instead).
+ */
+.media {
   position: absolute;
   top: variables.$space-m;
   right: variables.$page-margin;
-  bottom: calc(#{variables.$thumb-height} + #{variables.$space-xs});
+  bottom: calc(#{variables.$thumb-height} + #{variables.$thumb-gap});
   left: variables.$page-margin;
 
   @include layout.mobile {
     right: 0;
     bottom: calc(#{variables.$space-m} + 2 * #{variables.$slide-lift-mobile});
     left: 0;
-  }
-}
-
-.fullBleed {
-  position: absolute;
-  inset: 0;
-
-  /** Phones show every slide whole and full width, as in the mobile design. */
-  @include layout.mobile {
-    inset: variables.$space-m 0 calc(#{variables.$space-m} + 2 * #{variables.$slide-lift-mobile});
-
-    img,
-    video {
-      object-fit: contain;
-    }
   }
 }
 
@@ -226,7 +215,7 @@
 
 .counter {
   position: absolute;
-  bottom: variables.$page-margin;
+  bottom: variables.$counter-bottom-mobile;
   left: 50%;
   z-index: 3;
   transform: translateX(-50%);

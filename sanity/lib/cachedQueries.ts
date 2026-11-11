@@ -62,7 +62,6 @@ export type ProjectIndexData = {
 
 export type SlideData = {
   _key: string;
-  size?: "contained" | "fullBleed" | null;
   media?: MediaData | null;
 };
 
@@ -111,7 +110,7 @@ export type SiteSettingsData = {
 export const SANITY_CACHE_TAG = "sanity";
 
 /** Bump when GROQ projections change so `unstable_cache` does not serve stale shapes. */
-const SANITY_CACHE_KEY_VERSION = "3";
+const SANITY_CACHE_KEY_VERSION = "4";
 
 async function fetchSanity<T>(
   query: string,

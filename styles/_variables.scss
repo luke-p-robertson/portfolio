@@ -13,11 +13,26 @@ $studio-background: #101112;
 // the right value per breakpoint. Never hardcode a px gap — pick a step.
 // Measured from the 1280 / 402 Figma frames; awaiting Joshua's OK on the snapping.
 $spacing: (
-  "xs": (8px, 8px),
-  "s": (15px, 20px),
-  "m": (44px, 44px),
-  "l": (102px, 44px),
-  "xl": (188px, 132px),
+  "xs": (
+    8px,
+    8px,
+  ),
+  "s": (
+    15px,
+    20px,
+  ),
+  "m": (
+    44px,
+    44px,
+  ),
+  "l": (
+    102px,
+    44px,
+  ),
+  "xl": (
+    188px,
+    132px,
+  ),
 );
 
 $space-xs: var(--space-xs);
@@ -36,6 +51,8 @@ $mobile-index-gap: 41px;
 /** The header sits 12px from the top on desktop, 15px on mobile (sides use the page margin). */
 $header-top: 12px;
 $header-top-mobile: 15px;
+/** The mobile slide counter ("1/18") sits this far above the bottom of the screen. */
+$counter-bottom-mobile: 25px;
 /** The profile and info text column (column 7 onwards) stops short of the margin. */
 $text-column-width: 579px;
 /** Mobile slides centre this far above the middle of the screen. */
@@ -43,8 +60,9 @@ $slide-lift-mobile: 20px;
 
 // Media
 $aspect-card: unquote("4 / 5");
-/** Slideshow thumbnail strip height. */
+/** Slideshow thumbnail strip height, and the gap between a slide's image and the strip. */
 $thumb-height: 50px;
+$thumb-gap: 6px;
 
 // Components / z-index
 $z-header: 50;
@@ -53,10 +71,10 @@ $z-intro: 200;
 
 // Motion
 $transition-duration: 0.2s;
-/** The one crossfade timing: slides, headline, intro, pages, index thumbnails. */
+/** The one crossfade timing: slides, headline, intro, pages, index thumbnails. Keep equal to FADE_MS in lib/motion.ts. */
 $fade-duration: 0.6s;
 /** Delay between each index thumbnail fading in. */
-$stagger-step: 0.05s;
+$stagger-step: 0.09s;
 
 //  Breakpoints
 $mq-desktop-min: 1024px;

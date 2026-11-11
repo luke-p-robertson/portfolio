@@ -11,6 +11,7 @@
   object-fit: cover;
 }
 
-.contain {
+/** Beats SanityImage's own `cover` whatever order the stylesheets load in. */
+.box .contain {
   object-fit: contain;
 }

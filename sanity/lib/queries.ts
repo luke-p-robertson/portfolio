@@ -79,7 +79,6 @@ export const PROJECT_QUERY = groq`*[${visibleProject} && slug.current == $slug][
   textColor,
   slides[_type == "slideMedia"]{
     _key,
-    size,
     media { ${mediaProjection} }
   },
   scope,

@@ -47,36 +47,59 @@
   justify-self: start;
 }
 
+/** The middle column sits between two equal ones, so the title is centred on the page. */
 .center {
   position: relative;
   grid-column: 2;
   grid-row: 1;
   text-align: center;
+  white-space: nowrap;
 }
 
 /**
- * "for <project>" hangs off the name so the name never moves: beside it on desktop,
- * on the line below on mobile (as in the mobile design).
+ * Parts of the centred title that come and go ("for <project>"; on mobile "Luke Robertson
+ * Studio" ↔ "LR.S"). Each opens or closes its width as it fades, so the title widens or
+ * narrows smoothly and stays centred instead of jumping.
  */
-.suffix {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  white-space: nowrap;
+.collapse {
+  display: inline-grid;
+  grid-template-columns: 0fr;
+  vertical-align: top;
+  opacity: 0;
+  transition:
+    grid-template-columns variables.$fade-duration ease-out,
+    opacity variables.$fade-duration ease-out;
 
-  &::before {
-    content: "\00a0";
+  > * {
+    min-width: 0;
+    overflow: hidden;
+  }
+}
+
+.open {
+  grid-template-columns: 1fr;
+  opacity: 1;
+}
+
+/** Mobile project pages abbreviate the name to "LR.S" (Figma: "LR.S for By No Means"). */
+.nameFull {
+  @extend .open;
+}
+
+@include layout.mobile {
+  .onProject .nameFull {
+    grid-template-columns: 0fr;
+    opacity: 0;
   }
 
-  @include layout.mobile {
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    &::before {
-      content: none;
-    }
+  .onProject .nameShort {
+    grid-template-columns: 1fr;
+    opacity: 1;
   }
+}
+
+.space {
+  white-space: pre;
 }
 
 .right {

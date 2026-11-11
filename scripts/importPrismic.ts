@@ -168,12 +168,10 @@ async function upload(kind: "image" | "file", url: string): Promise<string> {
 
 async function slideFor(doc: PrismicSlide) {
   const { data } = doc;
-  const size = data.orientation === "Constrained" ? "contained" : "fullBleed";
   if (data.media_type === "Video" && data.video?.url) {
     return {
       _type: "slideMedia",
       _key: key(),
-      size,
       media: {
         _type: "media",
         mediaType: "video",
@@ -185,7 +183,6 @@ async function slideFor(doc: PrismicSlide) {
     return {
       _type: "slideMedia",
       _key: key(),
-      size,
       media: {
         _type: "media",
         mediaType: "image",

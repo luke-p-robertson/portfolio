@@ -5,19 +5,20 @@ import { usePathname } from "next/navigation";
 import { useCallback, useState, type CSSProperties } from "react";
 
 import { Overlay, overlayItemClass } from "@/components/Overlay/Overlay";
-import { STUDIO_NAME } from "@/lib/navigation";
+import { STUDIO_NAME, STUDIO_SHORT_NAME } from "@/lib/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
 
 import { Crossfade } from "./Crossfade";
 import { useHeader } from "./HeaderContext";
 import styles from "./SiteHeader.module.scss";
+import { TitleSuffix } from "./TitleSuffix";
 import { useCloseProject } from "./useCloseProject";
 
 /**
  * The one site header, kept in the site layout so it never disappears between pages.
  * "Luke Robertson Studio" stays put; the slots that change by page crossfade:
  *  - desktop: Projects (+ Filter on the index) ↔ Close on the left, Profile ↔ Info on the
- *    right, and "for <project>" beside the name on a project;
+ *    right, and "for <project>" after the name on a project, the whole title centred;
  *  - mobile: Menu ↔ Close on the left, Filter (index) or Info (project) on the right.
  */
 export function SiteHeader() {
@@ -103,16 +104,16 @@ export function SiteHeader() {
           ) : null}
         </Crossfade>
 
-        <div className={styles.center}>
-          <Link href="/" onClick={closeMenu}>
-            {STUDIO_NAME}
+        <div className={[styles.center, onProject ? styles.onProject : null].filter(Boolean).join(" ")}>
+          <Link href="/" onClick={closeMenu} aria-label={STUDIO_NAME}>
+            <span className={`${styles.collapse} ${styles.nameFull}`}>
+              <span>{STUDIO_NAME}</span>
+            </span>
+            <span className={`${styles.collapse} ${styles.nameShort}`} aria-hidden>
+              <span>{STUDIO_SHORT_NAME}</span>
+            </span>
           </Link>
-          <Crossfade
-            itemKey={onProject && project ? `for:${project.title}` : "none"}
-            className={styles.suffix}
-          >
-            {onProject && project ? <span>for {project.title}</span> : null}
-          </Crossfade>
+          <TitleSuffix title={onProject && project?.title ? project.title : null} />
         </div>
 
         <div className={styles.right}>

@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import styles from "./SiteHeader.module.scss";
+import { FADE_MS } from "@/lib/motion";
 
-/** Matches `$fade-duration` in styles/_variables.scss. */
-const FADE_MS = 600;
+import styles from "./SiteHeader.module.scss";
 
 type Shown = { key: string; node: React.ReactNode };
 

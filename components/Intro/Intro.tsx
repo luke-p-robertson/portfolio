@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import { INTRO_SEEN_KEY } from "@/lib/navigation";
+import { FADE_MS, SPLASH_MS } from "@/lib/motion";
+import { INTRO_SEEN_KEY, STUDIO_SHORT_NAME } from "@/lib/navigation";
 
 import styles from "./Intro.module.scss";
 
-/** How long "LR.S" holds before fading into the featured scroll. */
-const HOLD_MS = 1400;
-/** Matches `$fade-duration`. */
-const FADE_MS = 600;
 
 /**
  * The "LR.S" splash: shown once per session on the homepage, then fades away. Click skips it.
@@ -30,7 +27,7 @@ export function Intro() {
       return;
     }
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const leave = window.setTimeout(() => setPhase("leaving"), reduced ? 0 : HOLD_MS);
+    const leave = window.setTimeout(() => setPhase("leaving"), reduced ? 0 : SPLASH_MS);
     return () => window.clearTimeout(leave);
   }, []);
 
@@ -57,7 +54,7 @@ export function Intro() {
       onClick={() => setPhase("leaving")}
       aria-hidden
     >
-      <span className={styles.mark}>LR.S</span>
+      <span className={styles.mark}>{STUDIO_SHORT_NAME}</span>
     </div>
   );
 }

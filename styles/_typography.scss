@@ -12,10 +12,11 @@ $display-font: var(--font-display, "Times New Roman"), "Times New Roman", Times,
 $small-font: var(--font-small, "Helvetica Neue"), "Helvetica Neue", Helvetica, Arial, sans-serif;
 $main-font-weight: 400;
 
-// Type scale (Figma: 14/20 small, 22/28 body, 48 statement, 240 mark; mobile 14/19,
+// Type scale (Figma: 14/20 small, 22/28 body, 48 statement, 240 mark; mobile 13/19,
 // 18/24, 32, 85)
 $detail-size: 14px;
 $detail-line-height: 20px;
+$detail-size-mobile: 13px;
 $detail-line-height-mobile: 19px;
 $body-size: 22px;
 $body-line-height: 28px;
@@ -44,6 +45,7 @@ $tracking-tight: -0.01em;
   letter-spacing: $tracking-tight;
 
   @media (max-width: variables.$mq-mobile-max) {
+    font-size: $detail-size-mobile;
     line-height: $detail-line-height-mobile;
   }
 }

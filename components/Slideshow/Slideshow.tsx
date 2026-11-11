@@ -7,6 +7,7 @@ import { Media } from "@/components/Media/Media";
 import { SanityImage } from "@/components/SanityImage/SanityImage";
 import { useProjectHeader } from "@/components/SiteHeader/HeaderContext";
 import { useCloseProject } from "@/components/SiteHeader/useCloseProject";
+import { FADE_MS, PROJECT_INTRO_MS } from "@/lib/motion";
 import { STUDIO_NAME } from "@/lib/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
 import type { MediaData, ProjectData, SlideData } from "@/sanity/lib/cachedQueries";
@@ -21,10 +22,6 @@ type Item = { kind: "media"; key: string; slide: SlideData } | { kind: "info"; k
 
 /** A swipe shorter than this (px) is treated as a tap. */
 const SWIPE_THRESHOLD = 40;
-/** How long the headline holds before fading to the first slide. */
-const HEADLINE_HOLD_MS = 2800;
-/** Matches `$fade-duration` in styles/_variables.scss. */
-const FADE_MS = 600;
 
 function thumbImage(media?: MediaData | null) {
   return media?.mediaType === "video" ? media.poster : media?.image;
@@ -104,7 +101,7 @@ export function Slideshow({ project }: SlideshowProps) {
   // Headline: hold, fade out (crossfading to the first slide), then unmount.
   useEffect(() => {
     if (intro === "showing") {
-      const timer = window.setTimeout(() => setIntro("leaving"), HEADLINE_HOLD_MS);
+      const timer = window.setTimeout(() => setIntro("leaving"), PROJECT_INTRO_MS);
       return () => window.clearTimeout(timer);
     }
     if (intro === "leaving") {
@@ -229,29 +226,6 @@ export function Slideshow({ project }: SlideshowProps) {
           );
         })}
 
-        <nav className={styles.thumbs} aria-label="Slides">
-          {items.map((item, i) => {
-            if (item.kind !== "media") {
-              return null;
-            }
-            const image = thumbImage(item.slide.media);
-            if (!image?.asset) {
-              return null;
-            }
-            return (
-              <button
-                key={item.key}
-                type="button"
-                className={styles.thumb}
-                aria-current={i === index}
-                aria-label={`Slide ${i + 1}`}
-                onClick={() => show(i)}
-              >
-                <SanityImage image={image} sizes="120px" className={styles.thumbImage} />
-              </button>
-            );
-          })}
-        </nav>
 
         {count > 0 ? (
           <p className={styles.counter} aria-live="polite">
@@ -259,6 +233,34 @@ export function Slideshow({ project }: SlideshowProps) {
           </p>
         ) : null}
       </div>
+
+      {/* Outside the stage: visible (all dimmed) while the intro card shows, as in the design. */}
+      <nav className={styles.thumbs} aria-label="Slides">
+        {items.map((item, i) => {
+          if (item.kind !== "media") {
+            return null;
+          }
+          const image = thumbImage(item.slide.media);
+          if (!image?.asset) {
+            return null;
+          }
+          return (
+            <button
+              key={item.key}
+              type="button"
+              className={styles.thumb}
+              aria-current={stageVisible && i === index}
+              aria-label={`Slide ${i + 1}`}
+              onClick={() => {
+                skipIntro();
+                show(i);
+              }}
+            >
+              <SanityImage image={image} sizes="120px" className={styles.thumbImage} />
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }
@@ -272,12 +274,11 @@ function MediaSlide({
   priority: boolean;
   active: boolean;
 }) {
-  const fullBleed = slide.size === "fullBleed";
   return (
     <Media
       media={slide.media}
-      className={fullBleed ? styles.fullBleed : styles.contained}
-      fit={fullBleed ? "cover" : "contain"}
+      className={styles.media}
+      fit="contain"
       sizes="100vw"
       priority={priority}
       active={active}
