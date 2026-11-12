@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { SanityStudioRouteMark } from "@/components/SanityStudioRouteMark/SanityStudioRouteMark";
+import { SiteCreditConsole } from "@/components/SiteCredit/SiteCreditConsole";
+import { STUDIO_CREDIT } from "@/lib/siteCredit";
 import { INTRO_SEEN_KEY } from "@/lib/navigation";
 import { SITE_URL } from "@/lib/siteUrl";
 
@@ -20,7 +22,26 @@ export const metadata: Metadata = {
  * A plain inline <script>, not next/script: `beforeInteractive` inline code is queued
  * and runs after first paint, which let the intro flash on every reload.
  */
-const beforePaintScript = `(function(){try{var d=document.documentElement,p=location.pathname||"";if(p==="/cms"||p.indexOf("/cms/")===0){d.setAttribute("data-sanity-studio","");}if(sessionStorage.getItem(${JSON.stringify(INTRO_SEEN_KEY)})){d.setAttribute("data-intro-seen","");}}catch(e){}})();`;
+const beforePaintScript = `/* Site design & development by ${STUDIO_CREDIT.name} — ${STUDIO_CREDIT.url} */
+(function(){try{var d=document.documentElement,p=location.pathname||"";if(p==="/cms"||p.indexOf("/cms/")===0){d.setAttribute("data-sanity-studio","");}if(sessionStorage.getItem(${JSON.stringify(INTRO_SEEN_KEY)})){d.setAttribute("data-intro-seen","");}}catch(e){}})();`;
+
+/**
+ * The site as a schema.org WebSite, credited to the studio that built it. `creator` sits on
+ * the WebSite (not on Luke's organisation) so search engines and AI agents attribute the
+ * site's design and build, not the brand.
+ */
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Luke Robertson Studio",
+  url: SITE_URL,
+  creator: {
+    "@type": "Organization",
+    name: STUDIO_CREDIT.name,
+    url: STUDIO_CREDIT.url,
+    sameAs: STUDIO_CREDIT.sameAs,
+  },
+};
 
 export default function RootLayout({
   children,
@@ -30,7 +51,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Starts with the studio credit comment, for anyone viewing source. */}
         <script dangerouslySetInnerHTML={{ __html: beforePaintScript }} />
+        <link rel="author" href={STUDIO_CREDIT.url} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         {/*
           The licensed fonts' @font-face rules, served as a static file so their license
           notice is kept verbatim (a bundled stylesheet would have it minified away).
@@ -55,6 +82,7 @@ export default function RootLayout({
       </head>
       <body>
         <SanityStudioRouteMark />
+        <SiteCreditConsole />
         {children}
       </body>
     </html>

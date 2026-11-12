@@ -53,15 +53,18 @@
   }
 }
 
+/**
+ * "Site by AP", pinned to the bottom-left of the viewport: the page margin from the side,
+ * and the header's distance from the edge at the bottom, mirroring "Projects" up top.
+ */
 .credit {
-  grid-row: 2;
-  grid-column: 1 / span 6;
-  margin-top: variables.$space-l;
+  position: fixed;
+  bottom: variables.$header-top;
+  left: variables.$page-margin;
+  z-index: variables.$z-header;
   color: variables.$grey;
 
   @include layout.mobile {
-    grid-row: 3;
-    grid-column: 1 / -1;
-    margin-top: 0;
+    bottom: variables.$header-top-mobile;
   }
 }
