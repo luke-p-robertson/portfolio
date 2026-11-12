@@ -1,7 +1,7 @@
 /**
  * One-off: the project info from the Figma examples (Nov 11 design), word for word —
- * descriptions, scope, credits and the index labels (disciplines). Typos in the design copy
- * are kept as they are for Luke to correct in the Studio.
+ * descriptions, scope, credits and the index labels (disciplines), with the design copy's
+ * typos corrected.
  *
  *   npx sanity exec scripts/migrations/2026-11-seed-figma-project-info.ts --with-user-token
  */
@@ -60,8 +60,8 @@ async function main() {
         credit("Photography", "Paul Rousteau", "Lydia Roberts", "Christophe Goussard", "Charlotte Kreiger"),
       ],
       description: blocks(
-        "Château d’Yquem is a legendary wine, attributed the esteemed title Premier Cru Supérieur in 1855 and grown in an outstanding terroir in the sauternes appellation which has unique climate conditions and geological features. The LVMH group acquired the estate in 1999, with the continued desire to continue writing the legendary Yquem story, both in keeping with tradition and remaining open to modern advances.",
-        "We were approached by Château d’Yquem with a mandate to help it reclaim it’s own sense of style and evolve it’s brand image which was increasingly suffering from generic tropes. Following our research and strategic work, we established new design principles for the brand which led to many key evolutions. We restored key historic brand assets, art directed and designed new packaging and marketing materials; bringing back craft as a central tenant to the brand. New photographers were commissioned to capture the truely artisanal spirit of Yquem.",
+        "Château d’Yquem is a legendary wine, attributed the esteemed title Premier Cru Supérieur in 1855 and grown in an outstanding terroir in the Sauternes appellation which has unique climate conditions and geological features. The LVMH group acquired the estate in 1999, with the continued desire to continue writing the legendary Yquem story, both in keeping with tradition and remaining open to modern advances.",
+        "We were approached by Château d’Yquem with a mandate to help it reclaim its own sense of style and evolve its brand image which was increasingly suffering from generic tropes. Following our research and strategic work, we established new design principles for the brand which led to many key evolutions. We restored key historic brand assets, art directed and designed new packaging and marketing materials; bringing back craft as a central tenet to the brand. New photographers were commissioned to capture the truly artisanal spirit of Yquem.",
       ),
     }),
   );
