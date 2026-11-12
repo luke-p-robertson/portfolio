@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 
 import { SITE_ORIGIN } from "./lib/siteUrl";
 import { SANITY_PROJECT_ID, SANITY_DATASET } from "./sanity/lib/projectId";
+import { IMAGE_QUALITY } from "./sanity/lib/sanityImageUrl";
 
 const nextConfig: NextConfig = {
   // Public, non-secret config baked in so the app runs without a per-developer `.env`.
@@ -21,6 +22,8 @@ const nextConfig: NextConfig = {
     loaderFile: "./lib/sanityImageLoader.ts",
     deviceSizes: [640, 750, 828, 1080, 1200, 1280, 1920, 2560],
     imageSizes: [96, 160, 256, 384, 480, 640, 750, 828, 960, 1080, 1200],
+    // next/image only accepts listed qualities, even with a custom loader.
+    qualities: [IMAGE_QUALITY],
   },
   async headers() {
     return [
