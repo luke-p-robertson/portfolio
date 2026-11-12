@@ -50,7 +50,7 @@ export const project = defineType({
       name: "discipline",
       title: "Discipline",
       type: "string",
-      description: "The grey line under the title in the index, e.g. Brand Identity, Website.",
+      description: "The gray line under the title in the index, e.g. Brand Identity, Website.",
       group: "general",
     }),
     defineField({
@@ -72,7 +72,7 @@ export const project = defineType({
     }),
     defineField({
       name: "backgroundColor",
-      title: "Background colour",
+      title: "Background color",
       type: "string",
       description: "Hex code for the project page, e.g. #141414. Leave empty for white.",
       validation: hexColor,
@@ -80,7 +80,7 @@ export const project = defineType({
     }),
     defineField({
       name: "textColor",
-      title: "Text colour",
+      title: "Text color",
       type: "string",
       description: "Hex code for the header, counter and info text, e.g. #ffffff. Leave empty for black.",
       validation: hexColor,

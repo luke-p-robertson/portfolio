@@ -50,7 +50,7 @@ function hasInfo(project: ProjectData) {
  * slides crossfade one at a time and loop, with the info (scope, credits, description) as
  * the last one. Step with the arrow keys, the thumbnails, by clicking either half of the
  * screen, or on phones by tapping (forward) or swiping. Close, the title and Info live in
- * the persistent site header, which this lends its title, colour and Info action.
+ * the persistent site header, which this lends its title, color and Info action.
  */
 export function Slideshow({ project }: SlideshowProps) {
   const close = useCloseProject();

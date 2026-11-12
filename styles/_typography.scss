@@ -58,7 +58,7 @@ $tracking-tight: -0.01em;
   }
 }
 
-/** Centred statement slide. */
+/** Centered statement slide. */
 @mixin statement {
   @include font-base;
   font-size: $statement-size;

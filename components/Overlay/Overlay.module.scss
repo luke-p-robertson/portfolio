@@ -28,7 +28,7 @@
 
 /** A choice in a list where one is selected (the filter). */
 .option {
-  color: variables.$grey;
+  color: variables.$gray;
   transition: color variables.$transition-duration;
 
   &:hover,

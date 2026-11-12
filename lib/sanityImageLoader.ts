@@ -6,7 +6,7 @@ import { IMAGE_QUALITY } from "@/sanity/lib/sanityImageUrl";
  * next/image loader (next.config.ts `images.loaderFile`): every image is already a Sanity
  * CDN URL (with any Studio crop), and Sanity resizes, re-encodes (AVIF/WebP by browser)
  * and caches it at the edge. So images go straight to Sanity at the width the browser
- * picked from `sizes`, encoded once — rather than through Vercel's optimiser as well.
+ * picked from `sizes`, encoded once — rather than through Vercel's optimizer as well.
  */
 export default function sanityImageLoader({
   src,

@@ -2,7 +2,7 @@
 @use "@/styles/_typography.scss" as typography;
 @use "@/styles/_layout.scss" as layout;
 
-/** Colours come from the project (`--project-background`, `--project-text`), white/black by default. */
+/** Colors come from the project (`--project-background`, `--project-text`), white/black by default. */
 .root {
   position: fixed;
   inset: 0;
@@ -108,7 +108,7 @@
 
 /**
  * Every slide's image or video fills the height between the header and the thumbnails;
- * its width follows its own aspect ratio, centred (only a very wide image on a narrow
+ * its width follows its own aspect ratio, centered (only a very wide image on a narrow
  * screen is limited by the width instead).
  */
 .media {
@@ -165,7 +165,7 @@
 
 .label {
   display: block;
-  color: variables.$grey;
+  color: variables.$gray;
 }
 
 .description {

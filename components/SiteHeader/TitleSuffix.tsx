@@ -5,7 +5,7 @@ import { useState } from "react";
 import styles from "./SiteHeader.module.scss";
 
 /**
- * " for <project>" after the studio name. The whole title stays centred on the page: the
+ * " for <project>" after the studio name. The whole title stays centered on the page: the
  * suffix opens its width as it fades in (and closes as it fades out), so the name glides
  * aside rather than jumping.
  */

@@ -3,7 +3,7 @@
  *
  *   npx sanity exec scripts/importPrismic.ts --with-user-token
  *
- * Prismic held one document per slide (86 of them, each with its own colours and link),
+ * Prismic held one document per slide (86 of them, each with its own colors and link),
  * so they are grouped by client into real projects here. Every image and video is copied
  * into Sanity. Projects in the new design are visible; the rest are imported hidden for
  * Luke to review. Re-running replaces the same documents (ids are derived from the slug)

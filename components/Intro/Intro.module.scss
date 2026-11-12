@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  // The mark sits slightly above centre, as in the Figma splash frames.
+  // The mark sits slightly above center, as in the Figma splash frames.
   padding-bottom: calc(2 * #{variables.$mark-lift});
   background: variables.$white;
   color: variables.$text;

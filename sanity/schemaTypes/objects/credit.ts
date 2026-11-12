@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-/** A labelled group of names on a project's info slide, e.g. Photography → Annika Kafcaloudis. */
+/** A labeled group of names on a project's info slide, e.g. Photography → Annika Kafcaloudis. */
 export const credit = defineType({
   name: "credit",
   title: "Credit",

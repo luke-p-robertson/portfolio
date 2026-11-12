@@ -1,8 +1,10 @@
-// Colors (Figma: black, white, and the #8e8e8e label grey)
+@use "sass:string";
+
+// Colors (Figma: black, white, and the #8e8e8e label gray)
 $white: #ffffff;
 $black: #000000;
 $text: $black;
-$grey: #8e8e8e;
+$gray: #8e8e8e;
 /** Inactive slideshow thumbnails. */
 $thumb-inactive-opacity: 0.3;
 /** Embedded Sanity Studio at /cms. */
@@ -55,11 +57,11 @@ $header-top-mobile: 15px;
 $counter-bottom-mobile: 25px;
 /** The profile and info text column (column 7 onwards) stops short of the margin. */
 $text-column-width: 579px;
-/** Mobile slides centre this far above the middle of the screen. */
+/** Mobile slides center this far above the middle of the screen. */
 $slide-lift-mobile: 20px;
 
 // Media
-$aspect-card: unquote("4 / 5");
+$aspect-card: string.unquote("4 / 5");
 /** Slideshow thumbnail strip height, and the gap between a slide's image and the strip. */
 $thumb-height: 50px;
 $thumb-gap: 6px;

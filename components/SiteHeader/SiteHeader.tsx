@@ -18,7 +18,7 @@ import { useCloseProject } from "./useCloseProject";
  * The one site header, kept in the site layout so it never disappears between pages.
  * "Luke Robertson Studio" stays put; the slots that change by page crossfade:
  *  - desktop: Projects (+ Filter on the index) ↔ Close on the left, Profile ↔ Info on the
- *    right, and "for <project>" after the name on a project, the whole title centred;
+ *    right, and "for <project>" after the name on a project, the whole title centered;
  *  - mobile: Menu ↔ Close on the left, Filter (index) or Info (project) on the right.
  */
 export function SiteHeader() {

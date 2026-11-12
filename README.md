@@ -32,7 +32,7 @@ secret as that deployment's `SANITY_REVALIDATE_SECRET` in Vercel:
 
 All images are served from Sanity's CDN through a custom `next/image` loader
 (`lib/sanityImageLoader.ts`): Sanity resizes, crops, picks AVIF/WebP and caches them, so
-Vercel's image optimiser isn't used. Quality is `IMAGE_QUALITY` in
+Vercel's image optimizer isn't used. Quality is `IMAGE_QUALITY` in
 `sanity/lib/sanityImageUrl.ts`.
 
 ## Pages

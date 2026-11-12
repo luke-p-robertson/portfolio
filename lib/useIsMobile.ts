@@ -11,7 +11,7 @@ function subscribe(onChange: () => void) {
   return () => query.removeEventListener("change", onChange);
 }
 
-/** True at phone widths, for behaviour that differs by layout (not styling). False on the server. */
+/** True at phone widths, for behavior that differs by layout (not styling). False on the server. */
 export function useIsMobile(): boolean {
   return useSyncExternalStore(
     subscribe,

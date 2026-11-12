@@ -29,12 +29,12 @@
   mix-blend-mode: difference;
 }
 
-/** On a project the header takes the project's text colour (black by default). */
+/** On a project the header takes the project's text color (black by default). */
 .project {
   color: var(--header-color, #{variables.$text});
 }
 
-/** Above an overlay the header sits on plain white, so it uses the text colour. */
+/** Above an overlay the header sits on plain white, so it uses the text color. */
 .solid {
   z-index: variables.$z-overlay + 1;
   color: variables.$text;
@@ -47,7 +47,7 @@
   justify-self: start;
 }
 
-/** The middle column sits between two equal ones, so the title is centred on the page. */
+/** The middle column sits between two equal ones, so the title is centered on the page. */
 .center {
   position: relative;
   grid-column: 2;
@@ -57,9 +57,9 @@
 }
 
 /**
- * Parts of the centred title that come and go ("for <project>"; on mobile "Luke Robertson
+ * Parts of the centered title that come and go ("for <project>"; on mobile "Luke Robertson
  * Studio" ↔ "LR.S"). Each opens or closes its width as it fades, so the title widens or
- * narrows smoothly and stays centred instead of jumping.
+ * narrows smoothly and stays centered instead of jumping.
  */
 .collapse {
   display: inline-grid;

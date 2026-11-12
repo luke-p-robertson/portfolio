@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-/** A paragraph of the profile text, with an optional grey heading (Approach, Network). */
+/** A paragraph of the profile text, with an optional gray heading (Approach, Network). */
 export const profileSection = defineType({
   name: "profileSection",
   title: "Section",
@@ -23,7 +23,7 @@ export const profileSection = defineType({
   },
 });
 
-/** A labelled list on the profile page (Enquiries, Follow, Services…). */
+/** A labeled list on the profile page (Enquiries, Follow, Services…). */
 export const profileDetail = defineType({
   name: "profileDetail",
   title: "Detail",

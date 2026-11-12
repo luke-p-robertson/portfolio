@@ -26,7 +26,7 @@
 
 /**
  * Thumbnails fade in one after another from the top left (`--i` is the card's position).
- * Desktop rows of three, each three columns wide: flush left, centred, flush right.
+ * Desktop rows of three, each three columns wide: flush left, centered, flush right.
  */
 .card {
   grid-column: span 2;
@@ -38,7 +38,7 @@
       grid-column: 1 / span 3;
     }
 
-    // Columns 4–9 hold the middle card at half their width: three columns, centred.
+    // Columns 4–9 hold the middle card at half their width: three columns, centered.
     &:nth-child(3n + 2) {
       grid-column: 4 / span 6;
       justify-self: center;
@@ -80,12 +80,12 @@
 
 .discipline {
   display: block;
-  color: variables.$grey;
+  color: variables.$gray;
 }
 
 .empty {
   grid-column: 1 / -1;
-  color: variables.$grey;
+  color: variables.$gray;
 
   @include layout.mobile {
     grid-column: 1 / -1;

@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     // Every image is resized and encoded by Sanity's CDN (lib/sanityImageLoader.ts), not
-    // by Vercel's image optimiser.
+    // by Vercel's image optimizer.
     loader: "custom",
     loaderFile: "./lib/sanityImageLoader.ts",
     deviceSizes: [640, 750, 828, 1080, 1200, 1280, 1920, 2560],

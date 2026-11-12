@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 /** What the current project page lends the header. */
 export type ProjectHeader = {
   title: string;
-  /** The project's text colour, if set. */
+  /** The project's text color, if set. */
   textColor?: string | null;
   /** Jumps to the info slide; absent when the project has no info. */
   onInfo?: (() => void) | null;
@@ -48,7 +48,7 @@ export function useHeader(): HeaderContextValue {
   return value;
 }
 
-/** Lends the header a project's title, colour and Info action while the page is mounted. */
+/** Lends the header a project's title, color and Info action while the page is mounted. */
 export function useProjectHeader(project: ProjectHeader) {
   const { setProject } = useHeader();
   const { title, textColor, onInfo } = project;

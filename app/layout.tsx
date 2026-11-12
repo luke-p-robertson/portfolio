@@ -27,7 +27,7 @@ const beforePaintScript = `/* Site design & development by ${STUDIO_CREDIT.name}
 
 /**
  * The site as a schema.org WebSite, credited to the studio that built it. `creator` sits on
- * the WebSite (not on Luke's organisation) so search engines and AI agents attribute the
+ * the WebSite (not on Luke's organization) so search engines and AI agents attribute the
  * site's design and build, not the brand.
  */
 const websiteJsonLd = {

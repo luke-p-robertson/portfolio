@@ -1,7 +1,7 @@
 /**
  * One-off: moves imported projects to the schema agreed on the Nov 4 call.
  *
- *   npx sanity exec scripts/migrations/2026-11-headline-colours.ts --with-user-token
+ *   npx sanity exec scripts/migrations/2026-11-headline-colors.ts --with-user-token
  *
  * - `theme` (light/dark) → `backgroundColor` / `textColor` hex codes. Only Thomas Pierre
  *   Jean was dark in the design (#141414 with white type); the rest keep the defaults.
