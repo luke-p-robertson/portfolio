@@ -12,7 +12,8 @@ type ProfileProps = {
 export function Profile({ data, siteCreditLink }: ProfileProps) {
   return (
     <main className={styles.page}>
-      {data?.columns?.map((column) => (
+      <div className={styles.grid}>
+        {data?.columns?.map((column) => (
         <div key={column._key} className={styles.column}>
           {column.details?.map((detail) => (
             <dl key={detail._key}>
@@ -29,13 +30,14 @@ export function Profile({ data, siteCreditLink }: ProfileProps) {
           ))}
         </div>
       ))}
-      <div className={styles.text}>
-        {data?.sections?.map((section) => (
-          <p key={section._key}>
-            {section.heading ? <span className={styles.label}>{section.heading}</span> : null}
-            {section.body}
-          </p>
-        ))}
+        <div className={styles.text}>
+          {data?.sections?.map((section) => (
+            <p key={section._key}>
+              {section.heading ? <span className={styles.label}>{section.heading}</span> : null}
+              {section.body}
+            </p>
+          ))}
+        </div>
       </div>
       {siteCreditLink ? (
         <p className={styles.credit}>

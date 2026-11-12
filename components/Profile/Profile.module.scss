@@ -2,10 +2,25 @@
 @use "@/styles/_typography.scss" as typography;
 @use "@/styles/_layout.scss" as layout;
 
+/**
+ * At least one screen tall, so the site credit can sit at the bottom of the screen when
+ * the content is short, and below the content when it scrolls.
+ */
 .page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding: variables.$space-xl 0 variables.$header-top;
+
+  @include layout.mobile {
+    padding-bottom: variables.$header-top-mobile;
+  }
+}
+
+.grid {
   @include layout.grid;
   align-items: start;
-  padding-block: variables.$space-xl;
 
   @include layout.mobile {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -54,17 +69,13 @@
 }
 
 /**
- * "Site by AP", pinned to the bottom-left of the viewport: the page margin from the side,
- * and the header's distance from the edge at the bottom, mirroring "Projects" up top.
+ * "Site by AP", bottom-left: the page margin from the side and, when the content is short,
+ * the header's distance from the bottom of the screen (mirroring "Projects" up top). The
+ * auto margin takes up the spare height; when the content is taller than the screen there
+ * is none, and the credit follows the content with the padding as its gap.
  */
 .credit {
-  position: fixed;
-  bottom: variables.$header-top;
-  left: variables.$page-margin;
-  z-index: variables.$z-header;
+  margin-top: auto;
+  padding: variables.$space-l variables.$page-margin 0;
   color: variables.$grey;
-
-  @include layout.mobile {
-    bottom: variables.$header-top-mobile;
-  }
 }
