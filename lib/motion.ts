@@ -16,3 +16,9 @@ export const FILTER_CLOSE_DELAY_MS = 300;
 
 /** How long the "LR.S" splash holds on the homepage before fading. */
 export const SPLASH_MS = 1400;
+
+/**
+ * The splash also waits for the first feature's images (or video) to finish loading, so
+ * they're already there when it fades, but never holds longer than this on a slow line.
+ */
+export const SPLASH_MAX_MS = 5000;

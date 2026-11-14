@@ -7,6 +7,7 @@ import {
   type SanityCropHotspotAsset,
 } from "@/sanity/lib/sanityImageUrl";
 
+import { ImagePreload } from "./ImagePreload";
 import styles from "./SanityImage.module.scss";
 
 type SanityImageProps = {
@@ -17,6 +18,11 @@ type SanityImageProps = {
   fill?: boolean;
   /** Fetch early: the first image a visitor sees on a page (Next 16's `preload`). */
   preload?: boolean;
+  /**
+   * With `preload`: only preload at this media query, e.g. when a desktop and a mobile copy
+   * of an image are both on the page and CSS shows one, so each screen fetches just its own.
+   */
+  preloadMedia?: string;
   alt?: string;
   className?: string;
 };
@@ -35,6 +41,7 @@ export function SanityImage({
   sizes,
   fill = false,
   preload = false,
+  preloadMedia,
   alt,
   className,
 }: SanityImageProps) {
@@ -46,33 +53,54 @@ export function SanityImage({
 
   const altText = image.alt?.trim() || alt || "";
 
-  if (fill) {
-    return (
-      <Image
-        className={[styles.cover, className].filter(Boolean).join(" ")}
+  // Next's own preload has no media query, so a breakpoint-only preload is made here from
+  // the same srcset the image will use. The image itself stays lazy, so the copy hidden at
+  // the other breakpoint never downloads; the visible one picks up the preloaded file.
+  const mediaPreload =
+    preload && preloadMedia ? (
+      <ImagePreload
         src={src}
-        alt={altText}
-        fill
         sizes={sizes}
         quality={IMAGE_QUALITY}
-        preload={preload}
-        style={{ objectPosition: hotspotPosition(image) }}
+        media={preloadMedia}
+        {...(fill ? {} : sanityImageIntrinsicDimensions(image))}
       />
+    ) : null;
+  const loadingProps = mediaPreload ? ({ fetchPriority: "high" } as const) : { preload };
+
+  if (fill) {
+    return (
+      <>
+        {mediaPreload}
+        <Image
+          className={[styles.cover, className].filter(Boolean).join(" ")}
+          src={src}
+          alt={altText}
+          fill
+          sizes={sizes}
+          quality={IMAGE_QUALITY}
+          {...loadingProps}
+          style={{ objectPosition: hotspotPosition(image) }}
+        />
+      </>
     );
   }
 
   const { width, height } = sanityImageIntrinsicDimensions(image);
 
   return (
-    <Image
-      className={[styles.natural, className].filter(Boolean).join(" ")}
-      src={src}
-      alt={altText}
-      width={width}
-      height={height}
-      sizes={sizes}
-      quality={IMAGE_QUALITY}
-      preload={preload}
-    />
+    <>
+      {mediaPreload}
+      <Image
+        className={[styles.natural, className].filter(Boolean).join(" ")}
+        src={src}
+        alt={altText}
+        width={width}
+        height={height}
+        sizes={sizes}
+        quality={IMAGE_QUALITY}
+        {...loadingProps}
+      />
+    </>
   );
 }

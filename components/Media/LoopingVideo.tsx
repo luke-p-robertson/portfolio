@@ -8,6 +8,8 @@ type LoopingVideoProps = {
   className?: string;
   /** False while the video's slide isn't the current one; it pauses and rewinds. */
   active?: boolean;
+  /** Start downloading the video straight away (the first thing on a page). */
+  eager?: boolean;
 };
 
 /**
@@ -16,7 +18,13 @@ type LoopingVideoProps = {
  * the ref because React doesn't reliably render the attribute, and browsers only allow
  * autoplay for muted video.
  */
-export function LoopingVideo({ src, poster, className, active = true }: LoopingVideoProps) {
+export function LoopingVideo({
+  src,
+  poster,
+  className,
+  active = true,
+  eager = false,
+}: LoopingVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -55,7 +63,7 @@ export function LoopingVideo({ src, poster, className, active = true }: LoopingV
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={eager ? "auto" : "metadata"}
       aria-hidden
     />
   );

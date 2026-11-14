@@ -1,3 +1,5 @@
+import { preload as preloadResource } from "react-dom";
+
 import { SanityImage } from "@/components/SanityImage/SanityImage";
 import type { MediaData } from "@/sanity/lib/cachedQueries";
 import { urlForSanityImage } from "@/sanity/lib/sanityImageUrl";
@@ -12,14 +14,24 @@ type MediaProps = {
   className?: string;
   /** `cover` crops to the box (default); `contain` shows the whole frame. */
   fit?: "cover" | "contain";
-  /** Fetch early: the first image a visitor sees on a page. */
+  /** Fetch early: the first image a visitor sees on a page (a video loads in full). */
   preload?: boolean;
+  /** With `preload`: only at this media query (see SanityImage). */
+  preloadMedia?: string;
   /** Videos only: false pauses it (a slide that isn't current). */
   active?: boolean;
 };
 
 /** An image or looping video filling a sized box. */
-export function Media({ media, sizes, className, fit = "cover", preload, active }: MediaProps) {
+export function Media({
+  media,
+  sizes,
+  className,
+  fit = "cover",
+  preload,
+  preloadMedia,
+  active,
+}: MediaProps) {
   const boxClass = [styles.box, className].filter(Boolean).join(" ");
   const fitClass = fit === "contain" ? styles.contain : undefined;
 
@@ -29,6 +41,13 @@ export function Media({ media, sizes, className, fit = "cover", preload, active 
       return null;
     }
     const poster = urlForSanityImage(media.poster, { width: 1920 }) ?? undefined;
+    if (preload && poster) {
+      preloadResource(poster, {
+        as: "image",
+        media: preloadMedia,
+        fetchPriority: "high",
+      });
+    }
     return (
       <div className={boxClass}>
         <LoopingVideo
@@ -36,6 +55,7 @@ export function Media({ media, sizes, className, fit = "cover", preload, active 
           src={src}
           poster={poster}
           active={active}
+          eager={preload}
         />
       </div>
     );
@@ -52,6 +72,7 @@ export function Media({ media, sizes, className, fit = "cover", preload, active 
         sizes={sizes}
         fill
         preload={preload}
+        preloadMedia={preloadMedia}
         className={fitClass}
       />
     </div>

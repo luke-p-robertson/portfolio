@@ -2,8 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-/** Matches `$mq-mobile-max` in styles/_variables.scss. */
-const MOBILE_QUERY = "(max-width: 768px)";
+import { MOBILE_QUERY } from "./breakpoints";
 
 function subscribe(onChange: () => void) {
   const query = window.matchMedia(MOBILE_QUERY);
