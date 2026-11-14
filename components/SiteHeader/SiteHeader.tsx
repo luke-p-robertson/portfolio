@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { Overlay, overlayItemClass } from "@/components/Overlay/Overlay";
+import { FILTER_CLOSE_DELAY_MS } from "@/lib/motion";
 import { STUDIO_NAME, STUDIO_SHORT_NAME } from "@/lib/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
 
@@ -34,6 +35,36 @@ export function SiteHeader() {
   const showFilter = onIndex && filter && filter.options.length > 1 ? filter : null;
   const raised = menuOpen || Boolean(showFilter?.open && isMobile);
   const projectColor = onProject ? project?.textColor?.trim() : null;
+
+  // Desktop: hovering "Filter" opens the list; leaving closes it after a short delay, so
+  // moving down to the options doesn't shut it. Clicking still toggles (touch, keyboard).
+  const filterCloseTimer = useRef<number | null>(null);
+  const setFilterOpen = filter?.setOpen;
+  const hoverFilter = useCallback(
+    (entering: boolean) => {
+      if (filterCloseTimer.current !== null) {
+        window.clearTimeout(filterCloseTimer.current);
+        filterCloseTimer.current = null;
+      }
+      if (entering) {
+        setFilterOpen?.(true);
+      } else {
+        filterCloseTimer.current = window.setTimeout(
+          () => setFilterOpen?.(false),
+          FILTER_CLOSE_DELAY_MS,
+        );
+      }
+    },
+    [setFilterOpen],
+  );
+  useEffect(
+    () => () => {
+      if (filterCloseTimer.current !== null) {
+        window.clearTimeout(filterCloseTimer.current);
+      }
+    },
+    [],
+  );
 
   const headerClass = [
     styles.header,
@@ -81,7 +112,11 @@ export function SiteHeader() {
           className={`${styles.filterSlot} ${styles.desktopOnly}`}
         >
           {showFilter ? (
-            <span className={styles.filter}>
+            <span
+              className={styles.filter}
+              onPointerEnter={(event) => event.pointerType === "mouse" && hoverFilter(true)}
+              onPointerLeave={(event) => event.pointerType === "mouse" && hoverFilter(false)}
+            >
               <button type="button" onClick={showFilter.toggle} aria-expanded={showFilter.open}>
                 Filter
               </button>
@@ -98,6 +133,11 @@ export function SiteHeader() {
                       {option.title}
                     </button>
                   ))}
+                </span>
+              ) : showFilter.value ? (
+                // Once filtered, the chosen category sits under "Filter" as the page's heading.
+                <span className={styles.current}>
+                  {showFilter.options.find((o) => o.slug === showFilter.value)?.title}
                 </span>
               ) : null}
             </span>

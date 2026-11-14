@@ -27,6 +27,15 @@
 .blend {
   color: variables.$white;
   mix-blend-mode: difference;
+
+  // The hover gray, inverted so it blends to the same gray as everywhere else (the filter
+  // options hover by opacity instead).
+  @media (hover: hover) {
+    a:hover,
+    button:not(.option):hover {
+      color: variables.$gray-blend;
+    }
+  }
 }
 
 /** On a project the header takes the project's text color (black by default). */
@@ -128,12 +137,18 @@
 }
 
 .option {
+  color: inherit;
   opacity: 0.55;
 
   &[aria-pressed="true"],
   &:hover {
     opacity: 1;
   }
+}
+
+/** The chosen category, under "Filter" while the list is closed. */
+.current {
+  color: variables.$gray;
 }
 
 /** Crossfade slot: outgoing and incoming content share one grid cell while they fade. */

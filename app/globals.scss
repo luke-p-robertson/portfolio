@@ -29,7 +29,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a {
+:where(a) {
   color: inherit;
   text-decoration: none;
 }
@@ -60,8 +60,7 @@ ul {
   list-style: none;
 }
 
-button,
-input {
+:where(button, input) {
   font: inherit;
   color: inherit;
 }
@@ -71,6 +70,21 @@ button {
   border: 0;
   background: none;
   cursor: pointer;
+}
+
+/**
+ * Links and text buttons fade to the label gray on hover (not defined in Figma; agreed with
+ * Joshua). Zero specificity, so anything that sets its own color keeps it, and the Studio
+ * at /cms is left alone. Touch screens skip it so a tap doesn't leave a link gray.
+ */
+:where(html:not([data-sanity-studio]) a, html:not([data-sanity-studio]) button) {
+  transition: color variables.$transition-duration;
+}
+
+@media (hover: hover) {
+  :where(html:not([data-sanity-studio]) a:hover, html:not([data-sanity-studio]) button:hover) {
+    color: variables.$gray;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

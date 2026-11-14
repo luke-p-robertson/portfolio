@@ -66,6 +66,14 @@
   overflow: hidden;
   aspect-ratio: variables.$aspect-card;
   background: variables.$white;
+  transition: opacity variables.$transition-duration;
+}
+
+/** Hovering a tile dims its image slightly, alongside the title going gray. */
+@media (hover: hover) {
+  .card a:hover .image {
+    opacity: variables.$image-hover-opacity;
+  }
 }
 
 /** Room for three lines on desktop (projects can list several disciplines), so rows stay even. */

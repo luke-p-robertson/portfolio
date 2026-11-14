@@ -56,7 +56,7 @@ export const PROJECT_INDEX_QUERY = groq`{
       "slug": slug.current,
       discipline,
       "categories": categories[]->slug.current,
-      thumbnail { ${imageProjection} },
+      thumbnail { ${mediaProjection} },
       "fallbackImage": coalesce(
         slides[_type == "slideMedia" && media.mediaType == "image"][0].media.image,
         slides[_type == "slideMedia"][0].media.poster

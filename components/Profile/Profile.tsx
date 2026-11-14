@@ -41,7 +41,7 @@ export function Profile({ data, siteCreditLink }: ProfileProps) {
       </div>
       {siteCreditLink ? (
         <p className={styles.credit}>
-          <SmartLink href={siteCreditLink}>Site by AP</SmartLink>
+          <SmartLink href={siteCreditLink}>Site built by AP</SmartLink>
         </p>
       ) : null}
     </main>

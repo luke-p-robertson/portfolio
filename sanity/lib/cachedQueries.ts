@@ -42,7 +42,8 @@ export type ProjectCard = {
   slug?: string | null;
   discipline?: string | null;
   categories?: string[] | null;
-  thumbnail?: SanityCropHotspotAsset | null;
+  /** Image or looping video chosen for the index. */
+  thumbnail?: MediaData | null;
   /** First media slide (its poster for a video), when there's no index image. */
   fallbackImage?: SanityCropHotspotAsset | null;
 };
@@ -110,7 +111,7 @@ export type SiteSettingsData = {
 export const SANITY_CACHE_TAG = "sanity";
 
 /** Bump when GROQ projections change so `unstable_cache` does not serve stale shapes. */
-const SANITY_CACHE_KEY_VERSION = "4";
+const SANITY_CACHE_KEY_VERSION = "5";
 
 async function fetchSanity<T>(
   query: string,

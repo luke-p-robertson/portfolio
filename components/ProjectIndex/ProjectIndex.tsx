@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 
 import { Overlay, overlayOptionClass } from "@/components/Overlay/Overlay";
+import { Media } from "@/components/Media/Media";
 import { SanityImage } from "@/components/SanityImage/SanityImage";
 import { useFilterHeader } from "@/components/SiteHeader/HeaderContext";
 import { useIsMobile } from "@/lib/useIsMobile";
@@ -51,7 +52,7 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
 
   // The persistent header draws the "Filter" control from this.
   const filterHeader = useMemo(
-    () => (options.length > 1 ? { options, value: filter, open, toggle, choose } : null),
+    () => (options.length > 1 ? { options, value: filter, open, toggle, setOpen, choose } : null),
     [options, filter, open, toggle, choose],
   );
   useFilterHeader(filterHeader);
@@ -84,7 +85,11 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
             .join(" ")}
         >
           {visible.map((project, i) => {
-            const image = project.thumbnail?.asset ? project.thumbnail : project.fallbackImage;
+            const thumbnail = project.thumbnail;
+            const hasThumbnail =
+              thumbnail?.mediaType === "video"
+                ? Boolean(thumbnail.video?.asset?.url)
+                : Boolean(thumbnail?.image?.asset);
             return (
               <li
                 key={project._id}
@@ -92,15 +97,25 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
                 style={{ "--i": i } as React.CSSProperties}
               >
                 <Link href={`/projects/${project.slug}`}>
-                  <div className={styles.image}>
-                    <SanityImage
-                      image={image}
-                      alt={project.title ?? ""}
-                      fill
+                  {hasThumbnail ? (
+                    // A video loops silently, paused while it's off screen.
+                    <Media
+                      media={thumbnail}
+                      className={styles.image}
                       sizes="(max-width: 768px) 36vw, 24vw"
                       preload={i < 3}
                     />
-                  </div>
+                  ) : (
+                    <div className={styles.image}>
+                      <SanityImage
+                        image={project.fallbackImage}
+                        alt={project.title ?? ""}
+                        fill
+                        sizes="(max-width: 768px) 36vw, 24vw"
+                        preload={i < 3}
+                      />
+                    </div>
+                  )}
                   <span className={styles.label}>
                     {project.title}
                     {project.discipline ? (

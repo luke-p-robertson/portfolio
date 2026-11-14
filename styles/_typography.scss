@@ -31,6 +31,17 @@ $tracking-tight: -0.01em;
   letter-spacing: 0;
 }
 
+/**
+ * Practice's standard ligatures (fi, fl, ffi…) and proportional oldstyle figures. Browsers
+ * drop ligatures whenever letter-spacing isn't zero, so with our −1% tracking they're
+ * switched on explicitly with `font-feature-settings` rather than left to the default.
+ */
+@mixin practice-features {
+  font-variant-ligatures: common-ligatures;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-feature-settings: "liga" 1, "onum" 1, "pnum" 1;
+}
+
 /** Navigation, labels, captions, credits: the small-text face. */
 @mixin detail {
   @include font-base;
@@ -48,6 +59,7 @@ $tracking-tight: -0.01em;
 /** Profile and project description text. */
 @mixin body {
   @include font-base;
+  @include practice-features;
   font-size: $body-size;
   line-height: $body-line-height;
   letter-spacing: $tracking-tight;
@@ -61,6 +73,7 @@ $tracking-tight: -0.01em;
 /** Centered statement slide. */
 @mixin statement {
   @include font-base;
+  @include practice-features;
   font-size: $statement-size;
   line-height: $statement-line-height;
   letter-spacing: $tracking-tight;

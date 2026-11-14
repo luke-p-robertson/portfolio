@@ -17,6 +17,7 @@ export type FilterHeader = {
   value: string;
   open: boolean;
   toggle: () => void;
+  setOpen: (open: boolean) => void;
   choose: (slug: string) => void;
 };
 

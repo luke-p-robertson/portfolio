@@ -1,4 +1,8 @@
-.box {
+/**
+ * Zero specificity, so a consumer's class (e.g. the slideshow's absolutely positioned
+ * `.media`) always wins, whatever order the stylesheets load in.
+ */
+:where(.box) {
   position: relative;
   overflow: hidden;
 }

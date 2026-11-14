@@ -78,20 +78,20 @@
   z-index: 3;
   align-content: center;
   text-align: center;
+  color: inherit;
   cursor: pointer;
   animation: fade-in variables.$fade-duration ease-out backwards;
   transition: opacity variables.$fade-duration ease-out;
+  // Raised above the middle of the screen by twice the lift in bottom padding.
+  padding-bottom: calc(2 * #{variables.$headline-lift});
 
   @include layout.mobile {
-    padding-bottom: calc(2 * #{variables.$slide-lift-mobile});
+    padding-bottom: calc(2 * #{variables.$headline-lift-mobile});
   }
 
+  // The full width inside the page margins, so a headline only wraps when it must.
   span {
-    grid-column: 3 / span 8;
-
-    @include layout.mobile {
-      grid-column: 1 / -1;
-    }
+    grid-column: 1 / -1;
   }
 }
 

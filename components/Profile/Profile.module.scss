@@ -11,11 +11,7 @@
   flex-direction: column;
   min-height: 100svh;
   min-height: 100dvh;
-  padding: variables.$space-xl 0 variables.$header-top;
-
-  @include layout.mobile {
-    padding-bottom: variables.$header-top-mobile;
-  }
+  padding: variables.$space-xl 0 variables.$credit-bottom;
 }
 
 .grid {
@@ -69,13 +65,19 @@
 }
 
 /**
- * "Site by AP", bottom-left: the page margin from the side and, when the content is short,
- * the header's distance from the bottom of the screen (mirroring "Projects" up top). The
- * auto margin takes up the spare height; when the content is taller than the screen there
- * is none, and the credit follows the content with the padding as its gap.
+ * "Site built by AP", centered at the bottom (Figma). The auto margin takes up the spare
+ * height, so it sits near the bottom of the screen when the content is short; when the
+ * content is taller than the screen there is none, and the credit follows the content
+ * with the padding as its gap.
  */
 .credit {
   margin-top: auto;
   padding: variables.$space-l variables.$page-margin 0;
   color: variables.$gray;
+  text-align: center;
+
+  // Already gray, so its hover goes the other way.
+  a:hover {
+    color: variables.$text;
+  }
 }

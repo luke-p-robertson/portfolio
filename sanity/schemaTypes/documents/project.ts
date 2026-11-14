@@ -63,11 +63,10 @@ export const project = defineType({
     }),
     defineField({
       name: "thumbnail",
-      title: "Index image",
-      type: "image",
-      options: { hotspot: true },
-      description: "Shown in the Projects index, cropped to 4:5.",
-      fields: [defineField({ name: "alt", title: "Alt text", type: "string" })],
+      title: "Index image or video",
+      type: "media",
+      description:
+        "Shown in the Projects index, cropped to 4:5. A video loops silently while it's on screen. Without one, the first slide is used.",
       group: "general",
     }),
     defineField({
@@ -144,13 +143,14 @@ export const project = defineType({
       title: "title",
       discipline: "discipline",
       hidden: "hidden",
-      media: "thumbnail",
+      image: "thumbnail.image",
+      poster: "thumbnail.poster",
     },
-    prepare({ title, discipline, hidden, media }) {
+    prepare({ title, discipline, hidden, image, poster }) {
       return {
         title,
         subtitle: [discipline, hidden ? "Hidden" : null].filter(Boolean).join(" · "),
-        media,
+        media: image ?? poster,
       };
     },
   },

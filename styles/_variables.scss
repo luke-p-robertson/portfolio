@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "sass:string";
 
 // Colors (Figma: black, white, and the #8e8e8e label gray)
@@ -5,8 +6,12 @@ $white: #ffffff;
 $black: #000000;
 $text: $black;
 $gray: #8e8e8e;
+/** The gray for white text under `mix-blend-mode: difference`: it reads as `$gray` on white. */
+$gray-blend: color.invert($gray);
 /** Inactive slideshow thumbnails. */
 $thumb-inactive-opacity: 0.3;
+/** A project tile's image on hover in the index (with its title going gray). */
+$image-hover-opacity: 0.8;
 /** Embedded Sanity Studio at /cms. */
 $studio-background: #101112;
 
@@ -59,9 +64,18 @@ $counter-bottom-mobile: 25px;
 $text-column-width: 579px;
 /** Mobile slides center this far above the middle of the screen. */
 $slide-lift-mobile: 20px;
+/** The project headline sits this far above the middle of the screen (Luke: 50px on desktop; mobile Figma: 26px). */
+$headline-lift: 50px;
+$headline-lift-mobile: 26px;
+/** The "Site built by AP" credit's distance from the bottom when the content is short (Figma). */
+$credit-bottom: 16px;
 
 // Media
 $aspect-card: string.unquote("4 / 5");
+/** Homepage features (Figma): a single is 3:2, each half of a pair 3:4, phones 9:16. */
+$aspect-feature: string.unquote("3 / 2");
+$aspect-feature-half: string.unquote("3 / 4");
+$aspect-feature-mobile: string.unquote("9 / 16");
 /** Slideshow thumbnail strip height, and the gap between a slide's image and the strip. */
 $thumb-height: 50px;
 $thumb-gap: 6px;
