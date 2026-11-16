@@ -9,6 +9,10 @@ export type ProjectHeader = {
   textColor?: string | null;
   /** Jumps to the info slide; absent when the project has no info. */
   onInfo?: (() => void) | null;
+  /** True while the info slide shows: the header's Info becomes Images. */
+  infoOpen?: boolean;
+  /** Leaves the info slide for the slide shown before it. */
+  onImages?: (() => void) | null;
 };
 
 /** What the Projects page lends the header for its filter. */
@@ -49,13 +53,13 @@ export function useHeader(): HeaderContextValue {
   return value;
 }
 
-/** Lends the header a project's title, color and Info action while the page is mounted. */
+/** Lends the header a project's title, color and Info/Images action while the page is mounted. */
 export function useProjectHeader(project: ProjectHeader) {
   const { setProject } = useHeader();
-  const { title, textColor, onInfo } = project;
+  const { title, textColor, onInfo, infoOpen, onImages } = project;
   useEffect(() => {
-    setProject({ title, textColor, onInfo });
-  }, [setProject, title, textColor, onInfo]);
+    setProject({ title, textColor, onInfo, infoOpen, onImages });
+  }, [setProject, title, textColor, onInfo, infoOpen, onImages]);
   useEffect(() => () => setProject(null), [setProject]);
 }
 

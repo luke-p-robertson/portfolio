@@ -18,9 +18,10 @@ import { useCloseProject } from "./useCloseProject";
 /**
  * The one site header, kept in the site layout so it never disappears between pages.
  * "Luke Robertson Studio" stays put; the slots that change by page crossfade:
- *  - desktop: Projects (+ Filter on the index) ↔ Close on the left, Profile ↔ Info on the
- *    right, and "for <project>" after the name on a project, the whole title centered;
- *  - mobile: Menu ↔ Close on the left, Filter (index) or Info (project) on the right.
+ *  - desktop: Projects (+ Filter on the index) ↔ Close on the left, Profile ↔ Info (Images
+ *    on the info slide) on the right, and "for <project>" after the name on a project, the
+ *    whole title centered;
+ *  - mobile: Menu ↔ Close on the left, Filter (index) or Info/Images (project) on the right.
  */
 export function SiteHeader() {
   const pathname = usePathname();
@@ -35,6 +36,19 @@ export function SiteHeader() {
   const showFilter = onIndex && filter && filter.options.length > 1 ? filter : null;
   const raised = menuOpen || Boolean(showFilter?.open && isMobile);
   const projectColor = onProject ? project?.textColor?.trim() : null;
+
+  // On a project: Info jumps to the info slide, which turns it into Images (back to the slides).
+  const infoKey = project?.infoOpen ? "images" : "info";
+  const infoButton =
+    project?.infoOpen && project.onImages ? (
+      <button type="button" onClick={project.onImages}>
+        Images
+      </button>
+    ) : project?.onInfo ? (
+      <button type="button" onClick={project.onInfo}>
+        Info
+      </button>
+    ) : null;
 
   // Desktop: hovering "Filter" opens the list; leaving closes it after a short delay, so
   // moving down to the options doesn't shut it. Clicking still toggles (touch, keyboard).
@@ -158,18 +172,10 @@ export function SiteHeader() {
 
         <div className={styles.right}>
           <Crossfade
-            itemKey={onProject ? (project?.onInfo ? "info" : "none") : "profile"}
+            itemKey={onProject ? (infoButton ? infoKey : "none") : "profile"}
             className={styles.desktopOnly}
           >
-            {onProject ? (
-              project?.onInfo ? (
-                <button type="button" onClick={project.onInfo}>
-                  Info
-                </button>
-              ) : null
-            ) : (
-              <Link href="/profile">Profile</Link>
-            )}
+            {onProject ? infoButton : <Link href="/profile">Profile</Link>}
           </Crossfade>
           <Crossfade
             itemKey={
@@ -179,8 +185,8 @@ export function SiteHeader() {
                   ? showFilter.open
                     ? "filter-close"
                     : "filter"
-                  : onProject && project?.onInfo
-                    ? "info"
+                  : onProject && infoButton
+                    ? infoKey
                     : "none"
             }
             className={styles.mobileOnly}
@@ -189,10 +195,8 @@ export function SiteHeader() {
               <button type="button" onClick={showFilter.toggle} aria-expanded={showFilter.open}>
                 {showFilter.open ? "Close" : "Filter"}
               </button>
-            ) : onProject && project?.onInfo ? (
-              <button type="button" onClick={project.onInfo}>
-                Info
-              </button>
+            ) : onProject ? (
+              infoButton
             ) : null}
           </Crossfade>
         </div>

@@ -47,10 +47,11 @@ function hasInfo(project: ProjectData) {
 
 /**
  * A project's case study. The headline fades in, holds, then fades to the first slide; the
- * slides crossfade one at a time and loop, with the info (scope, credits, description) as
- * the last one. Step with the arrow keys, the thumbnails, by clicking either half of the
- * screen, or on phones by tapping (forward) or swiping. Close, the title and Info live in
- * the persistent site header, which this lends its title, color and Info action.
+ * slides switch instantly one at a time and loop, with the info (scope, credits,
+ * description) as the last one. Step with the arrow keys, the thumbnails, by clicking either
+ * half of the screen, or on phones by tapping (forward) or swiping. Close, the title and
+ * Info live in the persistent site header, which this lends its title, color and Info
+ * action (Images while the info shows, back to the slides).
  */
 export function Slideshow({ project }: SlideshowProps) {
   const close = useCloseProject();
@@ -104,10 +105,20 @@ export function Slideshow({ project }: SlideshowProps) {
     show(infoIndex);
   }, [infoIndex, show]);
 
+  const infoOpen = infoIndex >= 0 && index === infoIndex;
+
+  // Back to the slide shown before the info (the last image when it was reached by stepping
+  // forward), or the first when there's none.
+  const showImages = useCallback(() => {
+    show(previous !== null && previous !== infoIndex ? previous : 0);
+  }, [infoIndex, previous, show]);
+
   useProjectHeader({
     title: project.title ?? "",
     textColor: project.textColor,
     onInfo: infoIndex >= 0 ? showInfo : null,
+    infoOpen,
+    onImages: infoOpen ? showImages : null,
   });
 
   // Headline: hold, fade out (crossfading to the first slide), then unmount.
@@ -210,7 +221,8 @@ export function Slideshow({ project }: SlideshowProps) {
         ) : null}
 
         {items.map((item, i) => {
-          // Only the current slide, the one fading out, and the neighbours load media.
+          // Only the current slide, the one before it (Images returns there) and the
+          // neighbors load media.
           const distance = Math.min(Math.abs(i - index), count - Math.abs(i - index));
           const isCurrent = i === index;
           const mounted = distance <= 1 || i === previous;

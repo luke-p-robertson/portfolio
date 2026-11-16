@@ -15,7 +15,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: variables.$mobile-index-gap;
     row-gap: variables.$space-m;
-    padding-inline: variables.$mobile-index-inset;
   }
 }
 

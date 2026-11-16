@@ -24,30 +24,21 @@
   pointer-events: none;
 }
 
-/** Slides crossfade: the outgoing one stays visible until its fade has finished. */
+/** Slides switch instantly, with no fade (Luke: "snappy and instant"). */
 .slide {
   position: absolute;
   inset: 0;
   visibility: hidden;
-  opacity: 0;
-  transition:
-    opacity variables.$fade-duration ease-out,
-    visibility 0s linear variables.$fade-duration;
 }
 
 .current {
   z-index: 1;
+  visibility: visible;
 
   /** The info slide sits above the click zones so its text and links stay usable. */
   &.infoSection {
     z-index: 3;
   }
-
-  visibility: visible;
-  opacity: 1;
-  transition:
-    opacity variables.$fade-duration ease-out,
-    visibility 0s;
 }
 
 /** Left and right halves step back and forward. */

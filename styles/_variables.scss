@@ -52,8 +52,7 @@ $space-xl: var(--space-xl);
 $grid-columns: 12;
 $page-margin: $space-s;
 $grid-gutter: $space-s;
-/** Mobile project index: two 140px columns inset 40px with a 41px gap. */
-$mobile-index-inset: 40px;
+/** Mobile project index: two columns on the page margins with a wider 41px gap (as desktop). */
 $mobile-index-gap: 41px;
 /** The header sits 12px from the top on desktop, 15px on mobile (sides use the page margin). */
 $header-top: 12px;
@@ -64,8 +63,8 @@ $counter-bottom-mobile: 25px;
 $text-column-width: 579px;
 /** Mobile slides center this far above the middle of the screen. */
 $slide-lift-mobile: 20px;
-/** The project headline sits this far above the middle of the screen (Luke: 50px on desktop; mobile Figma: 26px). */
-$headline-lift: 50px;
+/** The project headline sits this far above the middle of the screen (Luke: 25px on desktop; mobile Figma: 26px). */
+$headline-lift: 25px;
 $headline-lift-mobile: 26px;
 /** The "Site built by AP" credit's distance from the bottom when the content is short (Figma). */
 $credit-bottom: 16px;
@@ -85,11 +84,15 @@ $thumb-gap: 6px;
 $mark-width: 424px;
 $mark-width-mobile: 182px;
 $mark-lift: 29px;
+/** The idle screen saver quote (Figma 2733:4): a 848px box, sitting 32px above center. */
+$screensaver-width: 848px;
+$screensaver-lift: 32px;
 
 // Components / z-index
 $z-header: 50;
 $z-overlay: 100;
 $z-intro: 200;
+$z-screensaver: 300;
 
 // Motion
 $transition-duration: 0.2s;

@@ -1,0 +1,49 @@
+@use "@/styles/_variables.scss" as variables;
+@use "@/styles/_typography.scss" as typography;
+
+/** A white screen over everything with the quote centered, slightly high (Figma 2733:4). */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: variables.$z-screensaver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: variables.$page-margin;
+  padding-bottom: calc(2 * #{variables.$screensaver-lift});
+  background: variables.$white;
+  color: variables.$text;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  // Leaving: gone quickly on any activity.
+  transition:
+    opacity variables.$transition-duration ease-out,
+    visibility 0s linear variables.$transition-duration;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/** Arriving: fades on slowly. */
+.showing {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity variables.$fade-duration ease-out,
+    visibility 0s;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.quote {
+  @include typography.detail;
+  max-width: variables.$screensaver-width;
+  margin: 0;
+  text-align: center;
+  // Keeps Luke's own line breaks, and puts the attribution on its own line.
+  white-space: pre-line;
+}

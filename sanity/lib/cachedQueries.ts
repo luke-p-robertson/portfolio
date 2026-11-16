@@ -105,13 +105,15 @@ export type ProfileData = {
 
 export type SiteSettingsData = {
   siteCreditLink?: string | null;
+  screensaverQuote?: string | null;
+  screensaverAttribution?: string | null;
   seo?: SanitySeo;
 };
 
 export const SANITY_CACHE_TAG = "sanity";
 
 /** Bump when GROQ projections change so `unstable_cache` does not serve stale shapes. */
-const SANITY_CACHE_KEY_VERSION = "5";
+const SANITY_CACHE_KEY_VERSION = "6";
 
 async function fetchSanity<T>(
   query: string,
