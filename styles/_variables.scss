@@ -8,6 +8,8 @@ $text: $black;
 $gray: #8e8e8e;
 /** The gray for white text under `mix-blend-mode: difference`: it reads as `$gray` on white. */
 $gray-blend: color.invert($gray);
+/** The mobile filter overlay lets the project tiles show through at 10% (Figma 2402:523). */
+$overlay-see-through: rgba($white, 0.9);
 /** Inactive slideshow thumbnails. */
 $thumb-inactive-opacity: 0.3;
 /** A project tile's image on hover in the index (with its title going gray). */

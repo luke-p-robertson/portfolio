@@ -132,7 +132,7 @@ export function ProjectIndex({ projects, categories, initialFilter }: ProjectInd
         </ul>
       </main>
       {open && isMobile ? (
-        <Overlay label="Filter" onClose={close}>
+        <Overlay label="Filter" onClose={close} seeThrough>
           {optionButtons(overlayOptionClass)}
         </Overlay>
       ) : null}

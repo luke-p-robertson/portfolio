@@ -13,6 +13,11 @@
   color: variables.$text;
 }
 
+/** The filter: the project tiles stay faintly visible behind the list. */
+.seeThrough {
+  background: variables.$overlay-see-through;
+}
+
 /** Mobile-only panels, set at the statement size like the design. */
 .list {
   @include typography.statement;
