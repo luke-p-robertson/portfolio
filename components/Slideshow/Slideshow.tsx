@@ -221,11 +221,13 @@ export function Slideshow({ project }: SlideshowProps) {
         ) : null}
 
         {items.map((item, i) => {
-          // Only the current slide, the one before it (Images returns there) and the
-          // neighbors load media.
+          // Every image loads as soon as the project opens (in slide order, the first one
+          // first), so clicking through never waits on one. Videos are heavier, so only the
+          // current slide, the one before it (Images returns there) and the neighbors load.
           const distance = Math.min(Math.abs(i - index), count - Math.abs(i - index));
           const isCurrent = i === index;
-          const mounted = distance <= 1 || i === previous;
+          const isVideo = item.kind === "media" && item.slide.media?.mediaType === "video";
+          const mounted = !isVideo || distance <= 1 || i === previous;
           return (
             <section
               key={item.key}
@@ -310,6 +312,7 @@ function MediaSlide({
       fit="contain"
       sizes={slideSizes(slide.media)}
       preload={preload}
+      eager
       active={active}
     />
   );

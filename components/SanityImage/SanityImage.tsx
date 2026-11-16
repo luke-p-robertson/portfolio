@@ -23,6 +23,8 @@ type SanityImageProps = {
    * of an image are both on the page and CSS shows one, so each screen fetches just its own.
    */
   preloadMedia?: string;
+  /** Load straight away even while hidden or off screen, without the high-priority preload. */
+  eager?: boolean;
   alt?: string;
   className?: string;
 };
@@ -42,6 +44,7 @@ export function SanityImage({
   fill = false,
   preload = false,
   preloadMedia,
+  eager = false,
   alt,
   className,
 }: SanityImageProps) {
@@ -66,7 +69,13 @@ export function SanityImage({
         {...(fill ? {} : sanityImageIntrinsicDimensions(image))}
       />
     ) : null;
-  const loadingProps = mediaPreload ? ({ fetchPriority: "high" } as const) : { preload };
+  const loadingProps = mediaPreload
+    ? ({ fetchPriority: "high" } as const)
+    : preload
+      ? { preload }
+      : eager
+        ? ({ loading: "eager" } as const)
+        : {};
 
   if (fill) {
     return (

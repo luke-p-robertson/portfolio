@@ -18,6 +18,8 @@ type MediaProps = {
   preload?: boolean;
   /** With `preload`: only at this media query (see SanityImage). */
   preloadMedia?: string;
+  /** Images only: load straight away, even on a hidden slide (no high-priority preload). */
+  eager?: boolean;
   /** Videos only: false pauses it (a slide that isn't current). */
   active?: boolean;
 };
@@ -30,6 +32,7 @@ export function Media({
   fit = "cover",
   preload,
   preloadMedia,
+  eager,
   active,
 }: MediaProps) {
   const boxClass = [styles.box, className].filter(Boolean).join(" ");
@@ -73,6 +76,7 @@ export function Media({
         fill
         preload={preload}
         preloadMedia={preloadMedia}
+        eager={eager}
         className={fitClass}
       />
     </div>
