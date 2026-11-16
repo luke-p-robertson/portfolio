@@ -23,7 +23,7 @@ export const siteSettings = defineType({
       type: "text",
       rows: 2,
       description:
-        "Fades in over the whole page on desktop after 20 seconds without a mouse move, scroll or key press, and goes as soon as there is one. Type the quote marks you want, e.g. ‘All things are delicately interconnected.’ Leave empty to turn the screen saver off.",
+        "Fades in over the whole page on desktop after 20 seconds without a mouse move, scroll or key press, and goes as soon as there is one. The quote marks are added for you, so type just the words, e.g. All things are delicately interconnected. Leave empty to turn the screen saver off.",
       group: "screensaver",
     }),
     defineField({

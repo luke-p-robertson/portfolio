@@ -20,6 +20,15 @@ const ACTIVITY_EVENTS = [
   "touchstart",
 ] as const;
 
+/** Quote marks Luke may have typed around the quote himself: dropped so they don't double up. */
+const TYPED_QUOTES = /^["'‘’“”]+([\s\S]*?)["'‘’“”]+$/;
+
+/** The quote in single curly quote marks, as in the design: ‘All things…’ */
+function inQuoteMarks(quote: string) {
+  const bare = quote.match(TYPED_QUOTES)?.[1]?.trim() ?? quote;
+  return `‘${bare}’`;
+}
+
 type ScreensaverProps = {
   quote?: string | null;
   attribution?: string | null;
@@ -27,7 +36,8 @@ type ScreensaverProps = {
 
 /**
  * Luke's idle state (Figma 2733:4): after IDLE_MS without a mouse move, scroll or key press,
- * the quote from Site settings fades in over the whole page, and any activity clears it.
+ * the quote from Site settings (in quote marks) fades in over the whole page, and any
+ * activity clears it.
  * A key press that wakes it does only that, so it doesn't also step a slideshow.
  */
 export function Screensaver({ quote, attribution }: ScreensaverProps) {
@@ -91,7 +101,7 @@ export function Screensaver({ quote, attribution }: ScreensaverProps) {
       aria-hidden
     >
       <p className={styles.quote}>
-        {text}
+        {inQuoteMarks(text)}
         {credit ? `\n— ${credit}` : null}
       </p>
     </div>
