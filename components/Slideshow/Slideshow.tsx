@@ -51,7 +51,7 @@ function hasInfo(project: ProjectData) {
  * description) as the last one. Step with the arrow keys, the thumbnails, by clicking either
  * half of the screen, or on phones by tapping (forward) or swiping. Close, the title and
  * Info live in the persistent site header, which this lends its title, color and Info
- * action (Images while the info shows, back to the slides).
+ * action (Images while the info shows, back to the first slide).
  */
 export function Slideshow({ project }: SlideshowProps) {
   const close = useCloseProject();
@@ -67,7 +67,6 @@ export function Slideshow({ project }: SlideshowProps) {
   const headline = project.headline?.trim();
 
   const [index, setIndex] = useState(0);
-  const [previous, setPrevious] = useState<number | null>(null);
   const [intro, setIntro] = useState<"showing" | "leaving" | "done">(
     headline ? "showing" : "done",
   );
@@ -76,7 +75,6 @@ export function Slideshow({ project }: SlideshowProps) {
   const show = useCallback(
     (next: number) => {
       if (next !== index) {
-        setPrevious(index);
         setIndex(next);
       }
     },
@@ -107,11 +105,10 @@ export function Slideshow({ project }: SlideshowProps) {
 
   const infoOpen = infoIndex >= 0 && index === infoIndex;
 
-  // Back to the slide shown before the info (the last image when it was reached by stepping
-  // forward), or the first when there's none.
+  // Back to the start of the slides.
   const showImages = useCallback(() => {
-    show(previous !== null && previous !== infoIndex ? previous : 0);
-  }, [infoIndex, previous, show]);
+    show(0);
+  }, [show]);
 
   useProjectHeader({
     title: project.title ?? "",
@@ -223,11 +220,11 @@ export function Slideshow({ project }: SlideshowProps) {
         {items.map((item, i) => {
           // Every image loads as soon as the project opens (in slide order, the first one
           // first), so clicking through never waits on one. Videos are heavier, so only the
-          // current slide, the one before it (Images returns there) and the neighbors load.
+          // current slide and its neighbors load.
           const distance = Math.min(Math.abs(i - index), count - Math.abs(i - index));
           const isCurrent = i === index;
           const isVideo = item.kind === "media" && item.slide.media?.mediaType === "video";
-          const mounted = !isVideo || distance <= 1 || i === previous;
+          const mounted = !isVideo || distance <= 1;
           return (
             <section
               key={item.key}

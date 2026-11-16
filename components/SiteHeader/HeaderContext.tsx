@@ -11,7 +11,7 @@ export type ProjectHeader = {
   onInfo?: (() => void) | null;
   /** True while the info slide shows: the header's Info becomes Images. */
   infoOpen?: boolean;
-  /** Leaves the info slide for the slide shown before it. */
+  /** Leaves the info slide for the first slide. */
   onImages?: (() => void) | null;
 };
 
