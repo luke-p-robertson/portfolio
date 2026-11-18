@@ -15,7 +15,7 @@ export const PROJECT_INTRO_MS = 3000;
 export const FILTER_CLOSE_DELAY_MS = 300;
 
 /** How long the desktop site sits idle (no mouse, scroll or key) before the screen saver quote. */
-export const IDLE_MS = 20000;
+export const IDLE_MS = 30000;
 
 /** How long the "LR.S" splash holds on the homepage before fading. */
 export const SPLASH_MS = 1400;

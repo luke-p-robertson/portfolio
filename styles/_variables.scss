@@ -59,8 +59,8 @@ $mobile-index-gap: 41px;
 /** The header sits 12px from the top on desktop, 15px on mobile (sides use the page margin). */
 $header-top: 12px;
 $header-top-mobile: 15px;
-/** The mobile slide counter ("1/18") sits this far above the bottom of the screen. */
-$counter-bottom-mobile: 25px;
+/** The header links' invisible click and tap area reaches this far past the text (Luke). */
+$header-hit-area: $space-s;
 /** The profile and info text column (column 7 onwards) stops short of the margin. */
 $text-column-width: 579px;
 /** Mobile slides center this far above the middle of the screen. */

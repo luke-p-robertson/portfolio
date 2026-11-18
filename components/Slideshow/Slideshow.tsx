@@ -21,11 +21,14 @@ type SlideshowProps = {
 
 type Item = { kind: "media"; key: string; slide: SlideData } | { kind: "info"; key: string };
 
-/** A swipe shorter than this (px) is treated as a tap. */
-const SWIPE_THRESHOLD = 40;
-
 function thumbImage(media?: MediaData | null) {
   return media?.mediaType === "video" ? media.poster : media?.image;
+}
+
+/** A slide's own shape (a video's from its poster), for the phone scroll. */
+function slideAspect(media?: MediaData | null): string {
+  const { width, height } = sanityImageIntrinsicDimensions(thumbImage(media));
+  return `${width} / ${height}`;
 }
 
 /**
@@ -46,12 +49,18 @@ function hasInfo(project: ProjectData) {
 }
 
 /**
- * A project's case study. The headline fades in, holds, then fades to the first slide; the
- * slides switch instantly one at a time and loop, with the info (scope, credits,
- * description) as the last one. Step with the arrow keys, the thumbnails, by clicking either
- * half of the screen, or on phones by tapping (forward) or swiping. Close, the title and
- * Info live in the persistent site header, which this lends its title, color and Info
- * action (Images while the info shows, back to the first slide).
+ * A project's case study. The headline fades in, holds, then fades to the slides.
+ *
+ * Desktop: the slides switch instantly one at a time and loop, with the info (scope,
+ * credits, description) as the last one. Step with the arrow keys, the thumbnails, or by
+ * clicking either half of the screen.
+ *
+ * Phones (Figma 2402:453): the same slides stack into one scrolling column, the info at the
+ * end. The styles do the switch, so the page never renders the wrong layout first.
+ *
+ * Close, the title and Info live in the persistent site header, which this lends its title,
+ * color and Info action: Info goes to the info, which turns it into Images (back to the
+ * first slide).
  */
 export function Slideshow({ project }: SlideshowProps) {
   const close = useCloseProject();
@@ -70,7 +79,9 @@ export function Slideshow({ project }: SlideshowProps) {
   const [intro, setIntro] = useState<"showing" | "leaving" | "done">(
     headline ? "showing" : "done",
   );
-  const touchStart = useRef<number | null>(null);
+  const infoRef = useRef<HTMLElement>(null);
+  // Phones: true while the info at the end of the scroll is on screen.
+  const [infoInView, setInfoInView] = useState(false);
 
   const show = useCallback(
     (next: number) => {
@@ -100,15 +111,53 @@ export function Slideshow({ project }: SlideshowProps) {
 
   const showInfo = useCallback(() => {
     setIntro("done");
-    show(infoIndex);
-  }, [infoIndex, show]);
+    if (isMobile) {
+      infoRef.current?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      show(infoIndex);
+    }
+  }, [infoIndex, isMobile, show]);
 
-  const infoOpen = infoIndex >= 0 && index === infoIndex;
+  const infoOpen = isMobile ? infoInView : infoIndex >= 0 && index === infoIndex;
 
   // Back to the start of the slides.
   const showImages = useCallback(() => {
-    show(0);
-  }, [show]);
+    if (isMobile) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      show(0);
+    }
+  }, [isMobile, show]);
+
+  // Phones: Info reads Images once the info has scrolled well into view.
+  useEffect(() => {
+    const info = infoRef.current;
+    if (!isMobile || !info) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setInfoInView(Boolean(entry?.isIntersecting)),
+      { rootMargin: "0px 0px -50% 0px" },
+    );
+    observer.observe(info);
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  // Phones: scrolling while the headline shows skips it, so the slides are there to scroll.
+  useEffect(() => {
+    if (!isMobile || intro !== "showing") {
+      return;
+    }
+    window.addEventListener("scroll", skipIntro, { passive: true, once: true });
+    return () => window.removeEventListener("scroll", skipIntro);
+  }, [intro, isMobile, skipIntro]);
+
+  // Phones: a project always opens at the top of its scroll.
+  useEffect(() => {
+    if (isMobile) {
+      window.scrollTo(0, 0);
+    }
+  }, [isMobile, project._id]);
 
   useProjectHeader({
     title: project.title ?? "",
@@ -132,7 +181,7 @@ export function Slideshow({ project }: SlideshowProps) {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+      if (!isMobile && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
         // A key press puts whatever was last clicked (a slide half, a thumbnail, Info) into
         // keyboard-focus mode and draws its focus ring; the arrows shouldn't, so let go of it.
         // Tabbing through the controls still shows focus as normal.
@@ -147,24 +196,7 @@ export function Slideshow({ project }: SlideshowProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [go, close]);
-
-  const onTouchStart = (event: React.TouchEvent) => {
-    touchStart.current = event.touches[0]?.clientX ?? null;
-  };
-
-  const onTouchEnd = (event: React.TouchEvent) => {
-    const start = touchStart.current;
-    const end = event.changedTouches[0]?.clientX;
-    touchStart.current = null;
-    if (start === null || end === undefined) {
-      return;
-    }
-    const delta = end - start;
-    if (Math.abs(delta) >= SWIPE_THRESHOLD) {
-      go(delta < 0 ? 1 : -1);
-    }
-  };
+  }, [go, close, isMobile]);
 
   const colors = {
     ...(project.backgroundColor?.trim()
@@ -176,12 +208,7 @@ export function Slideshow({ project }: SlideshowProps) {
   const stageVisible = intro !== "showing";
 
   return (
-    <div
-      className={styles.root}
-      style={colors}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
+    <div className={styles.root} style={colors}>
       <h1 className={styles.hidden}>
         {STUDIO_NAME} for {project.title}
       </h1>
@@ -199,14 +226,13 @@ export function Slideshow({ project }: SlideshowProps) {
       ) : null}
 
       <div className={[styles.stage, stageVisible ? null : styles.stageHidden].filter(Boolean).join(" ")}>
-        {count > 1 ? (
+        {count > 1 && !isMobile ? (
           <>
             <button
               type="button"
               className={[styles.zone, styles.prev].join(" ")}
-              // Phones: a tap anywhere moves forward; swiping goes either way.
-              onClick={() => go(isMobile ? 1 : -1)}
-              aria-label={isMobile ? "Next slide" : "Previous slide"}
+              onClick={() => go(-1)}
+              aria-label="Previous slide"
             />
             <button
               type="button"
@@ -219,15 +245,22 @@ export function Slideshow({ project }: SlideshowProps) {
 
         {items.map((item, i) => {
           // Every image loads as soon as the project opens (in slide order, the first one
-          // first), so clicking through never waits on one. Videos are heavier, so only the
-          // current slide and its neighbors load.
+          // first), so clicking through never waits on one. Videos are heavier, so on desktop
+          // only the current slide and its neighbors load them; the phone scroll has them all
+          // (each plays only while on screen).
           const distance = Math.min(Math.abs(i - index), count - Math.abs(i - index));
           const isCurrent = i === index;
           const isVideo = item.kind === "media" && item.slide.media?.mediaType === "video";
-          const mounted = !isVideo || distance <= 1;
+          const mounted = !isVideo || distance <= 1 || isMobile;
           return (
             <section
               key={item.key}
+              ref={item.kind === "info" ? infoRef : undefined}
+              style={
+                item.kind === "media"
+                  ? ({ "--slide-aspect": slideAspect(item.slide.media) } as CSSProperties)
+                  : undefined
+              }
               className={[
                 styles.slide,
                 isCurrent ? styles.current : null,
@@ -235,7 +268,7 @@ export function Slideshow({ project }: SlideshowProps) {
               ]
                 .filter(Boolean)
                 .join(" ")}
-              aria-hidden={!isCurrent}
+              aria-hidden={!isMobile && !isCurrent}
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${count}`}
             >
@@ -244,7 +277,7 @@ export function Slideshow({ project }: SlideshowProps) {
                   <MediaSlide
                     slide={item.slide}
                     preload={i === 0}
-                    active={isCurrent && stageVisible}
+                    active={(isCurrent || isMobile) && stageVisible}
                   />
                 ) : (
                   <InfoSlide project={project} />
@@ -253,13 +286,6 @@ export function Slideshow({ project }: SlideshowProps) {
             </section>
           );
         })}
-
-
-        {count > 0 ? (
-          <p className={styles.counter} aria-live="polite">
-            {index + 1}/{count}
-          </p>
-        ) : null}
       </div>
 
       {/* Outside the stage: visible (all dimmed) while the intro card shows, as in the design. */}

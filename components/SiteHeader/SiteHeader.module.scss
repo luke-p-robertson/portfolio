@@ -21,6 +21,20 @@
   button {
     pointer-events: auto;
   }
+
+  // A bigger, invisible target around each link, so a click just off "Projects", "Profile"
+  // or "Menu" doesn't land on the page beneath. The links themselves don't move. (Not the
+  // stacked filter options, whose targets would overlap.)
+  a:not(.option),
+  button:not(.option) {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: calc(-1 * #{variables.$header-hit-area});
+    }
+  }
 }
 
 /** White text with `difference` reads black on white, white on dark and over imagery. */
@@ -41,6 +55,13 @@
 /** On a project the header takes the project's text color (black by default). */
 .project {
   color: var(--header-color, #{variables.$text});
+
+  // Phones scroll the images under the header, so it blends like everywhere else (Figma
+  // 2402:453) and stays readable over light and dark images alike.
+  @include layout.mobile {
+    color: variables.$white;
+    mix-blend-mode: difference;
+  }
 }
 
 /** Above an overlay the header sits on plain white, so it uses the text color. */
@@ -137,6 +158,8 @@
 }
 
 .option {
+  // Positioned, so each option sits above the "Filter" button's bigger click area.
+  position: relative;
   color: inherit;
   opacity: 0.55;
 

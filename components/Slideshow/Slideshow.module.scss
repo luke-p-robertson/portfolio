@@ -9,7 +9,13 @@
   overflow: hidden;
   background: var(--project-background, #{variables.$white});
   color: var(--project-text, #{variables.$text});
-  touch-action: pan-y;
+
+  // Phones scroll the page instead (Figma 2402:453).
+  @include layout.mobile {
+    position: static;
+    min-height: 100lvh;
+    overflow: visible;
+  }
 }
 
 /** Everything outside the header: hidden while the headline shows, then crossfades in. */
@@ -17,6 +23,12 @@
   position: absolute;
   inset: 0;
   transition: opacity variables.$fade-duration ease-out;
+
+  /** Phones: every slide in one column on the page margins, the info last. */
+  @include layout.mobile {
+    position: static;
+    padding: variables.$space-xl variables.$page-margin variables.$space-l;
+  }
 }
 
 .stageHidden {
@@ -29,6 +41,19 @@
   position: absolute;
   inset: 0;
   visibility: hidden;
+
+  @include layout.mobile {
+    position: static;
+    visibility: visible;
+
+    & + & {
+      margin-top: variables.$space-s;
+    }
+
+    &.infoSection {
+      margin-top: variables.$space-m;
+    }
+  }
 }
 
 .current {
@@ -77,6 +102,8 @@
   padding-bottom: calc(2 * #{variables.$headline-lift});
 
   @include layout.mobile {
+    // Over the screen, not the scrolling page.
+    position: fixed;
     padding-bottom: calc(2 * #{variables.$headline-lift-mobile});
   }
 
@@ -109,10 +136,11 @@
   bottom: calc(#{variables.$thumb-height} + #{variables.$thumb-gap});
   left: variables.$page-margin;
 
+  /** Phones: full width inside the margins, at the slide's own shape. */
   @include layout.mobile {
-    right: 0;
-    bottom: calc(#{variables.$space-m} + 2 * #{variables.$slide-lift-mobile});
-    left: 0;
+    position: relative;
+    inset: auto;
+    aspect-ratio: var(--slide-aspect);
   }
 }
 
@@ -126,8 +154,11 @@
   overflow-y: auto;
 
   @include layout.mobile {
+    position: static;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: variables.$space-l;
+    padding: 0;
+    overflow: visible;
   }
 }
 
@@ -202,18 +233,6 @@
 .thumb .thumbImage {
   width: auto;
   height: 100%;
-}
-
-.counter {
-  position: absolute;
-  bottom: variables.$counter-bottom-mobile;
-  left: 50%;
-  z-index: 3;
-  transform: translateX(-50%);
-
-  @include layout.desktop {
-    display: none;
-  }
 }
 
 .hidden {
