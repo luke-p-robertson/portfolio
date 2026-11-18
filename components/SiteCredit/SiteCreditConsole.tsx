@@ -14,7 +14,7 @@ export function SiteCreditConsole() {
     }
     logged = true;
     console.log(
-      `%cSite design & development by ${STUDIO_CREDIT.name}%c\n${STUDIO_CREDIT.url}`,
+      `%cSite development by ${STUDIO_CREDIT.name}%c\n${STUDIO_CREDIT.url}`,
       "font-weight: 600;",
       "font-weight: normal;",
     );

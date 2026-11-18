@@ -1,4 +1,7 @@
-/** The studio that designed and built the site (Applied Poetics, formerly Collect NYC). */
+/**
+ * The studio that developed the site (Applied Poetics, formerly Collect NYC). Luke Robertson
+ * Studio designed it, so every credit says development only, never design.
+ */
 export const STUDIO_CREDIT = {
   name: "Applied Poetics",
   url: "https://ap.ltd",

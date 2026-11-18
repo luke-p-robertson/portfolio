@@ -152,6 +152,21 @@ export function Slideshow({ project }: SlideshowProps) {
     return () => window.removeEventListener("scroll", skipIntro);
   }, [intro, isMobile, skipIntro]);
 
+  // A project's own background also colors the page itself, so it reaches under Safari's
+  // floating toolbar and past the end of the phone scroll instead of showing white there.
+  const background = project.backgroundColor?.trim();
+  useEffect(() => {
+    if (!background) {
+      return;
+    }
+    const { body } = document;
+    const previousBackground = body.style.backgroundColor;
+    body.style.backgroundColor = background;
+    return () => {
+      body.style.backgroundColor = previousBackground;
+    };
+  }, [background]);
+
   // Phones: a project always opens at the top of its scroll.
   useEffect(() => {
     if (isMobile) {

@@ -68,6 +68,8 @@ $slide-lift-mobile: 20px;
 /** The project headline sits this far above the middle of the screen (Luke: 25px on desktop; mobile Figma: 26px). */
 $headline-lift: 25px;
 $headline-lift-mobile: 26px;
+/** How far a full-screen layer runs past the screen, to reach under iOS Safari's toolbar. */
+$under-toolbar: 200px;
 /** The "Site built by AP" credit's distance from the bottom when the content is short (Figma). */
 $credit-bottom: 16px;
 

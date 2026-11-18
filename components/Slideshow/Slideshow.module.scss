@@ -50,8 +50,12 @@
       margin-top: variables.$space-s;
     }
 
+    // Info lands this far down (where the first image starts), clear of the header, with
+    // room to get there even when the info is short.
     &.infoSection {
+      min-height: calc(100svh - #{variables.$space-xl} - #{variables.$space-l});
       margin-top: variables.$space-m;
+      scroll-margin-top: variables.$space-xl;
     }
   }
 }
@@ -101,10 +105,18 @@
   // Raised above the middle of the screen by twice the lift in bottom padding.
   padding-bottom: calc(2 * #{variables.$headline-lift});
 
+  // Phones: absolute, not fixed. iOS 26+ Safari cuts fixed layers off at its floating
+  // toolbar and tints the toolbar from them, which left a white strip under this
+  // (transparent) layer. It opens with the page at the top and scrolling skips it, so
+  // absolute sits where fixed did. The extra height runs it under the toolbar, and the
+  // matching extra padding keeps the text centered in the visible screen as before.
   @include layout.mobile {
-    // Over the screen, not the scrolling page.
-    position: fixed;
-    padding-bottom: calc(2 * #{variables.$headline-lift-mobile});
+    position: absolute;
+    inset: 0 0 auto;
+    height: calc(100lvh + #{variables.$under-toolbar});
+    padding-bottom: calc(
+      100lvh + #{variables.$under-toolbar} - 100svh + 2 * #{variables.$headline-lift-mobile}
+    );
   }
 
   // The full width inside the page margins, so a headline only wraps when it must.

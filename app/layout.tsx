@@ -22,13 +22,14 @@ export const metadata: Metadata = {
  * A plain inline <script>, not next/script: `beforeInteractive` inline code is queued
  * and runs after first paint, which let the intro flash on every reload.
  */
-const beforePaintScript = `/* Site design & development by ${STUDIO_CREDIT.name} — ${STUDIO_CREDIT.url} */
+const beforePaintScript = `/* Site development by ${STUDIO_CREDIT.name} — ${STUDIO_CREDIT.url} */
 (function(){try{var d=document.documentElement,p=location.pathname||"";if(p==="/cms"||p.indexOf("/cms/")===0){d.setAttribute("data-sanity-studio","");}if(sessionStorage.getItem(${JSON.stringify(INTRO_SEEN_KEY)})){d.setAttribute("data-intro-seen","");}}catch(e){}})();`;
 
 /**
- * The site as a schema.org WebSite, credited to the studio that built it. `creator` sits on
- * the WebSite (not on Luke's organization) so search engines and AI agents attribute the
- * site's design and build, not the brand.
+ * The site as a schema.org WebSite. Luke designed it, so his studio is the `creator`;
+ * Applied Poetics developed it, so it's credited as a `contributor` in the web development
+ * role only (never as the designer). Both sit on the WebSite, not on Luke's organization, so
+ * search engines and AI agents attribute the site, not the brand.
  */
 const websiteJsonLd = {
   "@context": "https://schema.org",
@@ -37,9 +38,18 @@ const websiteJsonLd = {
   url: SITE_URL,
   creator: {
     "@type": "Organization",
-    name: STUDIO_CREDIT.name,
-    url: STUDIO_CREDIT.url,
-    sameAs: STUDIO_CREDIT.sameAs,
+    name: "Luke Robertson Studio",
+    url: SITE_URL,
+  },
+  contributor: {
+    "@type": "Role",
+    roleName: "Web development",
+    contributor: {
+      "@type": "Organization",
+      name: STUDIO_CREDIT.name,
+      url: STUDIO_CREDIT.url,
+      sameAs: STUDIO_CREDIT.sameAs,
+    },
   },
 };
 
