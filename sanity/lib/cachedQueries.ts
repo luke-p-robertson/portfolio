@@ -66,10 +66,13 @@ export type SlideData = {
   media?: MediaData | null;
 };
 
+/** A credited name, with an optional link. Plain strings are the pre-link format. */
+export type CreditName = string | { _key: string; label?: string | null; href?: string | null };
+
 export type CreditData = {
   _key: string;
   role?: string | null;
-  names?: string[] | null;
+  names?: CreditName[] | null;
 };
 
 export type ProjectData = {
@@ -115,10 +118,7 @@ export const SANITY_CACHE_TAG = "sanity";
 /** Bump when GROQ projections change so `unstable_cache` does not serve stale shapes. */
 const SANITY_CACHE_KEY_VERSION = "6";
 
-async function fetchSanity<T>(
-  query: string,
-  params?: Record<string, unknown>,
-): Promise<T | null> {
+async function fetchSanity<T>(query: string, params?: Record<string, unknown>): Promise<T | null> {
   if (!sanityClient) {
     return null;
   }

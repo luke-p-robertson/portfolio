@@ -17,14 +17,18 @@ export const credit = defineType({
       name: "names",
       title: "Names",
       type: "array",
-      of: [defineArrayMember({ type: "string" })],
+      of: [defineArrayMember({ type: "link" })],
+      description: "One per name. Add a URL to make a name a link.",
       validation: (rule) => rule.min(1),
     }),
   ],
   preview: {
     select: { title: "role", names: "names" },
     prepare({ title, names }) {
-      return { title, subtitle: Array.isArray(names) ? names.join(", ") : undefined };
+      const labels = Array.isArray(names)
+        ? names.map((name) => (typeof name === "string" ? name : name?.label)).filter(Boolean)
+        : [];
+      return { title, subtitle: labels.length ? labels.join(", ") : undefined };
     },
   },
 });

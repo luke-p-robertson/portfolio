@@ -5,12 +5,13 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { BlockContent } from "@/components/BlockContent/BlockContent";
 import { Media } from "@/components/Media/Media";
 import { SanityImage } from "@/components/SanityImage/SanityImage";
+import { SmartLink } from "@/components/SmartLink/SmartLink";
 import { useProjectHeader } from "@/components/SiteHeader/HeaderContext";
 import { useCloseProject } from "@/components/SiteHeader/useCloseProject";
 import { FADE_MS, PROJECT_INTRO_MS } from "@/lib/motion";
 import { STUDIO_NAME } from "@/lib/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
-import type { MediaData, ProjectData, SlideData } from "@/sanity/lib/cachedQueries";
+import type { CreditName, MediaData, ProjectData, SlideData } from "@/sanity/lib/cachedQueries";
 import { sanityImageIntrinsicDimensions } from "@/sanity/lib/sanityImageUrl";
 
 import styles from "./Slideshow.module.scss";
@@ -20,6 +21,14 @@ type SlideshowProps = {
 };
 
 type Item = { kind: "media"; key: string; slide: SlideData } | { kind: "info"; key: string };
+
+/** A credited name and its optional link (names were plain strings before links). */
+function creditName(name: CreditName, index: number) {
+  if (typeof name === "string") {
+    return { key: `${index}-${name}`, label: name.trim(), href: undefined };
+  }
+  return { key: name._key, label: name.label?.trim(), href: name.href?.trim() || undefined };
+}
 
 function thumbImage(media?: MediaData | null) {
   return media?.mediaType === "video" ? media.poster : media?.image;
@@ -43,9 +52,7 @@ function slideSizes(media?: MediaData | null): string {
 }
 
 function hasInfo(project: ProjectData) {
-  return Boolean(
-    project.scope?.length || project.credits?.length || project.description?.length,
-  );
+  return Boolean(project.scope?.length || project.credits?.length || project.description?.length);
 }
 
 /**
@@ -76,9 +83,7 @@ export function Slideshow({ project }: SlideshowProps) {
   const headline = project.headline?.trim();
 
   const [index, setIndex] = useState(0);
-  const [intro, setIntro] = useState<"showing" | "leaving" | "done">(
-    headline ? "showing" : "done",
-  );
+  const [intro, setIntro] = useState<"showing" | "leaving" | "done">(headline ? "showing" : "done");
   const infoRef = useRef<HTMLElement>(null);
   // Phones: true while the info at the end of the scroll is on screen.
   const [infoInView, setInfoInView] = useState(false);
@@ -240,7 +245,11 @@ export function Slideshow({ project }: SlideshowProps) {
         </button>
       ) : null}
 
-      <div className={[styles.stage, stageVisible ? null : styles.stageHidden].filter(Boolean).join(" ")}>
+      <div
+        className={[styles.stage, stageVisible ? null : styles.stageHidden]
+          .filter(Boolean)
+          .join(" ")}
+      >
         {count > 1 && !isMobile ? (
           <>
             <button
@@ -372,9 +381,12 @@ function InfoSlide({ project }: { project: ProjectData }) {
           {project.credits.map((credit) => (
             <div key={credit._key}>
               <dt className={styles.label}>{credit.role}</dt>
-              {credit.names?.map((name) => (
-                <dd key={name}>{name}</dd>
-              ))}
+              {credit.names?.map((name, index) => {
+                const { key, label, href } = creditName(name, index);
+                return label ? (
+                  <dd key={key}>{href ? <SmartLink href={href}>{label}</SmartLink> : label}</dd>
+                ) : null;
+              })}
             </div>
           ))}
         </dl>
