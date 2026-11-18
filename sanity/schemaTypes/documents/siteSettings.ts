@@ -5,18 +5,10 @@ export const siteSettings = defineType({
   title: "Site settings",
   type: "document",
   groups: [
-    { name: "general", title: "General", default: true },
-    { name: "screensaver", title: "Screen saver" },
+    { name: "screensaver", title: "Screen saver", default: true },
     { name: "seo", title: "SEO & social" },
   ],
   fields: [
-    defineField({
-      name: "siteCreditLink",
-      title: "Site credit link",
-      type: "url",
-      description: "Profile page “Site by AP” link.",
-      group: "general",
-    }),
     defineField({
       name: "screensaverQuote",
       title: "Quote",

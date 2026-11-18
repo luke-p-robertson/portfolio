@@ -411,7 +411,6 @@ async function main() {
   transaction.createOrReplace({
     _id: "siteSettings",
     _type: "siteSettings",
-    siteCreditLink: "https://ap.ltd",
     seo: {
       _type: "seo",
       title: "Luke Robertson Studio",

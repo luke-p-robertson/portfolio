@@ -107,7 +107,6 @@ export type ProfileData = {
 };
 
 export type SiteSettingsData = {
-  siteCreditLink?: string | null;
   screensaverQuote?: string | null;
   screensaverAttribution?: string | null;
   seo?: SanitySeo;

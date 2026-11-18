@@ -1,15 +1,15 @@
 import { SmartLink } from "@/components/SmartLink/SmartLink";
+import { STUDIO_CREDIT } from "@/lib/siteCredit";
 import type { ProfileData } from "@/sanity/lib/cachedQueries";
 
 import styles from "./Profile.module.scss";
 
 type ProfileProps = {
   data?: ProfileData | null;
-  siteCreditLink?: string | null;
 };
 
 /** Detail columns (Enquiries, Follow, Business hours; Services) beside the profile text. */
-export function Profile({ data, siteCreditLink }: ProfileProps) {
+export function Profile({ data }: ProfileProps) {
   return (
     <main className={styles.page}>
       <div className={styles.grid}>
@@ -39,11 +39,9 @@ export function Profile({ data, siteCreditLink }: ProfileProps) {
           ))}
         </div>
       </div>
-      {siteCreditLink ? (
-        <p className={styles.credit}>
-          <SmartLink href={siteCreditLink}>Site built by AP</SmartLink>
-        </p>
-      ) : null}
+      <p className={styles.credit}>
+        <SmartLink href={STUDIO_CREDIT.url}>Site built by AP</SmartLink>
+      </p>
     </main>
   );
 }

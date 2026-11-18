@@ -99,7 +99,6 @@ export const PROFILE_QUERY = groq`*[_type == "profile" && _id == "profile"][0]{
 }`;
 
 export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings" && _id == "siteSettings"][0]{
-  siteCreditLink,
   screensaverQuote,
   screensaverAttribution,
   ${seoProjection}
