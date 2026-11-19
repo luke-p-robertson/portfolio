@@ -12,6 +12,7 @@
     "import:prismic": "sanity exec scripts/importPrismic.ts --with-user-token"
   },
   "dependencies": {
+    "@next/third-parties": "16.2.2",
     "@portabletext/react": "^3.2.4",
     "@portabletext/toolkit": "^2.0.18",
     "@sanity/client": "^6.22.0",
